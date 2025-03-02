@@ -3,8 +3,8 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:800italic);
 
 body { 
-    font-family: "Courier New", Courier, monospace;
-    background: url("../images/lgbtq+ project logo 3.2.png") no-repeat center center fixed;
+    font-family: "Husar Bold", Courier, monospace;
+    background-color: #ADD8E6;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -13,8 +13,8 @@ body {
     padding: 0;}
 
 h1, h3, p {
-    float: left;
-    clear: left;
+    text-align: center;
+    clear: center;
     width: 320px;
     background-color: #fff;
     color: #5a514c;
@@ -22,21 +22,26 @@ h1, h3, p {
 
 
 h1 {
-    margin: 50px 0 0 50px;
-    height: 600px;
-    background-image: url("../images/lgbtq+ project logo 3.3.png");
+    margin: 150px 0 0 700px;
+    height: 350px;
+    width: 380px;
+    text-align: center;
+    background-image: url("../images/lgbtq+ project logo 3.2.png");
+    background-image position: center
     background-repeat: no-repeat;
-    text-indent: -9999px;
     border-top: 1px solid #bcbdc0;
     border-left: 1px solid #bcbdc0;
     border-right: 1px solid #bcbdc0;}
 
 h3 {
-    margin: 0 0 0 50px;
+    margin: 200 0 0 500px;
+    background-color: #5a514c;
+    text-align: center
+    margin: 0 auto;
     padding: 25px 0 0 0;
     font-family: 'Open Sans', arial, sans-serif;
     font-size: 1.8em;
-    font-style: italic;
+    font-style: bold;
     font-weight: 800;
     line-height: 0.80em;
     letter-spacing: -0.02em;
@@ -44,14 +49,23 @@ h3 {
     border-left: 1px solid #bcbdc0;
     border-right: 1px solid #bcbdc0;}
 
+centered-paragraph {
+    background-color: #5a514c;
+    text-align: center
+    width: 400px;}
+
 p {
-    margin: 0 0 0 50px;
-    padding: 30px 0 25px 0;
     font-weight: bold;
     text-align: center;
-    border-right: 1px solid #bcbdc0;
-    border-bottom: 1px solid #bcbdc0;
-    border-left: 1px solid #bcbdc0;}
+    border-right: 2px solid #bcbdc0;
+    border-bottom: 2px solid #bcbdc0;
+    border-left: 2px solid #bcbdc0;}
+
+.paragraph-box {
+    display: center;
+    margin: 0 auto;
+    width: 450px; /* Set your desired width */
+}
 
 /* Border under box when you move script in the last example */
 p + script + h3 {
