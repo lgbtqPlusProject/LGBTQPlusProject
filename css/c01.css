@@ -3,7 +3,7 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:800italic);
 
 body { 
-    font-family: "Husar Bold", Courier, monospace;
+    font-family: "Josefin Sans Regular", Courier, monospace;
     background-color: #ADD8E6;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -23,10 +23,10 @@ h1, h3, p {
 
 h1 {
     margin: 150px 0 0 700px;
-    height: 350px;
-    width: 370px;
+    height: 460px;
+    width: 320px;
     text-align: center;
-    background-image: url("images/logo final.gif");
+    background-image: url("../images/lgbtq+ project 25.gif");
     background-image position: center
     background-repeat: no-repeat;
     border-top: 2px solid #000000;
@@ -35,14 +35,13 @@ h1 {
     border-left: 2px solid #000000;}
 
 h3 {
-    margin: 200 0 0 500px;
+    margin: 150 0 0 400px;
     background-color: #5a514c;
     text-align: center;
-    padding: 25px 0 0 0;
-    font-family: 'Husar Bold', arial, sans-serif;
+    padding: 20px 0 0 0;
+    font-family: 'Josefin Sans Regular', arial, sans-serif;
     font-size: 1.8em;
-    font-style: bold;
-    font-weight: 800;
+    font: black
     line-height: 0.80em;
     letter-spacing: -0.02em;
     text-transform: uppercase;
@@ -52,7 +51,7 @@ h3 {
     border-left: 2px solid #000000;}
 
 p {
-    margin: 0 0 0 725px;
+    margin: 0 0 0 700px;
     font-weight: bold;
     text-align: center;
     position: center;
@@ -65,7 +64,7 @@ p {
 .paragraph-box {
     position: center;
     margin: center;
-    width: 450px; /* Set your desired width */
+    width: 400px; /* Set your desired width */
 }
 
 /* Border under box when you move script in the last example */
