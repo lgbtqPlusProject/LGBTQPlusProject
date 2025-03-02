@@ -4,7 +4,7 @@
 
 body { 
     font-family: "Courier New", Courier, monospace;
-    background: url("../images/constructive-backdrop.jpg") no-repeat center center fixed; 
+    background: url("../images/lgbtq+ project logo 3.2.png") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -23,7 +23,7 @@ h1, h3, p {
 
 h1 {
     margin: 50px 0 0 50px;
-    height: 175px;
+    height: 600px;
     background-image: url("../images/lgbtq+ project logo 3.3.png");
     background-repeat: no-repeat;
     text-indent: -9999px;
