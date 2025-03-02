@@ -24,46 +24,47 @@ h1, h3, p {
 h1 {
     margin: 150px 0 0 700px;
     height: 350px;
-    width: 380px;
+    width: 370px;
     text-align: center;
-    background-image: url("../images/lgbtq+ project logo 3.5.gif");
+    background-image: url("../images/lgbtq+ project logo 6.gif");
     background-image position: center
     background-repeat: no-repeat;
-    border-top: 1px solid #bcbdc0;
-    border-left: 1px solid #bcbdc0;
-    border-right: 1px solid #bcbdc0;}
+    border-top: 2px solid #000000;
+    border-right: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    border-left: 2px solid #000000;}
 
 h3 {
     margin: 200 0 0 500px;
     background-color: #5a514c;
-    text-align: center
-    margin: 0 auto;
+    text-align: center;
     padding: 25px 0 0 0;
-    font-family: 'Open Sans', arial, sans-serif;
+    font-family: 'Husar Bold', arial, sans-serif;
     font-size: 1.8em;
     font-style: bold;
     font-weight: 800;
     line-height: 0.80em;
     letter-spacing: -0.02em;
     text-transform: uppercase;
-    border-left: 1px solid #bcbdc0;
-    border-right: 1px solid #bcbdc0;}
-
-centered-paragraph {
-    background-color: #5a514c;
-    text-align: center
-    width: 400px;}
+    border-top: 2px solid #000000;
+    border-right: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    border-left: 2px solid #000000;}
 
 p {
+    margin: 0 0 0 725px;
     font-weight: bold;
     text-align: center;
-    border-right: 2px solid #bcbdc0;
-    border-bottom: 2px solid #bcbdc0;
-    border-left: 2px solid #bcbdc0;}
+    position: center;
+    background-color: #ADD8E6;
+    border-top: 2px solid #000000;
+    border-right: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    border-left: 2px solid #000000;}
 
 .paragraph-box {
-    display: center;
-    margin: 0 auto;
+    position: center;
+    margin: center;
     width: 450px; /* Set your desired width */
 }
 
@@ -78,3 +79,19 @@ html{
     min-height:100%;}
 body{
     min-height:100%;}
+
+
+@media only screen and (max-width: 600px) {
+  p {grid-area: 1 / span 6;}
+  h1 {grid-area: 2 / span 6;}
+}
+
+@media only screen and (min-width: 600px) {
+    p  {grid-area: 1 / span 6;}
+    h1 {grid-area: 2 / span 6;}
+}
+
+@media only screen and (min-width: 768px) {
+    p {grid-area: 1 / span 6;}
+    h1 {grid-area: 2 / span 6;}
+}
