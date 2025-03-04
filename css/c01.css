@@ -2,37 +2,25 @@
 
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:800italic);
 
-body { 
-    font-family: "Josefin Sans Regular", Courier, monospace;
-    background-color: #ADD8E6;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    margin: 0;
-    padding: 0;}
+body {
+    background-image: url('../images/newlogo3633.gif');
+    background-size: cover;  /* Adjusts the size of the GIF to cover the entire screen */
+    background-position: center;  /* Ensures the GIF is centered */
+    background-repeat: no-repeat;  /* Prevents the GIF from repeating */
+}
 
 h1, h3, p {
     text-align: center;
     clear: center;
     width: 320px;
-    background-color: #fff;
+    background-color: lavender;
     color: #5a514c;
     text-align: center;}
 
 
 h1 {
-    margin: 150px 0 0 700px;
-    height: 460px;
-    width: 320px;
     text-align: center;
-    background-image: url("../images/lgbtq+ project 25.gif");
-    background-image position: center
-    background-repeat: no-repeat;
-    border-top: 2px solid #000000;
-    border-right: 2px solid #000000;
-    border-bottom: 2px solid #000000;
-    border-left: 2px solid #000000;}
+    /*background-image: url("../images/lgbtq+ project 25.gif");*/}
 
 h3 {
     margin: 150 0 0 400px;
@@ -50,27 +38,56 @@ h3 {
     border-bottom: 2px solid #000000;
     border-left: 2px solid #000000;}
 
-p {
-    margin: 0 0 0 700px;
-    font-weight: bold;
-    text-align: center;
-    position: center;
-    background-color: #ADD8E6;
-    border-top: 2px solid #000000;
-    border-right: 2px solid #000000;
-    border-bottom: 2px solid #000000;
-    border-left: 2px solid #000000;}
 
-.paragraph-box {
-    position: center;
-    margin: center;
-    width: 400px; /* Set your desired width */
+
+body {
+            display: center;
+            justify-content: center;
+            align-items: topline;
+            height: 100vh;
+            background-color: lavender;
+            color: black;
+            font-family: 'Josefin Sans Regular', arial, sans-serif;
+            margin: 0;
+        }
+
+.announcement-box {
+    position: fixed;
+    top: 20px;
+    right: -350px; /* Start off-screen */
+    background-color: lavender;
+    font-family: 'Josefin Sans Regular', arial, sans-serif;
+    border: 2px solid #ccc;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    border-radius: 15px;
+    animation: slideIn 1s forwards; /* Add slide-in animation */
 }
-
-/* Border under box when you move script in the last example */
-p + script + h3 {
-    padding-bottom: 20px;
-    border-bottom: 1px solid #bcbdc0;}
+.close-btn {
+    background-color: lavender;
+    color: black;
+    border: thin;
+    padding: 5px 10px;
+    cursor: pointer;
+    float: bottom;
+}
+@keyframes slideIn {
+    from {
+        right: -350px; /* Start off-screen */
+    }
+    to {
+        right: 20px; /* End position */
+    }
+}
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
 
 /* Fix for full-screen background image: Chrome on Android */
 html{

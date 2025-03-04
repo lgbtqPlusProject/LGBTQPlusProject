@@ -1,16 +1,85 @@
 <!DOCTYPE html>
 <html>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <head>
         <title>LGBTQ+ Project</title>
         <link rel="stylesheet" href="css/c01.css"/>
     </head>
     <body>
-        <link rel="icon" href="favicon.ico" type="images/x-icon"> 
-        <h1> </h1>
-        <script src="js/add-content.js"></script>
-        <div class="paragraph-box">
-        <p class="centered-paragraph" style="center">
-            For all inquires please email LGBTQPlusProject@outlook.com!</p>
+        
+        <div class="announcement-box" id="announcementBox">
+            <button class="close-btn" onclick="closeAnnouncement()">Close</button>
+            <p><strong>Our history will not be erased!</strong></p>
+            <p>Coming soon in 2025!</p>
+            <p>For inquiries, email at <a href="mailto:lgbtqplusproject@outlook.com">lgbtqplusproject@outlook.com</a></p>
         </div>
+        
+        <script>
+            
+            function closeAnnouncement() {
+                    const box = document.getElementById('announcementBox');
+                    box.style.animation = 'fadeOut 6s forwards';
+                    setTimeout(() => {
+                        box.style.display = 'none';
+                    }, 1000); // Match the duration of the fade-out animation
+                }
+
+            async function searchFigures() {
+                const query = document.getElementById("search").value;
+                if (!query) {
+                    alert("LGBTQ+ Project | Add your figure to search.");
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`http://localhost:3000/search?q=${query}`);
+                    const data = await response.json();
+
+                    // Check if the response is an array
+                    if (Array.isArray(data)) {
+                        const resultsDiv = document.getElementById("results");
+                        resultsDiv.innerHTML = ""; // Clear previous results
+
+                        // Check if there are no results
+                        if (data.length === 0) {
+                            resultsDiv.innerHTML = "<p>Check back soon! We are constantly adding new historical figures.</p>";
+                        } else {
+                            // Iterate over each figure in the results
+                            data.forEach(figure => {
+                                let div = document.createElement("div");
+
+                                // Display the name as a title
+                                div.innerHTML = `<h5>${figure.name}</h5>`;
+
+                                // Iterate through all properties (columns) of the figure
+                                for (const key in figure) {
+                                    if (figure.hasOwnProperty(key)) {
+                                        // Display each field (key and value)
+                                        div.innerHTML += `<p><strong>${key}:</strong> ${figure[key]}</p>`;
+                                    }
+                                }
+
+                                // Append the dynamically created div to the results div
+                                resultsDiv.appendChild(div);
+                            });
+                        }
+                    } else {
+                        document.getElementById("results").innerHTML = "<p>Error: Unexpected response format.</p>";
+                        console.error("Unexpected response:", data);
+                    }
+                } catch (error) {
+                    console.error("Fetch Error:", error);
+                    document.getElementById("results").innerHTML = "<p>Failed to connect to archives.</p>";
+                }
+            }
+        </script>
+
+        
+        <h4>LGBTQ+ Historical Figure Archives</h4>
+        <input type="text" id="search" onkeyup="searchFigures()" placeholder="Type to search...">
+            <button onclick="searchFigures()">This Way!</button>
+        <div id="results"></div>
+        </head>
     </body>
 <html>
