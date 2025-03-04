@@ -1,16 +1,28 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <title>LGBTQ+ Project</title>
         <link rel="stylesheet" href="css/c01.css"/>
     </head>
     <body>
-        <link rel="icon" href="favicon.ico" type="images/x-icon"> 
         <h1> </h1>
-        <script src="js/add-content.js"></script>
-        <div class="paragraph-box">
-        <p class="centered-paragraph" style="center">
-            For all inquires please email LGBTQPlusProject@outlook.com!</p>
-        </div>
+        <body>
+            <div class="announcement" id="announcement">
+                <button class="close-btn" onclick="closeAnnouncement()">Close</button>
+                <p>Our history will not be erased</p>
+                <p>Coming soon 2025!</p>
+                <a href="mailto:example@example.com?subject=Hello&body=I%20wanted%20to%20reach%20out%20to%20you.">Send an Email</a>
+            </div>
+            <script>
+                function closeAnnouncement() {
+                    const announcement = document.getElementById('announcement');
+                    announcement.style.animation = 'fadeOut 1s ease-in-out';
+                    setTimeout(() => {
+                        announcement.style.display = 'none';
+                    }, 1000);
+                }
+            </script>
     </body>
 <html>

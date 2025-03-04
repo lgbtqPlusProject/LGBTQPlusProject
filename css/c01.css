@@ -4,7 +4,8 @@
 
 body { 
     font-family: "Josefin Sans Regular", Courier, monospace;
-    background-color: #ADD8E6;
+    background-color: lavender;
+    background-image: url("../images/newlogo3633.gif");
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -16,27 +17,19 @@ h1, h3, p {
     text-align: center;
     clear: center;
     width: 320px;
-    background-color: #fff;
+    background-color: lavender;
     color: #5a514c;
+    border-radius: 15px;
     text-align: center;}
 
 
 h1 {
-    margin: 150px 0 0 700px;
-    height: 460px;
-    width: 320px;
     text-align: center;
-    background-image: url("../images/lgbtq+ project 25.gif");
-    background-image position: center
-    background-repeat: no-repeat;
-    border-top: 2px solid #000000;
-    border-right: 2px solid #000000;
-    border-bottom: 2px solid #000000;
-    border-left: 2px solid #000000;}
+
 
 h3 {
     margin: 150 0 0 400px;
-    background-color: #5a514c;
+    background-color: lavender;
     text-align: center;
     padding: 20px 0 0 0;
     font-family: 'Josefin Sans Regular', arial, sans-serif;
@@ -55,22 +48,39 @@ p {
     font-weight: bold;
     text-align: center;
     position: center;
-    background-color: #ADD8E6;
+    background-color: lavender;
     border-top: 2px solid #000000;
     border-right: 2px solid #000000;
     border-bottom: 2px solid #000000;
     border-left: 2px solid #000000;}
 
-.paragraph-box {
-    position: center;
-    margin: center;
-    width: 400px; /* Set your desired width */
+.announcement {
+    background-color: lavender;
+    padding: 20px;
+    border: 1px solid #ccc;
+    position: relative;
+    border-radius: 15px;
+    animation: fadeIn 5s ease-in-out;
 }
-
-/* Border under box when you move script in the last example */
-p + script + h3 {
-    padding-bottom: 20px;
-    border-bottom: 1px solid #bcbdc0;}
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff5c5c;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
 
 /* Fix for full-screen background image: Chrome on Android */
 html{
