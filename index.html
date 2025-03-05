@@ -9,20 +9,27 @@
     <body>
         <h1> </h1>
         <body>
-            <div class="announcement" id="announcement">
-                <button class="close-btn" onclick="closeAnnouncement()">Close</button>
-                <p>Our history will not be erased</p>
-                <p>Coming soon 2025!</p>
-                <a href="mailto:example@example.com?subject=Hello&body=I%20wanted%20to%20reach%20out%20to%20you.">Send an Email</a>
+            <!-- Announcement Box -->
+            <div id="announcement" class="announcement">
+                <button class="close-btn" onclick="closeAnnouncement()">✖</button>
+                <p><strong>Coming soon in 2025!</strong></p>
+                <p class="inquiry">For inquiries, email at <a href="mailto:lgbtqplusproject@outlook.com" style="color: #4DA6FF; text-decoration: none;">lgbtqplusproject@outlook.com</a></p>
             </div>
+
             <script>
-                function closeAnnouncement() {
-                    const announcement = document.getElementById('announcement');
-                    announcement.style.animation = 'fadeOut 1s ease-in-out';
-                    setTimeout(() => {
-                        announcement.style.display = 'none';
-                    }, 1000);
-                }
+                document.addEventListener("DOMContentLoaded", function() {
+                            setTimeout(() => {
+                                document.getElementById("announcement").classList.add("show");
+                            }, 1000); // Delay before fade-in
+                        });
+
+                        function closeAnnouncement() {
+                            const box = document.getElementById("announcement");
+                            box.style.opacity = "0";
+                            setTimeout(() => {
+                                box.style.visibility = "hidden";
+                            }, 1500); // Matches fade-out time
+                        }
             </script>
     </body>
 <html>
