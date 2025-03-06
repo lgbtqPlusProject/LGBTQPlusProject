@@ -79,6 +79,54 @@ body {
 }
 
 
+/* Reset styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Full-screen logo section */
+#landing {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #111;
+    color: white;
+    text-align: center;
+    position: relative;
+}
+
+#logo {
+    max-width: cover; /* Adjust as needed */
+}
+
+#scroll-indicator {
+    position: absolute;
+    bottom: 20px;
+    font-size: 18px;
+    opacity: 0.7;
+    animation: bounce 1.5s infinite;
+}
+
+/* Bounce animation */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+}
+
+/* Content section */
+#content {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: white;
+    padding: 20px;
+}
 @media only screen and (max-width: 600px) {
   p {grid-area: 1 / span 6;}
   h1 {grid-area: 2 / span 6;}
