@@ -13,13 +13,15 @@ document.getElementById('landing').addEventListener('click', () => {
     });
 });
 
+const cors = require('cors');
+app.use(cors());
 
 async function searchDatabase() {
     let query = document.getElementById('searchBox').value.trim();
     if (query.length < 2) return;  // Prevent very short searches
 
     try {
-        let response = await fetch(`http://localhost:3000/search?query=${encodeURIComponent(query)}`);
+        let response = await fetch(`http://lgbtqplusproject,org/search?query=${encodeURIComponent(query)}`);
         let results = await response.json();
 
         // Log the results to verify if data is returned
