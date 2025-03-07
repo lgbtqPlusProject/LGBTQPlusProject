@@ -1,18 +1,19 @@
-/* CSS for adding content example */
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:800italic);
-
-body { 
+/* Body */
+body {
     font-family: "Josefin Sans Regular", Courier, monospace;
     background-color: black;
     background-image: url("../images/lgbptqprojectLogov3.gif");
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
     background-size: cover;
     margin: 0;
-    padding: 0;}
-
+    padding: 0;
+}
 
 /* Announcement Box */
 .announcement {
@@ -33,14 +34,14 @@ body {
     transition: opacity 1.5s ease-in-out, visibility 1.5s ease-in-out;
 }
 
-/* Fade-in effect when the 'show' class is added */
+/* Fade-in effect for announcement */
 .announcement.show {
     opacity: 1;
     visibility: visible;
 }
 
-/* Close Button */
-.close-btn {
+/* Close button for announcement */
+.close-btn1 {
     background: none;
     border: none;
     color: white;
@@ -51,42 +52,70 @@ body {
     right: 15px;
 }
 
-.close-btn:hover {
+.close-btn1:hover {
     color: red;
 }
 
-/* Style for text */
-.announcement p {
-    margin: 10px 0;
-    font-size: 16px;
+/* Search Results Box */
+#searchResultsBox {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    max-width: 600px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
 }
 
-/* Style for the inquiry text */
-.inquiry {
-    font-size: 14px;
-    opacity: 0.8;
+/* Show the search results box when .show is added */
+#searchResultsBox.show {
+    display: block;
 }
 
-/* Make the email link stand out */
-.inquiry a {
-    color: #4DA6FF;
-    text-decoration: none;
-    font-weight: bold;
+/* Close button for search results box */
+#searchResultsBox .close-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 15px;
 }
 
-.inquiry a:hover {
-    text-decoration: underline;
+/* Search Results Container */
+#searchResultsContainer {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 20px;
 }
 
+/* Result Item Styling */
+.result-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
 
-/* Reset styles */
-* {
+.result-item:last-child {
+    border-bottom: none;
+}
+
+.result-item h3 {
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    font-size: 18px;
 }
 
-/* Full-screen logo section */
+.result-item p {
+    margin: 5px 0;
+    color: #555;
+}
+
+/* Full-screen Logo Section */
 #landing {
     height: 100vh;
     display: flex;
@@ -117,7 +146,7 @@ body {
     50% { transform: translateY(10px); }
 }
 
-/* Content section */
+/* Content Section */
 #content {
     height: 100vh;
     display: flex;
@@ -127,17 +156,19 @@ body {
     background-color: white;
     padding: 20px;
 }
+
+/* Mobile-responsive adjustments */
 @media only screen and (max-width: 600px) {
-  p {grid-area: 1 / span 6;}
-  h1 {grid-area: 2 / span 6;}
+    p { grid-area: 1 / span 6; }
+    h1 { grid-area: 2 / span 6; }
 }
 
 @media only screen and (min-width: 600px) {
-    p  {grid-area: 1 / span 6;}
-    h1 {grid-area: 2 / span 6;}
+    p { grid-area: 1 / span 6; }
+    h1 { grid-area: 2 / span 6; }
 }
 
 @media only screen and (min-width: 768px) {
-    p {grid-area: 1 / span 6;}
-    h1 {grid-area: 2 / span 6;}
+    p { grid-area: 1 / span 6; }
+    h1 { grid-area: 2 / span 6; }
 }

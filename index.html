@@ -7,45 +7,52 @@
         <link rel="stylesheet" href="css/c01.css"/>
     </head>
     <body>
-        <h1> </h1>
-        <body>
-            <!-- Announcement Box -->
-            <div id="announcement" class="announcement">
-                <button class="close-btn" onclick="closeAnnouncement()">✖</button>
-                <p><strong>Coming soon in 2025!</strong></p>
-                <p class="inquiry">For inquiries, email at <a href="mailto:lgbtqplusproject@outlook.com" style="color: #4DA6FF; text-decoration: none;">lgbtqplusproject@outlook.com</a></p>
-            </div>
-            
-            <!-- Landing Page with Logo -->
-            <section id="landing">
-                <img src="/Users/mateocarnavali/Desktop/LGBTQPlusProject/images/lgbptqprojectLogov3.gif" alt="Logo" id="logo">
-                <div id="scroll-indicator">Scroll Down ↓</div>
-            </section>
+        <!-- Announcement Box -->
+        <div id="announcement" class="announcement">
+            <button class="close-btn1" onclick="closeAnnouncement()">✖</button>
+            <p><strong>Coming soon in 2025!</strong></p>
+            <p class="inquiry">
+                For inquiries, email at
+                <a href="mailto: info@lgbtqplusproject.org" style="color: #4DA6FF; text-decoration: none;">
+                    info@lgbtqplusproject.org
+                </a>
+            </p>
+        </div>
+
+        <!-- Landing Page with Logo -->
+        <section id="landing">
+            <img src="/Users/mateocarnavali/Desktop/LGBTQPlusProject/images/lgbptqprojectLogov3.gif" alt="Logo" id="logo">
+            <div id="scroll-indicator">Scroll Down ↓</div>
+        </section>
 
             <!-- Main Content -->
             <section id="content">
-                <h1>Welcome to the Content Section</h1>
-                <p>This is where stuff is going to go.</p>
-                <input type="text" id="searchBox" placeholder="LGBTQ+ History..." />
+                <h1>UNDER CONSTRUCTION</h1>
+                <input type="text" id="searchBox" placeholder="Search LGBTQ+ Figures..." />
                 <button onclick="searchDatabase()">Search</button>
-                <div id="searchResults"></div>
+
+                <!-- Search Results Box -->
+                <div id="searchResultsBox" class="search-box">
+                    <button class="close-btn2" onclick="closeSearchBox()">×</button>
+                    <div id="searchResultsContainer"></div>  <!-- This is where the results will appear -->
+                </div>
             </section>
 
-            <script>
-                document.addEventListener("DOMContentLoaded", function() {
-                            setTimeout(() => {
-                                document.getElementById("announcement").classList.add("show");
-                            }, 1000); // Delay before fade-in
-                        });
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                setTimeout(() => {
+                    document.getElementById("announcement").classList.add("show");
+                }, 1000); // Delay before fade-in
+            });
 
-                        function closeAnnouncement() {
-                            const box = document.getElementById("announcement");
-                            box.style.opacity = "0";
-                            setTimeout(() => {
-                                box.style.visibility = "hidden";
-                            }, 1500); // Matches fade-out time
-                        }
-            </script>
-    </body>
+            function closeAnnouncement() {
+                const box = document.getElementById("announcement");
+                box.style.opacity = "0";
+                setTimeout(() => {
+                    box.style.visibility = "hidden";
+                }, 1500); // Matches fade-out time
+            }
+        </script>
         <script src="script.js"></script>
-<html>
+    </body>
+</html>

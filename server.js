@@ -4,13 +4,13 @@ const cors = require('cors');
 
 const app = express();
 app.use(cors()); // Enable CORS
-app.use(express.json());
+app.use(express.json()); // Allow JSON requests
 
 // MySQL Database Connection
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'Rubenom3626#', // ⚠️ Do not share passwords publicly!
+    password: 'Rubenom3626#',
     database: 'lgbtqplusproject'
 });
 
@@ -24,20 +24,36 @@ db.connect(err => {
 
 // Search API Endpoint
 app.get('/search', (req, res) => {
-    let searchQuery = req.query.query;
-    if (!searchQuery) return res.json([]);
+    const searchQuery = req.query.query;
 
-    let sql = `SELECT * FROM historicalFigures WHERE name LIKE ? OR contribution LIKE ?`;
-    let values = [`%${searchQuery}%`, `%${searchQuery}%`];
+    // Log the search query to make sure it's being received correctly
+    console.log("Search Query: ", searchQuery);
 
+    if (!searchQuery || searchQuery.trim() === '') {
+        return res.status(400).json({ error: "Search query is missing or empty" });
+    }
+
+    // SQL query to search by name, contribution, or country
+    let sql = `SELECT * FROM historicalFigures WHERE name LIKE ? OR contribution LIKE ? OR country LIKE ?`;
+    let values = [`%${searchQuery}%`, `%${searchQuery}%`, `%${searchQuery}%`];
+
+    // Execute the query
     db.query(sql, values, (err, results) => {
         if (err) {
-            console.error('Database query error:', err);
+            console.error('Database query failed:', err);
             res.status(500).json({ error: 'Database error' });
             return;
         }
-        console.log("Query Results:", results);  // Check what is returned from the database
-        res.json(results); //Send results to front end 
+
+        // Check if the result set is empty
+        if (results.length === 0) {
+            res.status(404).json({ message: 'No results found' });
+        } else {
+            // Log the results to verify the data
+            console.log("Query Results: ", results);
+            // Send the results back to the frontend
+            res.json(results);
+        }
     });
 });
 
