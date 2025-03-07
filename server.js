@@ -6,20 +6,21 @@ const app = express();
 app.use(cors()); // Enable CORS
 app.use(express.json()); // Allow JSON requests
 
-// MySQL Database Connection
+// Replace with the actual values you got from cPanel
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'Rubenom3626#',
-    database: 'lgbtqplusproject'
+  host: 'sv15.byethost15.org',  // Could be 'localhost' or something like 'mysql.yourdomain.com'
+  user: 'lgbtqplu_timo',      // The MySQL username you created for this database
+  password: 'Rubenom3626#',  // The password for that MySQL user
+  database: 'lgbtqplu_lgbtqplusproject'       // The database name you want to connect to
 });
 
-db.connect(err => {
-    if (err) {
-        console.error('Database connection failed:', err.stack);
-        return;
-    }
-    console.log('Connected to MySQL database');
+// Connect to the database
+db.connect((err) => {
+  if (err) {
+    console.error('Error connecting to the database:', err.stack);
+    return;
+  }
+  console.log('Connected to MySQL database!');
 });
 
 // Search API Endpoint
