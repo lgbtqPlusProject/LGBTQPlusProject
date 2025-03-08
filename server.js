@@ -34,29 +34,25 @@ app.get('/search', (req, res) => {
         return res.status(400).json({ error: "Search query is missing or empty" });
     }
 
-    // SQL query to search by name, contribution, or country
-    let sql = `SELECT * FROM historicalFigures WHERE name LIKE ? OR contribution LIKE ? OR country LIKE ?`;
-    let values = [`%${query}%`, `%${query}%`, `%${query}%`];
+    // Your database search logic here
+        let sql = `SELECT * FROM historicalFigures WHERE name LIKE ? OR contribution LIKE ? OR country LIKE ?`;
+        let values = [`%${query}%`, `%${query}%`, `%${query}%`];
 
-    // Execute the query
-    db.query(sql, values, (err, results) => {
-        if (err) {
-            console.error('Database query failed:', err);
-            res.status(500).json({ error: 'Database error' });
-            return;
-        }
+        db.query(sql, values, (err, results) => {
+            if (err) {
+                console.error('Database query failed:', err);
+                return res.status(500).json({ error: 'Database error' });
+            }
 
-        // Check if the result set is empty
-        if (results.length === 0) {
-            res.status(404).json({ message: 'No results found' });
-        } else {
-            console.log("Query Results: ", results);
+            if (results.length === 0) {
+                return res.status(404).json({ message: 'No results found' });
+            }
+            
             res.json(results);
-        }
+        });
     });
-});
 
-// Start Server
-app.listen(80, () => {
-    console.log('Server running on port 80');
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
 });

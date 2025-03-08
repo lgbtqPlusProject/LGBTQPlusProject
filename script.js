@@ -29,7 +29,7 @@ async function searchDatabase() {
 
     try {
         if (query && query.trim().length > 0) {
-            let response = await fetch(`https://lgbtqplusproject.org/search?query=${encodeURIComponent(query)}`);
+            let response = await fetch(`https://lgbtqplusproject.onrender.com/search?query=${encodeURIComponent(query)}`);
             // continue with handling the response
         }
         let results = await response.json();
