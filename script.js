@@ -21,7 +21,7 @@ async function searchDatabase() {
     if (query.length < 2) return;  // Prevent very short searches
 
     try {
-        let response = await fetch(`https://lgbtqplusproject,org/search?query=${encodeURIComponent(query)}`);
+        let response = await fetch(`https://lgbtqplusproject.org/search?query=${encodeURIComponent(query)}`);
         let results = await response.json();
 
         // Log the results to verify if data is returned
