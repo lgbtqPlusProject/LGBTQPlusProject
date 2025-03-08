@@ -22,7 +22,7 @@ function closeAnnouncement() {
         box.style.visibility = "hidden";
     }, 1500); // Matches fade-out time
 }
-
+    
 async function searchDatabase() {
     let query = document.getElementById('searchBox').value.trim();
     if (query.length < 2) return;  // Prevent very short searches
@@ -59,6 +59,9 @@ async function searchDatabase() {
         console.error("Search error:", error);
     }
 }
+
+document.getElementById('searchButton').addEventListener('click', searchDatabase);
+
 function closeSearchBox() {
     document.getElementById('searchResultsBox').classList.remove('show');  // Hide the pop-up
 }
