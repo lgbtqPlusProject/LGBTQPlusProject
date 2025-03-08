@@ -6,8 +6,8 @@ document.getElementById('landing').addEventListener('click', () => {
     window.scrollTo({
         top: window.innerHeight,
         behavior: 'smooth'
-});
-
+    });
+}); // <-- Closed the missing bracket here
 
 document.addEventListener("DOMContentLoaded", function() {
     setTimeout(() => {
@@ -30,30 +30,29 @@ async function searchDatabase() {
     try {
         if (query && query.trim().length > 0) {
             let response = await fetch(`https://lgbtqplusproject.onrender.com/search?query=${encodeURIComponent(query)}`);
-            // continue with handling the response
-        }
-        let results = await response.json();
+            let results = await response.json(); // Ensure this is inside the if block
 
-        // Log the results to verify if data is returned
-        console.log("Search Results:", results);
+            // Log the results to verify if data is returned
+            console.log("Search Results:", results);
 
-        let resultsContainer = document.getElementById('searchResultsContainer');
-        resultsContainer.innerHTML = ""; // Clear previous results
+            let resultsContainer = document.getElementById('searchResultsContainer');
+            resultsContainer.innerHTML = ""; // Clear previous results
 
-        if (Array.isArray(results) && results.length > 0) {
-            results.forEach(item => {
-                let resultItem = document.createElement('div');
-                resultItem.classList.add('result-item');
-                resultItem.innerHTML = `<h3>${item.name || 'No Name Found'}</h3>
-                                        <p>${item.contribution || 'No Contribution Found'}</p>`;
-                resultsContainer.appendChild(resultItem);
-            });
+            if (Array.isArray(results) && results.length > 0) {
+                results.forEach(item => {
+                    let resultItem = document.createElement('div');
+                    resultItem.classList.add('result-item');
+                    resultItem.innerHTML = `<h3>${item.name || 'No Name Found'}</h3>
+                                            <p>${item.contribution || 'No Contribution Found'}</p>`;
+                    resultsContainer.appendChild(resultItem);
+                });
 
-            // Show the search results box after results are added
-            document.getElementById('searchResultsBox').classList.add('show');
-        } else {
-            resultsContainer.innerHTML = "<p>No results found</p>";
-            document.getElementById('searchResultsBox').classList.add('show');
+                // Show the search results box after results are added
+                document.getElementById('searchResultsBox').classList.add('show');
+            } else {
+                resultsContainer.innerHTML = "<p>No results found</p>";
+                document.getElementById('searchResultsBox').classList.add('show');
+            }
         }
     } catch (error) {
         console.error("Search error:", error);
