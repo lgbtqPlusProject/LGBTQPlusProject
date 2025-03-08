@@ -2,26 +2,36 @@ window.onload = function() {
     document.getElementById('announcement').classList.add('show');
 };
 
-function closeAnnouncement() {
-    document.getElementById('announcement').classList.remove('show');
-}
-
 document.getElementById('landing').addEventListener('click', () => {
     window.scrollTo({
         top: window.innerHeight,
         behavior: 'smooth'
-    });
 });
 
-const cors = require('cors');
-app.use(cors());
+
+document.addEventListener("DOMContentLoaded", function() {
+    setTimeout(() => {
+        document.getElementById("announcement").classList.add("show");
+    }, 1000); // Delay before fade-in
+});
+
+function closeAnnouncement() {
+    const box = document.getElementById("announcement");
+    box.style.opacity = "0";
+    setTimeout(() => {
+        box.style.visibility = "hidden";
+    }, 1500); // Matches fade-out time
+}
 
 async function searchDatabase() {
     let query = document.getElementById('searchBox').value.trim();
     if (query.length < 2) return;  // Prevent very short searches
 
     try {
-        let response = await fetch(`https://lgbtqplusproject.org/search?query=${encodeURIComponent(query)}`);
+        if (query && query.trim().length > 0) {
+            let response = await fetch(`https://lgbtqplusproject.org/search?query=${encodeURIComponent(query)}`);
+            // continue with handling the response
+        }
         let results = await response.json();
 
         // Log the results to verify if data is returned

@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="css/c01.css"/>
     </head>
     <body>
+        
         <!-- Announcement Box -->
         <div id="announcement" class="announcement">
             <button class="close-btn1" onclick="closeAnnouncement()">✖</button>
@@ -37,22 +38,6 @@
                     <div id="searchResultsContainer"></div>  <!-- This is where the results will appear -->
                 </div>
             </section>
-
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                setTimeout(() => {
-                    document.getElementById("announcement").classList.add("show");
-                }, 1000); // Delay before fade-in
-            });
-
-            function closeAnnouncement() {
-                const box = document.getElementById("announcement");
-                box.style.opacity = "0";
-                setTimeout(() => {
-                    box.style.visibility = "hidden";
-                }, 1500); // Matches fade-out time
-            }
-        </script>
         <script src="script.js"></script>
     </body>
 </html>
