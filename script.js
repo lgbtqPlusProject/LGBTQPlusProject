@@ -23,6 +23,7 @@ function closeAnnouncement() {
     }, 1500); // Matches fade-out time
 }
     
+// Function that will be triggered when the button is clicked
 async function searchDatabase() {
     let query = document.getElementById('searchBox').value.trim();
     if (query.length < 2) return;  // Prevent very short searches
@@ -59,6 +60,7 @@ async function searchDatabase() {
     }
 }
 
+// Attach the searchDatabase function to the button click
 document.getElementById('searchButton').addEventListener('click', searchDatabase);
 
 function closeSearchBox() {
