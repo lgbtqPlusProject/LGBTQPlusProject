@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const mysql = require('mysql2');
 const cors = require('cors');
@@ -7,19 +8,15 @@ app.use(cors()); // Enable CORS
 app.use(express.json()); // Allow JSON requests
 
 
-// Serve static files (script.js and css/cs01.css)
-app.use('/css', express.static(path.join(__dirname, 'css')));  // Serve all CSS files from the css folder
+// Serve static files like script.js and css/cs01.css
 app.use(express.static(path.join(__dirname, '/')));  // Serve static files from the root folder
+app.use('/css', express.static(path.join(__dirname, 'css')));  // Serve all CSS files from the css folder
 
 // Serve index.html when accessing the root URL
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));  // Ensure this path points to your index.html
 });
 
-// Serve index.html when accessing the root URL
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'scrip.js'));  // Ensure this path points to your index.html
-});
 
 // Replace with your actual database credentials
 const db = mysql.createPool({  // Use createPool for multiple connections
