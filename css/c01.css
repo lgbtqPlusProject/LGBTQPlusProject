@@ -129,10 +129,18 @@ body {
 }
 
 #logo {
-    max-width: cover; /* Adjust as needed */
+    max-width: 100%; /* Adjust as needed */
 }
 
 #scroll-indicator {
+    position: absolute;
+    bottom: 20px;
+    font-size: 18px;
+    opacity: 0.7;
+    animation: bounce 1.5s infinite;
+}
+
+#scroll-indicator2 {
     position: absolute;
     bottom: 20px;
     font-size: 18px;
@@ -146,29 +154,118 @@ body {
     50% { transform: translateY(10px); }
 }
 
-/* Content Section */
+/* Navbar styling */
+#navbar {
+    background-color: black;
+    color: white;
+    padding: 15px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Navbar List Styling */
+#navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Center the links */
+}
+
+/* Navbar Item Styling */
+#navbar ul li {
+    margin: 0 20px; /* Space between links */
+}
+
+/* Navbar Link Styling */
+#navbar ul li a {
+    text-decoration: none;
+    color: white; /* White text */
+    font-size: 1rem;
+    padding: 10px 15px;
+    display: block;
+    transition: background-color 0.3s ease; /* Smooth hover transition */
+}
+
+/* Navbar Link Hover Effect */
+#navbar ul li a:hover {
+    background-color: #ff6347; /* Change background color on hover */
+    border-radius: 5px; /* Rounded corners on hover */
+}
+
+/* Responsive Navbar for Smaller Screens */
+@media (max-width: 768px) {
+    #navbar ul {
+        flex-direction: column; /* Stack links vertically */
+    }
+
+    #navbar ul li {
+        margin: 10px 0; /* Space between stacked links */
+    }
+}
+
+
+/* Full-screen Logo Section */
+#landing {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #111;
+    color: white;
+    text-align: center;
+    position: relative;
+    height: 100vh; /* Ensure landing page takes the full height of the viewport */
+    padding: 20px;
+}
+
+#logo {
+    max-width: 100%;
+}
+
+/* Content Section - Full Page */
 #content {
-    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     background-color: white;
     padding: 20px;
+    height: 100vh; /* Make sure the content page is also full screen */
+    flex-direction: column;
+}
+
+/* Mission Statement */
+.mission-statement {
+    width: 30%;
+    background-color: #f4f4f4;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-size: 14px;
 }
 
 /* Mobile-responsive adjustments */
-@media only screen and (max-width: 600px) {
-    p { grid-area: 1 / span 6; }
-    h1 { grid-area: 2 / span 6; }
+@media only screen and (max-width: 768px) {
+    #content {
+        height: auto; /* Allow content to grow naturally on mobile */
+    }
+
+    .mission-statement {
+        width: 100%;
+    }
 }
 
-@media only screen and (min-width: 600px) {
-    p { grid-area: 1 / span 6; }
-    h1 { grid-area: 2 / span 6; }
-}
+/* Mobile-responsive adjustments */
+@media only screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
 
-@media only screen and (min-width: 768px) {
-    p { grid-area: 1 / span 6; }
-    h1 { grid-area: 2 / span 6; }
+    .main-content, .mission-statement {
+        width: 100%;
+    }
 }

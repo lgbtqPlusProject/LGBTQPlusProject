@@ -9,6 +9,33 @@ document.getElementById('landing').addEventListener('click', () => {
     });
 }); // <-- Closed the missing bracket here
 
+window.onload = function() {
+    var navbar = document.getElementById("navbar");
+    var landingSection = document.getElementById("landing");
+    var contentSection = document.getElementById("content");
+
+    // Function to check if the landing section is in view
+    function checkSectionVisibility() {
+        if (isElementInViewport(landingSection)) {
+            navbar.style.display = "none"; // Hide navbar on landing section
+        } else if (isElementInViewport(contentSection)) {
+            navbar.style.display = "block"; // Show navbar on content section
+        }
+    }
+
+    // Check if element is in viewport
+    function isElementInViewport(el) {
+        var rect = el.getBoundingClientRect();
+        return (rect.top >= 0 && rect.bottom <= window.innerHeight);
+    }
+
+    // Monitor scrolling
+    window.addEventListener("scroll", checkSectionVisibility);
+
+    // Initial check
+    checkSectionVisibility();
+};
+
 document.addEventListener("DOMContentLoaded", function() {
     setTimeout(() => {
         document.getElementById("announcement").classList.add("show");
@@ -22,7 +49,7 @@ function closeAnnouncement() {
         box.style.visibility = "hidden";
     }, 1500); // Matches fade-out time
 }
-    
+
 // Function that will be triggered when the button is clicked
 async function searchDatabase() {
     let query = document.getElementById('searchBox').value.trim();

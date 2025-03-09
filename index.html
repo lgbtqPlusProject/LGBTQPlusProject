@@ -1,43 +1,74 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1.0">
-        <title>LGBTQ+ Project</title>
-        <link rel="stylesheet" href="css/c01.css"/>
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LGBTQ+ Project</title>
+    <!-- Favicon for Browser Tabs -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico"/>
+    <!-- Apple Touch Icon (for iOS Home Screen) -->
+    <link rel="apple-touch-icon" href="images/favicon.ico"/>
+    <!-- Link to CSS -->
+    <link rel="stylesheet" href="css/c01.css"/>
+</head>
+<body>
+    <!-- Announcement Box -->
+    <div id="announcement" class="announcement">
+        <button class="close-btn1" onclick="closeAnnouncement()">✖</button>
+        <p><strong>Coming soon in 2025!</strong></p>
+        <p class="inquiry">
+            For inquiries, email at
+            <a href="mailto: info@lgbtqplusproject.org" style="color: #4DA6FF; text-decoration: none;">
+                info@lgbtqplusproject.org
+            </a>
+        </p>
+    </div>
+
+    <!-- Landing Page with Logo -->
+    <section id="landing" class="page-section">
+        <img src="images/lgbptqprojectLogov3.gif" alt="Logo" id="logo">
+        <div id="scroll-indicator" onclick="showContentPage()">Scroll Down ↓</div>  <!-- Trigger to show content -->
+    </section>
+
+    <!-- Main Content -->
+    <section id="content"> <!-- Initially hidden -->
+        <!-- Navbar should appear only in content page -->
+        <nav id="navbar">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="new-section.html">New Section</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
         
-        <!-- Announcement Box -->
-        <div id="announcement" class="announcement">
-            <button class="close-btn1" onclick="closeAnnouncement()">✖</button>
-            <p><strong>Coming soon in 2025!</strong></p>
-            <p class="inquiry">
-                For inquiries, email at
-                <a href="mailto: info@lgbtqplusproject.org" style="color: #4DA6FF; text-decoration: none;">
-                    info@lgbtqplusproject.org
-                </a>
+        <div class="header">
+            <h1>LGBTQ+ Historical Figure Archives</h1>
+            <br><br>
+            <input type="text" id="searchBox" placeholder="Search LGBTQ+ Figures..." />
+            <br><br>
+            <button onclick="searchDatabase()">Search</button>
+        </div>
+        
+        <!-- Mission Statement -->
+        <div class="mission-statement">
+            <h2>Our Mission</h2>
+            <p>
+                The LGBTQ+ Project is dedicated to safeguarding and celebrating our rich history.
+                As a digital repository, we preserve artifacts, stories, and pivotal moments
+                from our past to keep LGBTQ+ history accessible for future generations.
             </p>
         </div>
 
-        <!-- Landing Page with Logo -->
-        <section id="landing">
-            <img src="images/lgbptqprojectLogov3.gif" alt="Logo" id="logo">
-            <div id="scroll-indicator">Scroll Down ↓</div>
-        </section>
+        <!-- Search Results Box -->
+        <div id="searchResultsBox" class="search-box">
+            <button class="close-btn2" onclick="closeSearchBox()">×</button>
+            <div id="searchResultsContainer"></div>
+        </div>
 
-            <!-- Main Content -->
-            <section id="content">
-                <h1>UNDER CONSTRUCTION</h1>
-                <input type="text" id="searchBox" placeholder="Search LGBTQ+ Figures..." />
-                <button onclick="searchDatabase()">Search</button>
+        <div id="scroll-indicator2">Scroll Down ↓</div>
+    </section>
 
-                <!-- Search Results Box -->
-                <div id="searchResultsBox" class="search-box">
-                    <button class="close-btn2" onclick="closeSearchBox()">×</button>
-                    <div id="searchResultsContainer"></div>  <!-- This is where the results will appear -->
-                </div>
-            </section>
-        <script src="script.js"></script>
-    </body>
+    <script src="script.js"></script>
+</body>
 </html>
