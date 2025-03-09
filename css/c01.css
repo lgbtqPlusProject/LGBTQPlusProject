@@ -44,21 +44,35 @@ body {
 
 }
 
-/* Close button for announcement */
+/* Close button for the search results box */
 .close-btn1 {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    z-index: 1002; /* Ensure it's above the announcement box */
+    background-color: black; /* Red background for visibility */
+    color: white;  /* White text */
+    border: whitesmoke;  /* Remove default border */
+    border-radius: 50%;  /* Circular button */
+    width: 30px;  /* Set the width */
+    height: 30px;  /* Set the height */
+    font-size: 20px;  /* Font size for the '×' */
+    font-weight: bold;  /* Make the '×' bold */
+    cursor: pointer;  /* Change cursor to pointer */
+    position: absolute;  /* Position it in the top-right corner */
+    top: 10px;  /* Space from the top */
+    right: 10px;  /* Space from the right */
+    padding: 0;  /* Remove padding */
+    text-align: center;  /* Center the text */
+    z-index: 1002; /* Ensure it's above the search results box */
 }
 
+/* Hover effect */
 .close-btn1:hover {
-    color: black;
+    background-color: #e60000;  /* Darker red on hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Add a small shadow on hover */
+}
+
+/* Focus effect */
+.close-btn1:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 5px rgba(255, 0, 0, 0.7); /* Red glow on focus */
 }
 
 /* Search Results Box */
@@ -82,15 +96,60 @@ body {
     display: block;
 }
 
-/* Close button for search results box */
-#searchResultsBox .close-btn {
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    position: absolute;
-    top: 10px;
-    right: 15px;
+/* Style the Search button */
+button[onclick="searchDatabase()"] {
+    background-color: black; /* black background */
+    color: white; /* White text */
+    border: none; /* Remove default border */
+    padding: 10px 20px; /* Add padding */
+    font-size: 14px; /* Text size */
+    font-weight: bold; /* Make text bold */
+    border-radius: 20px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    transition: background-color 0.3s ease; /* Smooth background color transition */
+    text-transform: uppercase; /* Capitalize text */
+}
+
+/* Hover effect */
+button[onclick="searchDatabase()"]:hover {
+    background-color: lightgray; /* Slightly darker green when hovered */
+}
+
+/* Focus effect */
+button[onclick="searchDatabase()"]:focus {
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 5px gray; /* Add a green shadow on focus */
+}
+
+/* Close button for the search results box */
+.close-btn2 {
+    background-color: #ff4d4d; /* Red background for visibility */
+    color: white;  /* White text */
+    border: none;  /* Remove default border */
+    border-radius: 50%;  /* Circular button */
+    width: 30px;  /* Set the width */
+    height: 30px;  /* Set the height */
+    font-size: 20px;  /* Font size for the '×' */
+    font-weight: bold;  /* Make the '×' bold */
+    cursor: pointer;  /* Change cursor to pointer */
+    position: absolute;  /* Position it in the top-right corner */
+    top: 10px;  /* Space from the top */
+    right: 10px;  /* Space from the right */
+    padding: 0;  /* Remove padding */
+    text-align: center;  /* Center the text */
+    z-index: 1002; /* Ensure it's above the search results box */
+}
+
+/* Hover effect */
+.close-btn2:hover {
+    background-color: #e60000;  /* Darker red on hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Add a small shadow on hover */
+}
+
+/* Focus effect */
+.close-btn2:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 5px rgba(255, 0, 0, 0.7); /* Red glow on focus */
 }
 
 /* Search Results Container */
@@ -145,6 +204,23 @@ body {
     animation: bounce 1.5s infinite;
 }
 
+/* Main content area */
+#content {
+    background-image: url('css/images/historicalFigures.gif'); /* Add the path to your image */
+    background-size: cover;  /* Make sure the image covers the entire container */
+    background-position: center center; /* Center the image */
+    background-attachment: fixed;  /* Make the background fixed when scrolling */
+    height: 100vh; /* Full viewport height */
+    color: black; /* Text color for better contrast */
+    padding: 20px; /* Adjust padding as needed */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
 #scroll-indicator2 {
     position: absolute;
     bottom: 20px;
@@ -180,36 +256,110 @@ body {
     justify-content: center; /* Center the links */
 }
 
-/* Navbar Item Styling */
-#navbar ul li {
-    margin: 0 20px; /* Space between links */
-}
-
-/* Navbar Link Styling */
-#navbar ul li a {
+/* Style for the <a> links */
+nav ul li a {
     text-decoration: none;
-    color: white; /* White text */
-    font-size: 1rem;
-    padding: 10px 15px;
-    display: block;
-    transition: background-color 0.3s ease; /* Smooth hover transition */
+    font-size: 1em;
+    color: white;
+    padding: 10px;
+    text-transform: uppercase;
+    display: inline-block;
+    cursor: pointer;
 }
 
-/* Navbar Link Hover Effect */
-#navbar ul li a:hover {
-    background-color: lightgray; /* Change background color on hover */
-    border-radius: 5px; /* Rounded corners on hover */
+/* Style for the button to look like a link */
+nav ul li button {
+    background: none;
+    font-family: "Josefin Sans Regular", Courier, monospace;
+    border: none;
+    font-size: 1em;
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: inline-block;
 }
 
-/* Responsive Navbar for Smaller Screens */
-@media (max-width: 768px) {
-    #navbar ul {
-        flex-direction: column; /* Stack links vertically */
-    }
+/* Hover effect for both links and the button */
+nav ul li a:hover, nav ul li button:hover {
+    color: #ccc; /* Change the hover color */
+}
 
-    #navbar ul li {
-        margin: 10px 0; /* Space between stacked links */
-    }
+/* Focus styles */
+nav ul li button:focus, nav ul li a:focus {
+    outline: none;
+}
+
+/* Pop-up form styling */
+.contact-form {
+    display: none;  /* Hide the form by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    justify-content: center;
+    align-items: center;
+}
+
+.form-container {
+    background-color: white;
+    padding: 20px;
+    border-color: black;
+    border-radius: 8px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin: 5px 0;
+}
+
+form input, form textarea {
+    margin-bottom: 10px;
+    padding: 8px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+}
+
+form button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+form button:hover {
+    background-color: black;
+}
+
+/* Close button for the contact form */
+.contact-form .close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1002; /* Ensure it's above the form */
+}
+
+/* Hover effect for close button */
+.contact-form .close-btn:hover {
+    color: #e60000;  /* Change color on hover */
 }
 
 
@@ -243,11 +393,21 @@ body {
     flex-direction: column;
 }
 
+
 .header {
     display: center;
     justify-content: center;  /* Center elements vertically in the header */
     align-items: center;      /* Center elements horizontally in the header */
     text-align: center;
+}
+
+.button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 20px;
 }
 
 /* Mission Statement at the Bottom of the Content Page */
