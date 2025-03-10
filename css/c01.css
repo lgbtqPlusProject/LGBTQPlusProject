@@ -96,6 +96,9 @@ body {
     display: block;
 }
 
+button[onclick="searchDatabase()"] {
+    margin-bottom: 20px; /* Adds 20px space below the button */
+}
 /* Style the Search button */
 button[onclick="searchDatabase()"] {
     background-color: black; /* black background */
@@ -204,21 +207,47 @@ button[onclick="searchDatabase()"]:focus {
     animation: bounce 1.5s infinite;
 }
 
-/* Main content area */
+/* Content Section Background */
 #content {
-    background-image: url('css/images/historicalFigures.gif'); /* Add the path to your image */
-    background-size: cover;  /* Make sure the image covers the entire container */
-    background-position: center center; /* Center the image */
-    background-attachment: fixed;  /* Make the background fixed when scrolling */
-    height: 100vh; /* Full viewport height */
-    color: black; /* Text color for better contrast */
-    padding: 20px; /* Adjust padding as needed */
+    position: relative;  /* Allows positioning of child elements */
+    background-repeat: no-repeat;
+    padding: 20px;
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
 }
 
+.rounded-background {
+    pad-top: 20px;
+    padding-bottom 20px;
+    width: 800px;                /* Width of the circle */
+    height: 800px;               /* Height of the circle (same as width for a perfect circle) */
+    background-image: url('../images/historicalfigures.gif');
+    background-size: cover;       /* Ensures the image covers the entire circle */
+    background-position: center;  /* Centers the image */
+    background-repeat: no-repeat;  /* Prevents the image from repeating */
+    border-radius: 20%;           /* Makes the div a circle */
+    margin: 0 auto;               /* Centers the circle horizontally */
+}
+
+/* Ensure the navbar is visible over the background */
+#navbar {
+    position: relative;  /* Keeps navbar on top of the background */
+    z-index: 10;
+}
+
+/* Ensure the search container is visible over the background */
+.header {
+    position: relative;
+    z-index: 10;
+}
+
+/* Mission statement visibility */
+.mission-statement {
+    position: relative;
+    z-index: 10;
+}
 
 
 #scroll-indicator2 {
@@ -419,7 +448,7 @@ form button:hover {
     font-size: 14px;
     width: 100%;  /* Full width of the content */
     text-align: center;
-    margin-top: auto;  /* This pushes the mission statement to the bottom */
+    margin-top: 50px;  /* This pushes the mission statement to the bottom */
 }
 
 /* Mobile-responsive adjustments */
