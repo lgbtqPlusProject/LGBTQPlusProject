@@ -5,6 +5,10 @@
     box-sizing: border-box;
 }
 
+h1 {
+    font-family: 'Bangers', cursive; /* 'cursive' is a fallback font if 'Street Graffiti' is not available */
+}
+
 /* Body */
 body {
     font-family: "Josefin Sans Regular", Courier, monospace;
@@ -46,9 +50,9 @@ body {
 
 /* Close button for the search results box */
 .close-btn1 {
-    background-color: black; /* Red background for visibility */
+    background-color: #ff4d4d; /* Red background for visibility */
     color: white;  /* White text */
-    border: whitesmoke;  /* Remove default border */
+    border: none;  /* Remove default border */
     border-radius: 50%;  /* Circular button */
     width: 30px;  /* Set the width */
     height: 30px;  /* Set the height */
@@ -102,14 +106,15 @@ button[onclick="searchDatabase()"] {
 /* Style the Search button */
 button[onclick="searchDatabase()"] {
     background-color: black; /* black background */
+    hover: lightgray; 
     color: white; /* White text */
     border: none; /* Remove default border */
-    padding: 10px 20px; /* Add padding */
-    font-size: 14px; /* Text size */
+    padding: 10px 10px; /* Add padding */
+    font-size: 12px; /* Text size */
     font-weight: bold; /* Make text bold */
-    border-radius: 20px; /* Rounded corners */
+    border-radius: 15px; /* Rounded corners */
     cursor: pointer; /* Change cursor to pointer on hover */
-    transition: background-color 0.3s ease; /* Smooth background color transition */
+    transition: background-color 0.25s ease; /* Smooth background color transition */
     text-transform: uppercase; /* Capitalize text */
 }
 
@@ -207,6 +212,35 @@ button[onclick="searchDatabase()"]:focus {
     animation: bounce 1.5s infinite;
 }
 
+.header {
+    position: relative;
+    display: inline-block;
+}
+
+/* Style the image */
+.background-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 10px; /* Smooth edges */
+}
+
+/* Style the title */
+.image-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 3rem;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Cool shadow effect */
+    font-family: "Sprite Graffiti", "Josefin Sans", Courier, sans-serif;
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, 0.5); /* Slightly dark background */
+    border-radius: 10px;
+}
+
+
 /* Content Section Background */
 #content {
     position: relative;  /* Allows positioning of child elements */
@@ -221,9 +255,9 @@ button[onclick="searchDatabase()"]:focus {
 .rounded-background {
     pad-top: 20px;
     padding-bottom 20px;
-    width: 800px;                /* Width of the circle */
-    height: 800px;               /* Height of the circle (same as width for a perfect circle) */
-    background-image: url('../images/historicalfigures.gif');
+    width:  1000px;                /* Width of the circle */
+    height: 1000px;               /* Height of the circle (same as width for a perfect circle) */
+    background-image: url('../images/swr01.gif');
     background-size: cover;       /* Ensures the image covers the entire circle */
     background-position: center;  /* Centers the image */
     background-repeat: no-repeat;  /* Prevents the image from repeating */
@@ -331,6 +365,7 @@ nav ul li button:focus, nav ul li a:focus {
     background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
     justify-content: center;
     align-items: center;
+    z-index: 9999;
 }
 
 .form-container {
@@ -372,23 +407,25 @@ form button:hover {
     background-color: black;
 }
 
-/* Close button for the contact form */
-.contact-form .close-btn {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 1002; /* Ensure it's above the form */
+/* Style for the close button */
+.close-btn1 {
+    background-color: black; /* Black background */
+    color: white; /* White text color */
+    border: none; /* Remove border */
+    font-size: 1.5em; /* Make the × symbol bigger */
+    width: 40px; /* Fixed width */
+    height: 40px; /* Fixed height */
+    display: flex; /* Flexbox to center the content */
+    align-items: center; /* Vertically center the text */
+    justify-content: center; /* Horizontally center the text */
+    border-radius: 50%; /* Round the button */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    transition: background-color 0.3s ease; /* Smooth background color transition */
 }
 
-/* Hover effect for close button */
-.contact-form .close-btn:hover {
-    color: #e60000;  /* Change color on hover */
+/* Hover effect for the close button */
+.close-btn1:hover {
+    background-color: lightgray; /* Darker gray on hover */
 }
 
 
@@ -438,6 +475,179 @@ form button:hover {
     cursor: pointer;
     border-radius: 20px;
 }
+
+/* Modern and cool design for the search box */
+#searchBox {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px 25px;
+    margin: 20px auto;
+    font-size: 18px;
+    border-radius: 30px;
+    border: 2px solid black;
+    background-color: #fafafa;
+    color: #333;
+    transition: all 0.4s ease-in-out, box-shadow 0.3s ease;
+    outline: none;
+    position: relative;
+}
+
+/* Hover effect */
+#searchBox:hover {
+    border-color: pink;
+    background-color: #fff;
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 128, 0, 0.3);
+}
+
+/* Focus effect */
+#searchBox:focus {
+    border-color: #4caf50;
+    background-color: #fff;
+    transform: scale(1.05);
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Placeholder styling */
+#searchBox::placeholder {
+    color: #aaa;
+    font-size: 16px;
+    font-style: italic;
+}
+
+/* Ripple effect on input click */
+#searchBox:focus::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 250%;
+    height: 250%;
+    background: rgba(76, 175, 80, 0.2);
+    border-radius: 50%;
+    animation: ripple 0.10s linear;
+    transform: translate(-50%, -50%);
+}
+
+/* Ripple animation */
+@keyframes ripple {
+    0% {
+        width: 0;
+        height: 0;
+    }
+    100% {
+        width: 250%;
+        height: 250%;
+        opacity: 0;
+    }
+}
+
+
+/* Style for the search results container */
+#searchResultsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Space between results */
+    padding: 20px;
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff; /* White background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards; /* Fade-in effect */
+}
+
+/* Individual search result card styling */
+.search-result-card {
+    background-color: #f9f9f9; /* Light gray background */
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Slight shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+/* Hover effect for individual results */
+.search-result-card:hover {
+    transform: translateY(-5px); /* Slight lift effect */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+}
+
+/* Styling for titles inside results */
+.search-result-card h3 {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #333; /* Dark gray color */
+    margin-bottom: 10px;
+}
+
+/* Styling for paragraphs inside results */
+.search-result-card p {
+    font-size: 1em;
+    color: #666; /* Light gray text */
+    margin: 5px 0;
+}
+
+/* Animation for fade-in */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Style for the close button */
+.close-btn2 {
+    background-color: black; /* Black background */
+    color: white; /* White text color */
+    border: none; /* Remove border */
+    font-size: 1.5em; /* Make the × symbol bigger */
+    width: 40px; /* Fixed width */
+    height: 40px; /* Fixed height */
+    display: flex; /* Flexbox to center the content */
+    align-items: center; /* Vertically center the text */
+    justify-content: center; /* Horizontally center the text */
+    border-radius: 50%; /* Round the button */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+/* Hover effect for the close button */
+.close-btn2:hover {
+    background-color: #666; /* Darker gray on hover */
+}
+
+#searchResultsContainer {
+    background-color: white;  /* Background color for the results */
+    padding: 20px;            /* Padding for inner spacing */
+    border-radius: 8px;       /* Rounded corners for the results box */
+    max-height: 400px;        /* Set a maximum height for the container */
+    overflow-y: auto;         /* Allow vertical scrolling when content exceeds height */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  /* Shadow for a more modern look */
+    margin-top: 20px;         /* Space above the results box */
+}
+
+#searchResultsContainer div {
+    margin-bottom: 15px; /* Spacing between each result */
+    border-bottom: 1px solid #ddd; /* Light border to separate results */
+    padding-bottom: 10px;  /* Padding below each result */
+}
+
+#searchResultsContainer h3 {
+    font-size: 1.2em;  /* Adjust font size for the names */
+    margin-bottom: 5px; /* Space below the name */
+}
+
+#searchResultsContainer p {
+    font-size: 0.95em;  /* Adjust font size for the details */
+    color: #555;        /* Light gray color for the text */
+}
+
+
 
 /* Mission Statement at the Bottom of the Content Page */
 .mission-statement {

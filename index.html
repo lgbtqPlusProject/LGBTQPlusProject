@@ -48,7 +48,7 @@
         <!-- Contact Form (Pop-up) -->
         <div id="contactForm" class="contact-form" style="display:none;">
             <div class="form-container">
-                <h2>Contact Us</h2>
+                <h2>Tell Us Your Story</h2>
                 <form id="contactFormContent" action="https://formspree.io/f/mgvawgvn" method="POST">
                     <label for="name">Your Name:</label>
                     <input type="text" id="name" name="name" required>
@@ -56,23 +56,21 @@
                     <label for="email">Your Email:</label>
                     <input type="email" id="email" name="email" required>
                     
-                    <label for="message">Your Message:</label>
+                    <label for="message">Tell Us Your Story:</label>
                     <textarea id="message" name="message" required></textarea>
                     
                     <button type="submit">Send</button>
                 </form>
                 <!-- Success Message (Initially Hidden) -->
                 <p id="successMessage" style="display:none; color: green;">✅ Thank you! Your message has been sent.</p>
-                <button type="button" onclick="closeForm()">x</button>
+                <button type="close-btn1" onclick="closeForm()">X</button>
             </div>
         </div>
         
         <div class="header">
             <br></br>
-            <h1>LGBTQ+ Historical Figure Archives</h1>
-            <br><br>
+            <img src="images/historicalFiguresTitle.gif" alt="Background Image" class="background-image">
             <input type="text" id="searchBox" placeholder="Search LGBTQ+ Figures..." />
-            <br><br>
             <button onclick="searchDatabase()">Search</button>
         </div>
         <div class="rounded-background"></div>
@@ -88,7 +86,7 @@
 
         <!-- Search Results Box -->
         <div id="searchResultsBox" class="search-box">
-            <button class="close-btn2" onclick="closeSearchBox()">×</button>
+            <button class="close-btn2" onclick="closeSearchBox()">X</button>
             <div id="searchResultsContainer"></div>
         </div>
     </section>
