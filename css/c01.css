@@ -502,7 +502,7 @@ form button:hover {
 
 /* Focus effect */
 #searchBox:focus {
-    border-color: #4caf50;
+    border-color: black;
     background-color: #fff;
     transform: scale(1.05);
     box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
@@ -651,7 +651,8 @@ form button:hover {
 
 /* Mission Statement at the Bottom of the Content Page */
 .mission-statement {
-    background-color: #f4f4f4;  /* Optional background color */
+    background-color: black;  /* Optional background color */
+    color: white;
     padding: 20px;
     box-sizing: border-box;
     border-radius: 10px;
@@ -659,6 +660,33 @@ form button:hover {
     width: 100%;  /* Full width of the content */
     text-align: center;
     margin-top: 50px;  /* This pushes the mission statement to the bottom */
+}
+
+/* Full-Page About Section */
+.full-page-section {
+    width: 100%;
+    height: 100vh; /* Full viewport height */
+    background-color: #e3e1dc; /* The background color you requested */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-content {
+    text-align: center;
+    max-width: 800px; /* Optional: limits the content width */
+}
+
+.about-content h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.about-content p {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
 }
 
 /* Mobile-responsive adjustments */
