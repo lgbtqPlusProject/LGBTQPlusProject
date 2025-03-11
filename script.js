@@ -7,35 +7,65 @@ document.getElementById('landing').addEventListener('click', () => {
         top: window.innerHeight,
         behavior: 'smooth'
     });
-}); // <-- Closed the missing bracket here
+});
 
-window.onload = function() {
-    var navbar = document.getElementById("navbar");
-    var landingSection = document.getElementById("landing");
-    var contentSection = document.getElementById("content");
 
-    // Function to check if the landing section is in view
-    function checkSectionVisibility() {
-        if (isElementInViewport(landingSection)) {
-            navbar.style.display = "none"; // Hide navbar on landing section
-        } else if (isElementInViewport(contentSection)) {
-            navbar.style.display = "block"; // Show navbar on content section
-        }
-    }
+// Select the navbar and sections
+const navbar = document.getElementById('navbar');
+const contentSection = document.getElementById('content');
+const aboutSection = document.getElementById('about');
 
-    // Check if element is in viewport
-    function isElementInViewport(el) {
-        var rect = el.getBoundingClientRect();
-        return (rect.top >= 0 && rect.bottom <= window.innerHeight);
-    }
+// Function to toggle navbar visibility based on scroll position
+function toggleNavbar() {
+  const scrollPosition = window.scrollY;
 
-    // Monitor scrolling
-    window.addEventListener("scroll", checkSectionVisibility);
+  // Get the offsetTop and height of the content and about sections
+  const contentTop = contentSection.offsetTop;
+  const contentHeight = contentSection.offsetHeight;
+  const aboutTop = aboutSection.offsetTop;
+  const aboutHeight = aboutSection.offsetHeight;
 
-    // Initial check
-    checkSectionVisibility();
-};
+  // Show navbar if within the content or about sections
+  if (
+    (scrollPosition >= contentTop && scrollPosition <= contentTop + contentHeight) ||
+    (scrollPosition >= aboutTop && scrollPosition <= aboutTop + aboutHeight)
+  ) {
+    navbar.style.display = 'block'; // Show navbar
+    contentSection.classList.add('navbar-visible'); // Push content down
+  } else {
+    navbar.style.display = 'none'; // Hide navbar
+    contentSection.classList.remove('navbar-visible'); // Reset margin
+  }
+}
 
+// Add event listener to trigger on scroll
+window.addEventListener('scroll', toggleNavbar);
+
+// Call the function initially to handle page load case
+toggleNavbar();
+
+// Add event listener to trigger on scroll
+window.addEventListener('scroll', toggleNavbar);
+
+// Call the function initially to handle page load case
+toggleNavbar();
+
+// Add event listener to trigger on scroll
+window.addEventListener('scroll', toggleNavbar);
+
+// Call the function initially to handle page load case
+toggleNavbar();
+
+// Create an IntersectionObserver instance
+const observer = new IntersectionObserver(handleIntersection, observerOptions);
+
+// Observe the content and about sections
+observer.observe(document.getElementById('content'));
+observer.observe(document.getElementById('about'));
+
+
+
+//Announcement
 document.addEventListener("DOMContentLoaded", function() {
     setTimeout(() => {
         document.getElementById("announcement").classList.add("show");

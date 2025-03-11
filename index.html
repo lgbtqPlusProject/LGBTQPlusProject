@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,28 +23,25 @@
             </a>
         </p>
     </div>
-
+    
+    <!-- Navbar (Initially Hidden) -->
+    <nav id="navbar" style="display: none;">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="new-section.html">Coming Soon</a></li>
+            <li><a href="#about">About</a></li>
+            <li><button id="contactBtn">Contact Us</button></li>
+        </ul>
+    </nav>
+    
     <!-- Landing Page with Logo -->
     <section id="landing" class="page-section">
         <img src="images/lgbptqprojectLogov3.gif" alt="Logo" id="logo">
         <div id="scroll-indicator" onclick="showContentPage()">Scroll Down ↓</div>  <!-- Trigger to show content -->
     </section>
-
+    
     <!-- Main Content -->
     <section id="content"> <!-- Initially hidden -->
-        <!-- New Image -->
-        <!-- Navbar should appear only in content page -->
-        <nav id="navbar">
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="new-section.html">Coming Soon</a></li>
-                <li><a href="#about">About</a></li>
-                <li>
-                    <button id="contactBtn">Contact Us</button>
-                </li>
-            </ul>
-        </nav>
-        
         <!-- Contact Form (Pop-up) -->
         <div id="contactForm" class="contact-form" style="display:none;">
             <div class="form-container">
@@ -63,12 +60,11 @@
                 </form>
                 <!-- Success Message (Initially Hidden) -->
                 <p id="successMessage" style="display:none; color: green;">✅ Thank you! Your message has been sent.</p>
-                <button type="close-btn1" onclick="closeForm()">X</button>
+                <button type="button" onclick="closeForm()">X</button>
             </div>
         </div>
         
         <div class="header">
-            <br></br>
             <img src="images/historicalFiguresTitle.gif" alt="Background Image" class="background-image">
             <input type="text" id="searchBox" placeholder="Search LGBTQ+ Figures..." />
             <button onclick="searchDatabase()">Search</button>
@@ -94,15 +90,9 @@
     <!-- About Section -->
     <section id="about" class="full-page-section">
         <div class="about-content">
-            <h1>About Us</h1>
-            <p>
-                The LGBTQ+ Project is dedicated to safeguarding and celebrating our rich history.
-                As a digital repository, we preserve artifacts, stories, and pivotal moments from our past
-                to keep LGBTQ+ history accessible for future generations.
-            </p>
+            <img src="images/aboutUsBlurb.gif" alt="Background Image About Us" class="background-image2">
         </div>
     </section>
-    
     
     <script src="script.js"></script>
 </body>

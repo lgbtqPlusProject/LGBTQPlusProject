@@ -9,6 +9,10 @@ h1 {
     font-family: 'Bangers', cursive; /* 'cursive' is a fallback font if 'Street Graffiti' is not available */
 }
 
+.hidden {
+    display: none;
+}
+
 /* Body */
 body {
     font-family: "Josefin Sans Regular", Courier, monospace;
@@ -265,16 +269,32 @@ button[onclick="searchDatabase()"]:focus {
     margin: 0 auto;               /* Centers the circle horizontally */
 }
 
-/* Ensure the navbar is visible over the background */
+/* Ensure the navbar is fixed at the top */
 #navbar {
-    position: relative;  /* Keeps navbar on top of the background */
-    z-index: 10;
+  display: none; /* Initially hidden */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff; /* Customize the background */
+  z-index: 10; /* Ensure it stays on top */
+  padding: 10px 0; /* Add some padding for the navbar */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: add shadow for visibility */
 }
 
-/* Ensure the search container is visible over the background */
-.header {
-    position: relative;
-    z-index: 10;
+/* Initially, the content doesn't need extra margin */
+#content {
+  padding: 20px;
+}
+
+/* When navbar is visible, push the content down */
+#content.navbar-visible {
+  margin-top: 80px; /* Adjust this value to match the navbar's height */
+}
+
+/* Optional: Add some styling to the h1 */
+#content h1 {
+  margin-top: 0; /* Remove any top margin */
 }
 
 /* Mission statement visibility */
