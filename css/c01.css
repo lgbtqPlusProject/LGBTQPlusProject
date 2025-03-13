@@ -269,6 +269,17 @@ button[onclick="searchDatabase()"]:focus {
     margin: 0 auto;               /* Centers the circle horizontally */
 }
 
+.about-content {
+    pad-top: 20px;
+    padding-bottom 20px;
+    width:  570px;
+    height: 500px;
+    background-size: cover;
+    background-position: center;  /* Centers the image */
+    background-repeat: no-repeat;  /* Prevents the image from repeating */
+    background-image: url('../images/aboutUsBlurb.gif');
+}
+
 /* Ensure the navbar is fixed at the top */
 #navbar {
   display: none; /* Initially hidden */
