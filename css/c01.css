@@ -285,6 +285,7 @@ button[onclick="searchDatabase()"]:focus {
 /* Initially, the content doesn't need extra margin */
 #content {
   padding: 20px;
+  transition: margin-top 0.3s ease; /* Smooth transition for margin-top */
 }
 
 /* When navbar is visible, push the content down */
