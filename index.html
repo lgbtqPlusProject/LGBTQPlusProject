@@ -88,7 +88,12 @@
     <!-- About Section -->
     <section id="about" class="full-page-section">
         <div class="about-content">
-            <h1></h1>
+            <h1>Wayback Machine Search</h1>
+                <input type="text" id="urlInput" placeholder="Enter URL (e.g., https://lgbtqhistory.org)" />
+                <input type="text" id="dateInput" placeholder="Enter Date (YYYYMMDD)" />
+                <button onclick="fetchSnapshot()">Search Snapshot</button>
+
+                <div id="result"></div>
         </div>
     </section>
     

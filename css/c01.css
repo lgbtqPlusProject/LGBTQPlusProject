@@ -277,7 +277,6 @@ button[onclick="searchDatabase()"]:focus {
     background-size: cover;
     background-position: center;  /* Centers the image */
     background-repeat: no-repeat;  /* Prevents the image from repeating */
-    background-image: url('../images/aboutUsBlurb.gif');
 }
 
 /* Ensure the navbar is fixed at the top */
@@ -719,6 +718,36 @@ form button:hover {
     line-height: 1.6;
     margin-bottom: 40px;
 }
+
+
+
+/*TimeMachine API*/
+
+input {
+    padding: 10px;
+    margin: 5px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #45a049;
+}
+iframe {
+    margin-top: 20px;
+    width: 100%;
+    height: 500px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 /* Mobile-responsive adjustments */

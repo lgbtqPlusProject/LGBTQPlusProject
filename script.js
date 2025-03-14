@@ -198,3 +198,51 @@ document.getElementById('searchButton').addEventListener('click', searchDatabase
 function closeSearchBox() {
     document.getElementById('searchResultsBox').classList.remove('show');  // Hide the pop-up
 }
+
+
+//TimeMachine API
+async function fetchSnapshot() {
+            const url = document.getElementById('urlInput').value;
+            const date = document.getElementById('dateInput').value;
+
+            if (!url) {
+                alert('Please enter a URL.');
+                return;
+            }
+
+            const apiUrl = `https://archive.org/wayback/available?url=${encodeURIComponent(url)}&timestamp=${date}`;
+
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (data.archived_snapshots?.closest?.url) {
+                    const snapshotUrl = data.archived_snapshots.closest.url;
+                    document.getElementById('result').innerHTML = `<iframe src="${snapshotUrl}"></iframe>`;
+
+                    // Save to database
+                    saveSnapshot(url, date, snapshotUrl);
+                } else {
+                    document.getElementById('result').innerHTML = 'No snapshot available for this URL and date.';
+                }
+            } catch (error) {
+                console.error('Error fetching snapshot:', error);
+                alert('An error occurred while fetching the snapshot. Please try again.');
+            }
+        }
+
+        function saveSnapshot(url, date, snapshotUrl) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'save_snapshot.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            const params = `url=${encodeURIComponent(url)}&date=${encodeURIComponent(date)}&snapshotUrl=${encodeURIComponent(snapshotUrl)}`;
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    alert('Snapshot saved successfully!');
+                }
+            };
+
+            xhr.send(params);
+        }
