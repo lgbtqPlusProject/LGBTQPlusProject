@@ -1,7 +1,9 @@
+// Window onLoad
 window.onload = function() {
     document.getElementById('announcement').classList.add('show');
 };
 
+// Landing Scroll
 document.getElementById('landing').addEventListener('click', () => {
     window.scrollTo({
         top: window.innerHeight,
@@ -9,67 +11,38 @@ document.getElementById('landing').addEventListener('click', () => {
     });
 });
 
-
-// Select the navbar and sections
+// Navbar Scroll Handling
 const navbar = document.getElementById('navbar');
 const contentSection = document.getElementById('content');
 const aboutSection = document.getElementById('about');
 
-// Function to toggle navbar visibility based on scroll position
 function toggleNavbar() {
   const scrollPosition = window.scrollY;
-
-  // Get the offsetTop and height of the content and about sections
   const contentTop = contentSection.offsetTop;
   const contentHeight = contentSection.offsetHeight;
   const aboutTop = aboutSection.offsetTop;
   const aboutHeight = aboutSection.offsetHeight;
 
-  // Show navbar if within the content or about sections
   if (
     (scrollPosition >= contentTop && scrollPosition <= contentTop + contentHeight) ||
     (scrollPosition >= aboutTop && scrollPosition <= aboutTop + aboutHeight)
   ) {
-    navbar.style.display = 'block'; // Show navbar
-    contentSection.classList.add('navbar-visible'); // Push content down
+    navbar.style.display = 'block';
+    contentSection.classList.add('navbar-visible');
   } else {
-    navbar.style.display = 'none'; // Hide navbar
-    contentSection.classList.remove('navbar-visible'); // Reset margin
+    navbar.style.display = 'none';
+    contentSection.classList.remove('navbar-visible');
   }
 }
 
-// Add event listener to trigger on scroll
 window.addEventListener('scroll', toggleNavbar);
+toggleNavbar();  // Call on page load
 
-// Call the function initially to handle page load case
-toggleNavbar();
-
-// Add event listener to trigger on scroll
-window.addEventListener('scroll', toggleNavbar);
-
-// Call the function initially to handle page load case
-toggleNavbar();
-
-// Add event listener to trigger on scroll
-window.addEventListener('scroll', toggleNavbar);
-
-// Call the function initially to handle page load case
-toggleNavbar();
-
-// Create an IntersectionObserver instance
-const observer = new IntersectionObserver(handleIntersection, observerOptions);
-
-// Observe the content and about sections
-observer.observe(document.getElementById('content'));
-observer.observe(document.getElementById('about'));
-
-
-
-//Announcement
+// Announcement Handling
 document.addEventListener("DOMContentLoaded", function() {
     setTimeout(() => {
         document.getElementById("announcement").classList.add("show");
-    }, 1000); // Delay before fade-in
+    }, 1000);
 });
 
 function closeAnnouncement() {
@@ -77,39 +50,34 @@ function closeAnnouncement() {
     box.style.opacity = "0";
     setTimeout(() => {
         box.style.visibility = "hidden";
-    }, 1500); // Matches fade-out time
+    }, 1500);
 }
 
-
-
+// Contact Form Handling
 document.addEventListener('DOMContentLoaded', function() {
     const contactBtn = document.getElementById('contactBtn');
     const contactForm = document.getElementById('contactForm');
     const contactFormContent = document.getElementById('contactFormContent');
     const successMessage = document.getElementById('successMessage');
 
-    // Open the contact form
     if (contactBtn) {
         contactBtn.addEventListener('click', function() {
             contactForm.style.display = 'flex';
-            successMessage.style.display = 'none'; // Hide success message if open
-            contactFormContent.style.display = 'block'; // Show form again
-            contactFormContent.reset(); // Reset form fields
+            successMessage.style.display = 'none';
+            contactFormContent.style.display = 'block';
+            contactFormContent.reset();
         });
     }
 
-    // Close the contact form and reset everything
     window.closeForm = function() {
         contactForm.style.display = 'none';
-        successMessage.style.display = 'none'; // Hide the success message
-        contactFormContent.style.display = 'block'; // Make sure the form is visible again
-        contactFormContent.reset(); // Clear form fields for a fresh start
+        successMessage.style.display = 'none';
+        contactFormContent.style.display = 'block';
+        contactFormContent.reset();
     };
 
-    // Handle Form Submission with AJAX (To Prevent Page Reload)
     contactFormContent.addEventListener('submit', function(event) {
-        event.preventDefault(); // Stop default form submission
-
+        event.preventDefault();
         const formData = new FormData(contactFormContent);
         
         fetch(contactFormContent.action, {
@@ -119,7 +87,6 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => {
             if (response.ok) {
-                // Hide the form and show the success message
                 contactFormContent.style.display = 'none';
                 successMessage.style.display = 'block';
             } else {
@@ -130,119 +97,98 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-
-document.addEventListener("DOMContentLoaded", function () {
-    // Get the search button by its onclick event
-    let searchButton = document.querySelector("button[onclick='searchDatabase()']");
-
-    if (searchButton) {
-        searchButton.addEventListener("click", searchDatabase);
-    } else {
-        console.error("Search button not found.");
-    }
-});
-
-
-// Function that will be triggered when the button is clicked
+// Search Database Handling
 async function searchDatabase() {
     let query = document.getElementById('searchBox').value.trim();
-    if (query.length < 2) return;  // Prevent very short searches
+    if (query.length < 2) return;
 
     try {
-        if (query && query.trim().length > 0) {
-            let response = await fetch(`https://lgbtqplusproject.onrender.com/search?query=${encodeURIComponent(query)}`);
-            let results = await response.json(); // Ensure this is inside the if block
+        let response = await fetch(`https://lgbtqplusproject.onrender.com/search?query=${encodeURIComponent(query)}`);
+        let results = await response.json();
+        console.log("Search Results:", results);
 
-            // Log the results to verify if data is returned
-            console.log("Search Results:", results);
+        let resultsContainer = document.getElementById('searchResultsContainer');
+        resultsContainer.innerHTML = "";
 
-            let resultsContainer = document.getElementById('searchResultsContainer');
-            resultsContainer.innerHTML = ""; // Clear previous results
-
-            // Function to display results
-            function displayResults(data) {
-                let resultsContainer = document.getElementById("searchResultsContainer");
-                resultsContainer.innerHTML = ""; // Clear previous results
-
-                data.forEach(figure => {
-                    let item = document.createElement("div");
-                    item.innerHTML = `
-                        <h3>${figure.name}</h3>
-                        <p><strong>Born:</strong> ${figure.birth_year}</p>
-                        <p><strong>Death:</strong> ${figure.death_year}</p>
-                        <p><strong>Country:</strong> ${figure.country}</p>
-                        <p><strong>Contribution:</strong> ${figure.contribution}</p>
-                    `;
-                    resultsContainer.appendChild(item);
-                });
-
-                // Show the search results box after results are added
-                document.getElementById('searchResultsBox').classList.add('show');
-            }
-
-            if (results.length > 0) {
-                displayResults(results);
-            } else {
-                resultsContainer.innerHTML = "<p>No results found</p>";
-                document.getElementById('searchResultsBox').classList.add('show');
-            }
+        if (results.length > 0) {
+            results.forEach(figure => {
+                let item = document.createElement("div");
+                item.innerHTML = `
+                    <h3>${figure.name}</h3>
+                    <p><strong>Born:</strong> ${figure.birth_year}</p>
+                    <p><strong>Death:</strong> ${figure.death_year}</p>
+                    <p><strong>Country:</strong> ${figure.country}</p>
+                    <p><strong>Contribution:</strong> ${figure.contribution}</p>
+                `;
+                resultsContainer.appendChild(item);
+            });
+            document.getElementById('searchResultsBox').classList.add('show');
+        } else {
+            resultsContainer.innerHTML = "<p>No results found</p>";
+            document.getElementById('searchResultsBox').classList.add('show');
         }
     } catch (error) {
         console.error("Search error:", error);
     }
 }
 
-// Attach the searchDatabase function to the button click
-document.getElementById('searchButton').addEventListener('click', searchDatabase);
-
 function closeSearchBox() {
     document.getElementById('searchResultsBox').classList.remove('show');  // Hide the pop-up
 }
 
-
-//TimeMachine API
+// TimeMachine API Handling
 async function fetchSnapshot() {
-            const url = document.getElementById('urlInput').value;
-            const date = document.getElementById('dateInput').value;
+    const url = document.getElementById('urlInput').value;
+    const date = document.getElementById('dateInput').value;
 
-            if (!url) {
-                alert('Please enter a URL.');
-                return;
-            }
+    if (!url) {
+        alert('Please enter a URL.');
+        return;
+    }
 
-            const apiUrl = `https://archive.org/wayback/available?url=${encodeURIComponent(url)}&timestamp=${date}`;
+    const apiUrl = `https://archive.org/wayback/available?url=${encodeURIComponent(url)}&timestamp=${date}`;
 
-            try {
-                const response = await fetch(apiUrl);
-                const data = await response.json();
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
 
-                if (data.archived_snapshots?.closest?.url) {
-                    const snapshotUrl = data.archived_snapshots.closest.url;
-                    document.getElementById('result').innerHTML = `<iframe src="${snapshotUrl}"></iframe>`;
-
-                    // Save to database
-                    saveSnapshot(url, date, snapshotUrl);
-                } else {
-                    document.getElementById('result').innerHTML = 'No snapshot available for this URL and date.';
-                }
-            } catch (error) {
-                console.error('Error fetching snapshot:', error);
-                alert('An error occurred while fetching the snapshot. Please try again.');
-            }
+        if (data.archived_snapshots?.closest?.url) {
+            const snapshotUrl = data.archived_snapshots.closest.url;
+            document.getElementById('result').innerHTML = `<iframe src="${snapshotUrl}"></iframe>`;
+            saveSnapshot(url, date, snapshotUrl);
+        } else {
+            document.getElementById('result').innerHTML = 'No snapshot available for this URL and date.';
         }
+    } catch (error) {
+        console.error('Error fetching snapshot:', error);
+        alert('An error occurred while fetching the snapshot. Please try again.');
+    }
+}
 
-        function saveSnapshot(url, date, snapshotUrl) {
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'save_snapshot.php', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+function saveSnapshot(url, date, snapshotUrl) {
+    const data = {
+        url: url,
+        date: date,
+        snapshotUrl: snapshotUrl
+    };
 
-            const params = `url=${encodeURIComponent(url)}&date=${encodeURIComponent(date)}&snapshotUrl=${encodeURIComponent(snapshotUrl)}`;
-
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    alert('Snapshot saved successfully!');
-                }
-            };
-
-            xhr.send(params);
+    fetch('/save-snapshot', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(responseData => {
+        if (responseData.success) {
+            alert('Snapshot saved successfully!');
+        } else {
+            alert('Error saving snapshot');
         }
+    })
+    .catch(error => {
+        console.error('Error saving snapshot:', error);
+        alert('Error saving snapshot');
+    });
+}

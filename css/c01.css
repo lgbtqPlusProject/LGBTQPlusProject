@@ -730,18 +730,9 @@ input {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
-button {
-    padding: 10px 20px;
-    margin-top: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-button:hover {
-    background-color: #45a049;
-}
+
+
+
 iframe {
     margin-top: 20px;
     width: 100%;
