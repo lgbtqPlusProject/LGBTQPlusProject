@@ -135,4 +135,3 @@ async function searchDatabase() {
 function closeSearchBox() {
     document.getElementById('searchResultsBox').classList.remove('show');  // Hide the pop-up
 }
-
