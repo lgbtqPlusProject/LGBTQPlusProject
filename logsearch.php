@@ -28,6 +28,7 @@ if ($conn->connect_error) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the query and results from the POST body (assuming results are passed as JSON)
     $data = json_decode(file_get_contents('php://input'), true);
+    error_log(print_r($data, true));  // Log the data to the error log
     
     // Check if query and results exist
     if (!isset($data['query']) || !isset($data['results'])) {

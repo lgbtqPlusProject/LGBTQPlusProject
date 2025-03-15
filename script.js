@@ -128,8 +128,8 @@ document.getElementById('searchBtn').addEventListener('click', function () {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            query: query,
-            results: items // results from the API
+            query: query,       // Ensure query is a valid string
+            results: items      // Ensure results (from the Archive search) are valid
         })
     })
     .then(response => response.json())
