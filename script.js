@@ -179,7 +179,7 @@ async function searchDatabase(query) {
         return; // Don't search if the query is undefined or too short
     }
 
-    const url = `https://lgbtqplusproject.org/search?query=${encodeURIComponent(query)}`;
+    const url = `https://lgbtqplusproject.onrender.com/search?query=${encodeURIComponent(query)}`;
 
     try {
         const response = await fetch(url, {

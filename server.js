@@ -6,10 +6,12 @@ const app = express();
 // Enable CORS for specific domain
 const cors = require('cors');
 app.use(cors({
-    origin: ['https://www.lgbtqplusproject.org', 'https://lgbtqplusproject.org'],  // Allow both www and non-www versions of the domain
+    origin: 'https://www.lgbtqplusproject.org',  // Allow the frontend domain
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
 }));
+
+
 
 // Allow JSON requests
 app.use(express.json());
@@ -93,7 +95,7 @@ async function logSearch(query) {
     }
 }
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 10000; // Default to port 10000 if no environment variable is provided
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
