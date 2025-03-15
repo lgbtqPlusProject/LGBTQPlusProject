@@ -103,6 +103,24 @@
         <button id="closePopup" class="close-popup-btn">X</button>
         <div id="result"></div>
     </div>
+    
+    <section id="logsSection">
+        <h2>Search Search Query Logs</h2>
+        <input type="text" id="logSearchQuery" placeholder="Search logs by query or timestamp">
+        <button onclick="searchLogs()">Search</button>
+
+        <table id="logTable">
+            <thead>
+                <tr>
+                    <th>Query</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Logs will be injected here -->
+            </tbody>
+        </table>
+    </section>
 
     <script src="script.js"></script>
 </body>

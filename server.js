@@ -68,3 +68,22 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
+
+app.get('/searchLogs', (req, res) => {
+    const searchQuery = req.query.query || ""; // Get search query from URL
+    const sql = `
+        SELECT query, search_time
+        FROM search_logs
+        WHERE query LIKE ? OR search_time LIKE ?
+        ORDER BY timestamp DESC
+        LIMIT 100
+    `;
+    const values = [`%${searchQuery}%`, `%${searchQuery}%`];
+
+    db.query(sql, values, (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: "Database query failed" });
+        }
+        res.json({ logs: results });
+    });
+});

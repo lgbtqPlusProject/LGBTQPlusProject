@@ -204,3 +204,32 @@ function searchArchive(query) {
 }
 
 localStorage.setItem('isAdmin', 'true');
+
+
+function searchLogs() {
+    const searchQuery = document.getElementById('logSearchQuery').value;
+
+    fetch(`https://lgbtqplusproject.org/searchLogs?query=${searchQuery}`)
+        .then(response => response.json())
+        .then(data => {
+            const logsContainer = document.querySelector("#logTable tbody");
+            logsContainer.innerHTML = ""; // Clear previous logs
+
+            if (data.logs.length === 0) {
+                const noResultsRow = document.createElement("tr");
+                noResultsRow.innerHTML = "<td colspan='2'>No results found</td>";
+                logsContainer.appendChild(noResultsRow);
+            }
+
+            data.logs.forEach(log => {
+                const logRow = document.createElement("tr");
+                logRow.innerHTML = `
+                    <td>${log.query}</td>
+                    <td>${log.timestamp}</td>
+                `;
+                logsContainer.appendChild(logRow);
+            });
+        })
+        .catch(error => console.error('Error fetching logs:', error));
+}
+
