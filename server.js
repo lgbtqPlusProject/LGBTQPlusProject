@@ -6,7 +6,7 @@ const app = express();
 // Enable CORS for specific domain
 const cors = require('cors');
 app.use(cors({
-    origin: 'https://www.lgbtqplusproject.org',  // Allow the frontend domain
+    origin: '*',  // Allow the frontend domain
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
 }));
