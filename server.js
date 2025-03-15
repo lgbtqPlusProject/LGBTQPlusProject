@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const mysql = require('mysql2');
 const app = express();
+const fetch = require('node-fetch');
 
 // Enable CORS for specific domain
 const cors = require('cors');
@@ -42,6 +43,23 @@ db.getConnection((err, connection) => {
   console.log('Connected to MySQL database!');
   connection.release(); // Release the connection back to the pool
 });
+
+
+
+// Function to log the Archive.org search query and results to the database
+async function logArchiveSearchToDatabase(query, results) {
+    const timestamp = new Date().toISOString();  // Get the current timestamp
+    const logSql = 'INSERT INTO search_log (query, search_time, results) VALUES (?, ?, ?)';
+
+    // Here we're saving both the search query and the JSON stringified results
+    db.query(logSql, [query, timestamp, JSON.stringify(results)], (err, result) => {
+        if (err) {
+            console.error('Error logging Archive.org search:', err);
+            return;
+        }
+        console.log('Archive.org search logged to database:', result);
+    });
+}
 
 
 
