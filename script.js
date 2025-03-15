@@ -105,6 +105,29 @@ async function searchArchive(query) {
         resultHTML += '</ul>';
         resultDiv.innerHTML = resultHTML;
 
+        // Log the search query and results
+        fetch('https://lgbtqplusproject.onrender.com/logSearch', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                query: query,       // Ensure query is a valid string
+                results: items      // Ensure results (from the Archive search) are valid
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === 'Search logged successfully') {
+                console.log('Search logged successfully.');
+            } else {
+                console.error('Failed to log search:', data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error logging search:', error);
+        });
+
         // Close the popup on close button click
         closePopupBtn.addEventListener('click', function () {
             resultPopup.style.display = 'none';
@@ -121,6 +144,11 @@ document.getElementById('searchBtn').addEventListener('click', function () {
 
     if (query === '') return;
 
+    
+    // Proceed with the search
+    searchArchive(query);
+    
+    
     // Log the search query in your database
     fetch('https://lgbtqplusproject.onrender.com/logSearch', {
         method: 'POST',
