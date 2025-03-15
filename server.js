@@ -1,13 +1,13 @@
 const path = require('path');
 const express = require('express');
 const mysql = require('mysql2');
-const cors = require('cors');
 const app = express();
 
 // Enable CORS for specific domain
+const cors = require('cors');
 app.use(cors({
-    origin: ['https://www.lgbtqplusproject.org', 'https://lgbtqplusproject.org'],  // Allow both www and non-www
-    methods: ['GET'],
+    origin: ['https://www.lgbtqplusproject.org', 'https://lgbtqplusproject.org'],  // Allow both www and non-www versions of the domain
+    methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
 }));
 
@@ -41,6 +41,8 @@ db.getConnection((err, connection) => {
   connection.release(); // Release the connection back to the pool
 });
 
+
+
 // Search API Endpoint
 app.get('/search', (req, res) => {
     const searchQuery = req.query.query;
@@ -62,20 +64,33 @@ app.get('/search', (req, res) => {
             return res.status(200).json([]);  // Return empty array if no results
         }
 
-        // Log the search query into the search_logs table
-        const timestamp = new Date().toISOString();
-        const logSql = 'INSERT INTO search_logs (query, search_time) VALUES (?, ?)';
-        
-        db.query(logSql, [searchQuery, timestamp], (err) => {
-            if (err) {
-                console.error('Failed to log search query:', err);
-            }
-        });
-
-        // Send the results back to the client
-        res.json(results);
+        res.status(200).json(results);  // Return results as JSON
     });
 });
+
+
+
+async function logSearch(query) {
+    try {
+        const response = await fetch('https://lgbtqplusproject.org/logSearch.php', {
+            method: 'POST',  // Ensure the correct method is used
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ query: query }),
+        });
+
+        if (!response.ok) {
+            console.error(`Error logging search: ${response.status}`);
+            return;
+        }
+
+        const data = await response.json();
+        console.log('Search logged:', data);
+    } catch (error) {
+        console.error('Error logging search:', error);
+    }
+}
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
