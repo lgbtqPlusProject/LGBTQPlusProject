@@ -26,27 +26,33 @@ $password = 'Rubenom3626#';
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Log search query
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $query = isset($_POST['query']) ? $_POST['query'] : '';
+    // Ensure the request has a 'query' parameter
+    if (isset($_POST['query'])) {
+        $query = $_POST['query'];
 
-    // Validate input to prevent SQL injection
-    $query = $conn->real_escape_string($query);
+        // Proceed with logging the search query
+        $timestamp = date('Y-m-d H:i:s');  // Current timestamp
+        $connection = new mysqli('your_host', 'your_user', 'your_password', 'your_database');
 
-    // Insert search query into the database
-    $sql = "INSERT INTO search_logs (query, search_time) VALUES ('$query', NOW())";
+        if ($connection->connect_error) {
+            die("Connection failed: " . $connection->connect_error);
+        }
 
-    if ($conn->query($sql) === TRUE) {
-        echo "Search logged successfully";
+        $stmt = $connection->prepare("INSERT INTO search_logs (query, search_time) VALUES (?, ?)");
+        $stmt->bind_param("ss", $query, $timestamp);
+
+        if ($stmt->execute()) {
+            echo json_encode(['message' => 'Search logged successfully']);
+        } else {
+            echo json_encode(['error' => 'Failed to log search']);
+        }
+
+        $stmt->close();
+        $connection->close();
     } else {
-        echo "Error logging search: " . $conn->error;
+        echo json_encode(['error' => 'Missing search query']);
     }
-} else {
-    echo "Invalid request method";
 }
 
 $conn->close();

@@ -122,26 +122,23 @@ document.getElementById('searchBtn').addEventListener('click', function () {
     if (query === '') return;
 
     // Log the search query in your database
-    fetch('https://lgbtqplusproject.org/logSearch.php', {
-        method: 'POST',
+    fetch('https://lgbtqplusproject.onrender.com/logSearch', {
+        method: 'POST', // Ensure you're sending a POST request
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json', // Changed to JSON
         },
-        body: `query=${encodeURIComponent(query)}`
+        body: JSON.stringify({ query: query }) // Ensure query is a valid string
     })
-    
-    .then(response => {
-        if (response.ok) {
+    .then(response => response.json())
+    .then(data => {
+        if (data.message === 'Search logged successfully') {
             console.log('Search logged successfully.');
         } else {
-            console.error('Failed to log search.');
-            alert('⚠️ Error logging search. Please try again later.');
+            console.error('Failed to log search:', data.error);
         }
     })
-    
     .catch(error => {
         console.error('Error logging search:', error);
-        alert(`⚠️ Error logging search. Error details: ${error.message}`);
     });
 
     // Proceed with the search

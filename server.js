@@ -108,6 +108,26 @@ async function searchArchive(query) {
 }
 
 
+app.post('/logSearch', (req, res) => {
+    const searchQuery = req.body.query; // Get query from body
+
+    if (!searchQuery) {
+        return res.status(400).json({ error: 'Query is missing' });
+    }
+
+    const timestamp = new Date().toISOString();
+    const logSql = 'INSERT INTO search_logs (query, search_time) VALUES (?, ?)';
+
+    db.query(logSql, [searchQuery, timestamp], (err, result) => {
+        if (err) {
+            console.error('Error logging search:', err);
+            return res.status(500).json({ error: 'Failed to log search' });
+        }
+
+        res.status(200).json({ message: 'Search logged successfully' });
+    });
+});
+
 // Define the /search route
 app.get('/search', async (req, res) => {
     const searchQuery = req.query.query;
