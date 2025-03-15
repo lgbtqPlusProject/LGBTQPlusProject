@@ -122,16 +122,26 @@ document.getElementById('searchBtn').addEventListener('click', function () {
     if (query === '') return;
 
     // Log the search query in your database
-    fetch('https://lgbtqplusproject.onrender.com/logSearch.php', {
+    fetch('https://lgbtqplusproject.org/logSearch.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: `query=${encodeURIComponent(query)}`
-    }).then(response => {
-        console.log('Search logged successfully.');
-    }).catch(error => {
+    })
+    
+    .then(response => {
+        if (response.ok) {
+            console.log('Search logged successfully.');
+        } else {
+            console.error('Failed to log search.');
+            alert('⚠️ Error logging search. Please try again later.');
+        }
+    })
+    
+    .catch(error => {
         console.error('Error logging search:', error);
+        alert(`⚠️ Error logging search. Error details: ${error.message}`);
     });
 
     // Proceed with the search
@@ -150,7 +160,12 @@ function searchLogs() {
     console.log("Searching logs for: ", searchQuery); // Debug log
 
     fetch(`https://lgbtqplusproject.onrender.com/logsearch?query=${searchQuery}`)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
             const logsContainer = document.querySelector("#logTable tbody");
             logsContainer.innerHTML = ""; // Clear previous logs
@@ -170,7 +185,10 @@ function searchLogs() {
                 logsContainer.appendChild(logRow);
             });
         })
-        .catch(error => console.error('Error fetching logs:', error));
+        .catch(error => {
+            console.error('Error fetching logs:', error);
+            alert('⚠️ Error fetching logs. Please try again later.');
+        });
 }
 
 // Function to search the historicalFigures table in the database
@@ -224,7 +242,7 @@ async function searchDatabase(query) {
 
     } catch (error) {
         console.error('Error fetching database search results:', error);
-        alert('Error fetching data from the database.');
+        alert('⚠️ Error fetching data from the database. Please try again later.');
     }
 }
 
