@@ -89,43 +89,53 @@ app.get('/search', (req, res) => {
 
 // Archive.org Search Handling and Logging
 async function searchArchive(query) {
-    const apiUrl = `https://archive.org/logsearch.php?q=title:${encodeURIComponent(query)}&fl[]=title&fl[]=creator&rows=5&start=0&output=json`;
+    const apiUrl = `https://archive.org/advancedsearch.php?q=title:${encodeURIComponent(query)}&fl[]=title&fl[]=creator&rows=5&start=0&output=json`;
 
     try {
         const response = await fetch(apiUrl);
         const data = await response.json();
         const items = data.response.docs;
 
-        // Log the search query to the database
-        logSearchToDatabase(query);
+        // Log the search query and results to the database
+        logSearchToDatabase(query, items);
 
-        // Here you can handle showing the results, e.g., to the frontend
-        return items;  // Returning the results (you can further process this data for the frontend)
+        // Return the search results to display on the frontend
+        return items;
     } catch (error) {
         console.error('Error fetching the API:', error);
-        return [];  // In case of an error, return an empty array
+        return [];  // Return an empty array if the search fails
     }
 }
 
 
 app.post('/logSearch', (req, res) => {
     const searchQuery = req.body.query; // Get query from body
-
+    
     if (!searchQuery) {
         return res.status(400).json({ error: 'Query is missing' });
     }
-
+    
     const timestamp = new Date().toISOString();
-    const logSql = 'INSERT INTO search_logs (query, search_time) VALUES (?, ?)';
-
+    const logSql = 'INSERT INTO search_logs (query, search_time, results) VALUES (?, ?, ?)';
+    
     db.query(logSql, [searchQuery, timestamp], (err, result) => {
         if (err) {
             console.error('Error logging search:', err);
             return res.status(500).json({ error: 'Failed to log search' });
         }
-
+        
         res.status(200).json({ message: 'Search logged successfully' });
     });
+    
+    // Stringify the results so we can store them in the database
+    db.query(logSql, [query, timestamp, JSON.stringify(results)], (err, result) => {
+        if (err) {
+            console.error('Error logging Archive.org search:', err);
+            return;
+        }
+        console.log('Search query and results logged to database:', result);
+    });
+    
 });
 
 // Define the /search route

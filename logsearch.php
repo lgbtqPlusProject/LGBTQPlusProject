@@ -27,33 +27,32 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Ensure the request has a 'query' parameter
-    if (isset($_POST['query'])) {
-        $query = $_POST['query'];
+    // Get the query and results from the POST body (assuming results are passed as JSON)
+    $data = json_decode(file_get_contents('php://input'), true);
+    $query = $data['query'];
+    $results = json_encode($data['results']);  // Store results as JSON string
 
-        // Proceed with logging the search query
-        $timestamp = date('Y-m-d H:i:s');  // Current timestamp
-        $connection = new mysqli('your_host', 'your_user', 'your_password', 'your_database');
-
-        if ($connection->connect_error) {
-            die("Connection failed: " . $connection->connect_error);
-        }
-
-        $stmt = $connection->prepare("INSERT INTO search_logs (query, search_time) VALUES (?, ?)");
-        $stmt->bind_param("ss", $query, $timestamp);
-
-        if ($stmt->execute()) {
-            echo json_encode(['message' => 'Search logged successfully']);
-        } else {
-            echo json_encode(['error' => 'Failed to log search']);
-        }
-
-        $stmt->close();
-        $connection->close();
-    } else {
-        echo json_encode(['error' => 'Missing search query']);
+    if (empty($query)) {
+        echo json_encode(['error' => 'Query is missing']);
+        exit;
     }
-}
 
-$conn->close();
+    $timestamp = date('Y-m-d H:i:s'); // Get current timestamp
+    $connection = new mysqli('your_host', 'your_user', 'your_password', 'your_database');
+    if ($connection->connect_error) {
+        die("Connection failed: " . $connection->connect_error);
+    }
+
+    $stmt = $connection->prepare("INSERT INTO search_log (query, search_time, results) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $query, $timestamp, $results);
+
+    if ($stmt->execute()) {
+        echo json_encode(['message' => 'Search logged successfully']);
+    } else {
+        echo json_encode(['error' => 'Failed to log search']);
+    }
+
+    $stmt->close();
+    $connection->close();
+}
 ?>
