@@ -4,8 +4,12 @@ const mysql = require('mysql2');
 const cors = require('cors');
 const app = express();
 
-// Enable CORS and allow only the frontend domain
-app.use(cors());
+
+// Enable CORS for specific domain
+app.use(cors({
+    origin: 'https://www.lgbtqplusproject.org', // Your frontend domain
+    methods: ['GET', 'POST'], // Allow specific methods (GET/POST)
+}));
 
 // Allow JSON requests
 app.use(express.json());
@@ -41,24 +45,29 @@ db.getConnection((err, connection) => {
 
 // Search route
 app.get('/search', (req, res) => {
-  const query = req.query.query;
+    const searchQuery = req.query.query;
 
-  if (!query || query.trim() === '') {
-    return res.status(400).json({ error: "Query parameter missing or empty" });
-  }
-
-  // Your database search logic (e.g., querying MySQL)
-
-  const sql = `SELECT * FROM historicalFigures WHERE name LIKE ? OR contribution LIKE ? OR country LIKE ?`;
-  const values = [`%${query}%`, `%${query}%`, `%${query}%`];
-
-  db.query(sql, values, (err, results) => {
-    if (err) {
-      console.error('Error querying database:', err);
-      return res.status(500).json({ error: "Database error" });
+    if (!searchQuery || searchQuery.trim() === '') {
+        return res.status(400).json({ error: 'Search query is missing or empty' });
     }
-    res.json(results); // Return the results to the frontend
-  });
+
+    // Perform your database query here
+    // Example:
+    const sql = `SELECT * FROM historicalFigures WHERE name LIKE ? OR contribution LIKE ? OR country LIKE ?`;
+    const values = [`%${searchQuery}%`, `%${searchQuery}%`, `%${searchQuery}%`];
+
+    db.query(sql, values, (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'No results found' });
+        }
+
+        res.json(results);
+    });
 });
 
       // Log the search query into the search_logs table

@@ -181,8 +181,12 @@ async function searchDatabase(query) {
         return; // Don't search if the query is undefined or too short
     }
 
+    const url = `https://lgbtqplusproject.org/search?query=${encodeURIComponent(query)}`;
+
     try {
-        const response = await fetch(`https://lgbtqplusproject.org/search?query=${encodeURIComponent(query)}`);
+        const response = await fetch(url, {
+            method: 'GET', // Ensure you're sending a GET request
+        });
 
         if (!response.ok) {
             const errorData = await response.json();
@@ -192,6 +196,7 @@ async function searchDatabase(query) {
 
         const data = await response.json();
 
+        // Display results in a popup or any other method you prefer
         const resultDiv = document.getElementById('result');
         const resultPopup = document.getElementById('resultPopup');
         const closePopupBtn = document.getElementById('closePopup');
@@ -218,7 +223,7 @@ async function searchDatabase(query) {
         closePopupBtn.addEventListener('click', function () {
             resultPopup.style.display = 'none';
         });
-
+        
     } catch (error) {
         console.error('Error fetching database search results:', error);
         alert('Error fetching data from the database.');
