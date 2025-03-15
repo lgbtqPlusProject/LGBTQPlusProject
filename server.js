@@ -43,7 +43,7 @@ db.getConnection((err, connection) => {
 
 
 
-// Search API Endpoint
+// Define the /search route before app.listen()
 app.get('/search', (req, res) => {
     const searchQuery = req.query.query;
 
@@ -67,6 +67,7 @@ app.get('/search', (req, res) => {
         res.status(200).json(results);  // Return results as JSON
     });
 });
+
 
 
 
