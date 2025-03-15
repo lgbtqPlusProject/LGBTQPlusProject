@@ -89,26 +89,20 @@
     <section id="about" class="full-page-section">
         <div class="about-content">
         </div>
-        
-        <!-- Archive.org Search -->
-        <div class="container">
-            <h1>Search Archive.org</h1>
-            <input type="text" id="searchInput" placeholder="Search for books, audio, etc.">
-            <button id="searchBtn">Search</button>
+
+        <!-- Search Section -->
+        <input type="text" id="searchInput" placeholder="Search...">
+        <button id="searchBtn">Search</button>
+
+        <!-- Popup for displaying results -->
+        <div id="resultPopup" class="popup" style="display:none;">
+            <div id="result"></div>
+            <button id="closePopup" onclick="closeSearchPopup()">Close</button>
         </div>
-    </section>
 
-    <!-- Popup box for displaying results -->
-    <div id="resultPopup" class="result-popup">
-        <button id="closePopup" class="close-popup-btn">X</button>
-        <div id="result"></div>
-    </div>
-    
-    <section id="logsSection">
-        <h2>Search Search Query Logs</h2>
-        <input type="text" id="logSearchQuery" placeholder="Search logs by query or timestamp">
-        <button onclick="searchLogs()">Search</button>
-
+        <!-- Log Search Section (optional) -->
+        <input type="text" id="logSearchQuery" placeholder="Search logs...">
+        <button onclick="searchLogs()">Search Logs</button>
         <table id="logTable">
             <thead>
                 <tr>
@@ -116,12 +110,9 @@
                     <th>Timestamp</th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- Logs will be injected here -->
-            </tbody>
+            <tbody></tbody>
         </table>
-    </section>
-
+        
     <script src="script.js"></script>
 </body>
 </html>

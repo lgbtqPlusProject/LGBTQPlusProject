@@ -97,55 +97,57 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Search Database Handling
-async function searchDatabase() {
-    let query = document.getElementById('searchBox').value.trim();
-    if (query.length < 2) return;
+// Search Archive Handling
+async function searchArchive(query) {
+  const apiUrl = `https://archive.org/advancedsearch.php?q=title:${encodeURIComponent(query)}&fl[]=title&fl[]=creator&rows=5&start=0&output=json`;
 
-    try {
-        let response = await fetch(`https://lgbtqplusproject.onrender.com/search?query=${encodeURIComponent(query)}`);
-        let results = await response.json();
-        console.log("Search Results:", results);
+  try {
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    const resultDiv = document.getElementById('result');
+    const resultPopup = document.getElementById('resultPopup');
+    const closePopupBtn = document.getElementById('closePopup');
+    const items = data.response.docs;
 
-        let resultsContainer = document.getElementById('searchResultsContainer');
-        resultsContainer.innerHTML = "";
+    // Show the result popup
+    resultPopup.style.display = 'block';
 
-        if (results.length > 0) {
-            results.forEach(figure => {
-                let item = document.createElement("div");
-                item.innerHTML = `
-                    <h3>${figure.name}</h3>
-                    <p><strong>Born:</strong> ${figure.birth_year}</p>
-                    <p><strong>Death:</strong> ${figure.death_year}</p>
-                    <p><strong>Country:</strong> ${figure.country}</p>
-                    <p><strong>Contribution:</strong> ${figure.contribution}</p>
-                `;
-                resultsContainer.appendChild(item);
-            });
-            document.getElementById('searchResultsBox').classList.add('show');
-        } else {
-            resultsContainer.innerHTML = "<p>No results found</p>";
-            document.getElementById('searchResultsBox').classList.add('show');
-        }
-    } catch (error) {
-        console.error("Search error:", error);
+    if (items.length > 0) {
+      let resultHTML = '<ul>';
+      items.forEach(item => {
+        const creators = Array.isArray(item.creator) ? item.creator.join(', ') : (item.creator || 'N/A');
+        resultHTML += `
+          <li>
+            <strong>Title:</strong> <a href="https://archive.org/search.php?query=${encodeURIComponent(item.title)}" target="_blank">${item.title}</a><br>
+            <strong>Creator:</strong> ${creators}
+          </li>
+        `;
+      });
+      resultHTML += '</ul>';
+      resultDiv.innerHTML = resultHTML;
+    } else {
+      resultDiv.innerHTML = '<p>No results found.</p>';
     }
+
+    // Close the popup when clicking the close button
+    closePopupBtn.addEventListener('click', function () {
+      resultPopup.style.display = 'none'; // Hide the result popup
+    });
+
+  } catch (error) {
+    console.error('Error fetching the API:', error);
+    document.getElementById('result').innerHTML = '<p>There was an error fetching the results.</p>';
+  }
 }
 
-function closeSearchBox() {
-    document.getElementById('searchResultsBox').classList.remove('show');  // Hide the pop-up
-}
-
-
-// script.js
-
-document.getElementById('searchBtn').addEventListener('click', function() {
+// Trigger search on search button click
+document.getElementById('searchBtn').addEventListener('click', function () {
     const query = document.getElementById('searchInput').value.trim();
 
     if (query === '') return;
 
     // Log the search query in your database
-    fetch('https://yourdomain.com/path/to/logSearch.php', {
+    fetch('https://lgbtqplusproject.org/path/to/logSearch.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -157,57 +159,20 @@ document.getElementById('searchBtn').addEventListener('click', function() {
         console.error('Error logging search:', error);
     });
 
-    // Proceed with the search as usual
+    // Proceed with the search
     searchArchive(query);
 });
 
-function searchArchive(query) {
-  const apiUrl = `https://archive.org/advancedsearch.php?q=title:${encodeURIComponent(query)}&fl[]=title&fl[]=creator&rows=5&start=0&output=json`;
-
-  fetch(apiUrl)
-    .then(response => response.json())
-    .then(data => {
-      const resultDiv = document.getElementById('result');
-      const resultPopup = document.getElementById('resultPopup');
-      const closePopupBtn = document.getElementById('closePopup');
-      const items = data.response.docs;
-
-      // Show the result popup
-      resultPopup.style.display = 'block';
-
-      if (items.length > 0) {
-        let resultHTML = '<ul>';
-        items.forEach(item => {
-          const creators = Array.isArray(item.creator) ? item.creator.join(', ') : (item.creator || 'N/A');
-          resultHTML += `
-            <li>
-              <strong>Title:</strong> <a href="https://archive.org/search.php?query=${encodeURIComponent(item.title)}" target="_blank">${item.title}</a><br>
-              <strong>Creator:</strong> ${creators}
-            </li>
-          `;
-        });
-        resultHTML += '</ul>';
-        resultDiv.innerHTML = resultHTML;
-      } else {
-        resultDiv.innerHTML = '<p>No results found.</p>';
-      }
-
-      // Close the popup when clicking the close button
-      closePopupBtn.addEventListener('click', function () {
-        resultPopup.style.display = 'none'; // Hide the result popup
-      });
-    })
-    .catch(error => {
-      console.error('Error fetching the API:', error);
-      document.getElementById('result').innerHTML = '<p>There was an error fetching the results.</p>';
-    });
+// Close search popup function
+function closeSearchPopup() {
+    document.getElementById('resultPopup').style.display = 'none';
 }
 
-localStorage.setItem('isAdmin', 'true');
-
-
+// Function to search logs
 function searchLogs() {
     const searchQuery = document.getElementById('logSearchQuery').value;
+
+    console.log("Searching logs for: ", searchQuery); // Debug log
 
     fetch(`https://lgbtqplusproject.org/searchLogs?query=${searchQuery}`)
         .then(response => response.json())
@@ -233,3 +198,62 @@ function searchLogs() {
         .catch(error => console.error('Error fetching logs:', error));
 }
 
+async function searchDatabase() {
+    let query = document.getElementById('searchBox').value.trim();
+    if (query.length < 2) return;
+
+    try {
+        let response = await fetch(`https://archive.org/advancedsearch.php?q=title:${encodeURIComponent(query)}&fl[]=title&fl[]=creator&rows=5&start=0&output=json`);
+        let data = await response.json();
+
+        // Log the search query in the database
+        fetch('https://lgbtqplusproject.org/logSearch.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `query=${encodeURIComponent(query)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                console.log('Search query logged successfully.');
+            } else {
+                console.error('Error logging search query:', data.message);
+            }
+        })
+        .catch(error => console.error('Error logging search query:', error));
+
+        // Process the search results and display them in the popup
+        const resultDiv = document.getElementById('result');
+        const resultPopup = document.getElementById('resultPopup');
+        const closePopupBtn = document.getElementById('closePopup');
+        const items = data.response.docs;
+
+        resultPopup.style.display = 'block';
+
+        if (items.length > 0) {
+            let resultHTML = '<ul>';
+            items.forEach(item => {
+                const creators = Array.isArray(item.creator) ? item.creator.join(', ') : (item.creator || 'N/A');
+                resultHTML += `
+                    <li>
+                        <strong>Title:</strong> <a href="https://archive.org/search.php?query=${encodeURIComponent(item.title)}" target="_blank">${item.title}</a><br>
+                        <strong>Creator:</strong> ${creators}
+                    </li>
+                `;
+            });
+            resultHTML += '</ul>';
+            resultDiv.innerHTML = resultHTML;
+        } else {
+            resultDiv.innerHTML = '<p>No results found.</p>';
+        }
+
+        closePopupBtn.addEventListener('click', function () {
+            resultPopup.style.display = 'none';
+        });
+    } catch (error) {
+        console.error('Error fetching the API:', error);
+        document.getElementById('result').innerHTML = '<p>There was an error fetching the results.</p>';
+    }
+}

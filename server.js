@@ -2,8 +2,9 @@ const path = require('path');
 const express = require('express');
 const mysql = require('mysql2');
 const cors = require('cors');
-
 const app = express();
+
+
 app.use(cors()); // Enable CORS
 app.use(express.json()); // Allow JSON requests
 
@@ -69,21 +70,26 @@ app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
 
-app.get('/searchLogs', (req, res) => {
-    const searchQuery = req.query.query || ""; // Get search query from URL
-    const sql = `
-        SELECT query, search_time
-        FROM search_logs
-        WHERE query LIKE ? OR search_time LIKE ?
-        ORDER BY timestamp DESC
-        LIMIT 100
-    `;
-    const values = [`%${searchQuery}%`, `%${searchQuery}%`];
+// Assuming you're using Express and MySQL
 
-    db.query(sql, values, (err, results) => {
+app.get('/search', (req, res) => {
+    const searchQuery = req.query.query || '';
+    const timestamp = new Date().toISOString();
+
+    // Log the search query into the database
+    const logSql = 'INSERT INTO search_logs (query, search_time) VALUES (?, ?)';
+    db.query(logSql, [searchQuery, timestamp], (err) => {
         if (err) {
-            return res.status(500).json({ error: "Database query failed" });
+            return res.status(500).json({ error: 'Failed to log search query' });
         }
-        res.json({ logs: results });
+    });
+
+    // Proceed with search operation (returning search results)
+    const searchSql = 'SELECT * FROM your_data_table WHERE column_name LIKE ?';
+    db.query(searchSql, [`%${searchQuery}%`], (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: 'Failed to search database' });
+        }
+        res.json({ results });
     });
 });
