@@ -135,3 +135,72 @@ async function searchDatabase() {
 function closeSearchBox() {
     document.getElementById('searchResultsBox').classList.remove('show');  // Hide the pop-up
 }
+
+
+// script.js
+
+document.getElementById('searchBtn').addEventListener('click', function() {
+    const query = document.getElementById('searchInput').value.trim();
+
+    if (query === '') return;
+
+    // Log the search query in your database
+    fetch('https://yourdomain.com/path/to/logSearch.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `query=${encodeURIComponent(query)}`
+    }).then(response => {
+        console.log('Search logged successfully.');
+    }).catch(error => {
+        console.error('Error logging search:', error);
+    });
+
+    // Proceed with the search as usual
+    searchArchive(query);
+});
+
+function searchArchive(query) {
+  const apiUrl = `https://archive.org/advancedsearch.php?q=title:${encodeURIComponent(query)}&fl[]=title&fl[]=creator&rows=5&start=0&output=json`;
+
+  fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+      const resultDiv = document.getElementById('result');
+      const resultPopup = document.getElementById('resultPopup');
+      const closePopupBtn = document.getElementById('closePopup');
+      const items = data.response.docs;
+
+      // Show the result popup
+      resultPopup.style.display = 'block';
+
+      if (items.length > 0) {
+        let resultHTML = '<ul>';
+        items.forEach(item => {
+          const creators = Array.isArray(item.creator) ? item.creator.join(', ') : (item.creator || 'N/A');
+          resultHTML += `
+            <li>
+              <strong>Title:</strong> <a href="https://archive.org/search.php?query=${encodeURIComponent(item.title)}" target="_blank">${item.title}</a><br>
+              <strong>Creator:</strong> ${creators}
+            </li>
+          `;
+        });
+        resultHTML += '</ul>';
+        resultDiv.innerHTML = resultHTML;
+      } else {
+        resultDiv.innerHTML = '<p>No results found.</p>';
+      }
+
+      // Close the popup when clicking the close button
+      closePopupBtn.addEventListener('click', function () {
+        resultPopup.style.display = 'none'; // Hide the result popup
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching the API:', error);
+      document.getElementById('result').innerHTML = '<p>There was an error fetching the results.</p>';
+    });
+}
+
+localStorage.setItem('isAdmin', 'true');

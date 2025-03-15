@@ -709,6 +709,55 @@ form button:hover {
 }
 
 
+
+<!-- Archive.org Search Popup Box (Styled) -->
+<style>
+  /* Popup Box Styling */
+  .result-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-height: 80%;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    z-index: 1000;
+  }
+
+  /* Close Button Styling */
+  .close-popup-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff4d4d;
+    border: none;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+  }
+
+  /* Results Styling */
+  #result {
+    padding: 20px;
+  }
+
+  /* Scroll Styling */
+  .result-popup::-webkit-scrollbar {
+    width: 8px;
+  }
+  .result-popup::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+  }
+  .result-popup::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+
 /* Mobile-responsive adjustments */
 @media only screen and (max-width: 768px) {
     #content {

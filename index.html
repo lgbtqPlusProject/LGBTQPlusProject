@@ -18,7 +18,7 @@
         <p><strong>Coming soon in 2025!</strong></p>
         <p class="inquiry">
             For inquiries, email at
-            <a href="mailto: info@lgbtqplusproject.org" style="color: #4DA6FF; text-decoration: none;">
+            <a href="mailto:info@lgbtqplusproject.org" style="color: #4DA6FF; text-decoration: none;">
                 info@lgbtqplusproject.org
             </a>
         </p>
@@ -37,11 +37,11 @@
     <!-- Landing Page with Logo -->
     <section id="landing" class="page-section">
         <img src="images/lgbptqprojectLogov3.gif" alt="Logo" id="logo">
-        <div id="scroll-indicator" onclick="showContentPage()">Scroll Down ↓</div>  <!-- Trigger to show content -->
+        <div id="scroll-indicator" onclick="showContentPage()">Scroll Down ↓</div>
     </section>
     
     <!-- Main Content -->
-    <section id="content"> <!-- Initially hidden -->
+    <section id="content">
         <!-- Contact Form (Pop-up) -->
         <div id="contactForm" class="contact-form" style="display:none;">
             <div class="form-container">
@@ -58,7 +58,6 @@
                     
                     <button type="submit">Send</button>
                 </form>
-                <!-- Success Message (Initially Hidden) -->
                 <p id="successMessage" style="display:none; color: green;">✅ Thank you! Your message has been sent.</p>
                 <button type="button" onclick="closeForm()">X</button>
             </div>
@@ -70,6 +69,7 @@
             <button onclick="searchDatabase()">Search</button>
         </div>
         <div class="rounded-background"></div>
+        
         <!-- Mission Statement -->
         <div class="mission-statement">
             <h2>Our Mission</h2>
@@ -88,12 +88,22 @@
     <!-- About Section -->
     <section id="about" class="full-page-section">
         <div class="about-content">
-            <img src="images/aboutUs.gif" alt="AboutUs Image" class="AboutUs-image">
-  
-
+        </div>
+        
+        <!-- Archive.org Search -->
+        <div class="container">
+            <h1>Search Archive.org</h1>
+            <input type="text" id="searchInput" placeholder="Search for books, audio, etc.">
+            <button id="searchBtn">Search</button>
         </div>
     </section>
-    
+
+    <!-- Popup box for displaying results -->
+    <div id="resultPopup" class="result-popup">
+        <button id="closePopup" class="close-popup-btn">X</button>
+        <div id="result"></div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
