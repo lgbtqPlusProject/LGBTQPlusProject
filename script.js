@@ -96,10 +96,10 @@ async function searchArchive(query) {
         items.forEach(item => {
             const creators = Array.isArray(item.creator) ? item.creator.join(', ') : (item.creator || 'N/A');
             resultHTML += `
-              <li>
-                <strong>Title:</strong> <a href="https://archive.org/search.php?query=${encodeURIComponent(item.title)}" target="_blank">${item.title}</a><br>
-                <strong>Creator:</strong> ${creators}
-              </li>
+                <li>
+                    <strong>Title:</strong> <a href="https://archive.org/search.php?query=${encodeURIComponent(item.title)}" target="_blank">${item.title}</a><br>
+                    <strong>Creator:</strong> ${creators}
+                </li>
             `;
         });
         resultHTML += '</ul>';

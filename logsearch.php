@@ -38,12 +38,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $timestamp = date('Y-m-d H:i:s'); // Get current timestamp
-    $connection = new mysqli('your_host', 'your_user', 'your_password', 'your_database');
+    $connection = new mysqli('sv15.byethost15.org', 'lgbtqplu_timo', 'Rubenom3626#', 'lgbtqplu_lgbtqplusproject');
     if ($connection->connect_error) {
         die("Connection failed: " . $connection->connect_error);
     }
 
-    $stmt = $connection->prepare("INSERT INTO search_log (query, search_time, results) VALUES (?, ?, ?)");
+    $stmt = $connection->prepare("INSERT INTO search_logs (query, search_time, results) VALUES (?, ?, ?)");
     $stmt->bind_param("sss", $query, $timestamp, $results);
 
     if ($stmt->execute()) {
