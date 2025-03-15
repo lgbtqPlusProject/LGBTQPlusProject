@@ -123,11 +123,11 @@ document.getElementById('searchBtn').addEventListener('click', function () {
 
     // Log the search query in your database
     fetch('https://lgbtqplusproject.onrender.com/logSearch', {
-        method: 'POST', // Ensure you're sending a POST request
+        method: 'POST',
         headers: {
-            'Content-Type': 'application/json', // Changed to JSON
+            'Content-Type': 'application/json', // Send data as JSON
         },
-        body: JSON.stringify({ query: query }) // Ensure query is a valid string
+        body: JSON.stringify({ query: query })  // Ensure the query is correctly stringified as JSON
     })
     .then(response => response.json())
     .then(data => {

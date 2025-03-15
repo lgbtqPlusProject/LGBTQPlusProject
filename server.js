@@ -107,35 +107,28 @@ async function searchArchive(query) {
     }
 }
 
+// Enable parsing of JSON bodies
+app.use(express.json());
 
+// Handle POST request to log search query
 app.post('/logSearch', (req, res) => {
-    const searchQuery = req.body.query; // Get query from body
-    
+    const searchQuery = req.body.query;  // Extract query from request body
+
     if (!searchQuery) {
         return res.status(400).json({ error: 'Query is missing' });
     }
-    
+
     const timestamp = new Date().toISOString();
-    const logSql = 'INSERT INTO search_logs (query, search_time, results) VALUES (?, ?, ?)';
-    
+    const logSql = 'INSERT INTO search_logs (query, search_time, results) VALUES (?, ?,?)';
+
     db.query(logSql, [searchQuery, timestamp], (err, result) => {
         if (err) {
             console.error('Error logging search:', err);
             return res.status(500).json({ error: 'Failed to log search' });
         }
-        
+
         res.status(200).json({ message: 'Search logged successfully' });
     });
-    
-    // Stringify the results so we can store them in the database
-    db.query(logSql, [query, timestamp, JSON.stringify(results)], (err, result) => {
-        if (err) {
-            console.error('Error logging Archive.org search:', err);
-            return;
-        }
-        console.log('Search query and results logged to database:', result);
-    });
-    
 });
 
 // Define the /search route
