@@ -149,7 +149,7 @@ function searchLogs() {
 
     console.log("Searching logs for: ", searchQuery); // Debug log
 
-    fetch(`https://lgbtqplusproject.org/logsearch?query=${searchQuery}`)
+    fetch(`https://lgbtqplusproject.onrender.com/logsearch?query=${searchQuery}`)
         .then(response => response.json())
         .then(data => {
             const logsContainer = document.querySelector("#logTable tbody");
