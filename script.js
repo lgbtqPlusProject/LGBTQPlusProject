@@ -147,7 +147,7 @@ document.getElementById('searchBtn').addEventListener('click', function () {
     if (query === '') return;
 
     // Log the search query in your database
-    fetch('https://lgbtqplusproject.org/path/to/logSearch.php', {
+    fetch('https://lgbtqplusproject.org/logSearch.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -174,7 +174,7 @@ function searchLogs() {
 
     console.log("Searching logs for: ", searchQuery); // Debug log
 
-    fetch(`https://lgbtqplusproject.org/searchLogs?query=${searchQuery}`)
+    fetch(`https://lgbtqplusproject.org/logsearch?query=${searchQuery}`)
         .then(response => response.json())
         .then(data => {
             const logsContainer = document.querySelector("#logTable tbody");
@@ -190,70 +190,10 @@ function searchLogs() {
                 const logRow = document.createElement("tr");
                 logRow.innerHTML = `
                     <td>${log.query}</td>
-                    <td>${log.timestamp}</td>
+                    <td>${log.search_time}</td>
                 `;
                 logsContainer.appendChild(logRow);
             });
         })
         .catch(error => console.error('Error fetching logs:', error));
-}
-
-async function searchDatabase() {
-    let query = document.getElementById('searchBox').value.trim();
-    if (query.length < 2) return;
-
-    try {
-        let response = await fetch(`https://archive.org/advancedsearch.php?q=title:${encodeURIComponent(query)}&fl[]=title&fl[]=creator&rows=5&start=0&output=json`);
-        let data = await response.json();
-
-        // Log the search query in the database
-        fetch('https://lgbtqplusproject.org/logSearch.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: `query=${encodeURIComponent(query)}`
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                console.log('Search query logged successfully.');
-            } else {
-                console.error('Error logging search query:', data.message);
-            }
-        })
-        .catch(error => console.error('Error logging search query:', error));
-
-        // Process the search results and display them in the popup
-        const resultDiv = document.getElementById('result');
-        const resultPopup = document.getElementById('resultPopup');
-        const closePopupBtn = document.getElementById('closePopup');
-        const items = data.response.docs;
-
-        resultPopup.style.display = 'block';
-
-        if (items.length > 0) {
-            let resultHTML = '<ul>';
-            items.forEach(item => {
-                const creators = Array.isArray(item.creator) ? item.creator.join(', ') : (item.creator || 'N/A');
-                resultHTML += `
-                    <li>
-                        <strong>Title:</strong> <a href="https://archive.org/search.php?query=${encodeURIComponent(item.title)}" target="_blank">${item.title}</a><br>
-                        <strong>Creator:</strong> ${creators}
-                    </li>
-                `;
-            });
-            resultHTML += '</ul>';
-            resultDiv.innerHTML = resultHTML;
-        } else {
-            resultDiv.innerHTML = '<p>No results found.</p>';
-        }
-
-        closePopupBtn.addEventListener('click', function () {
-            resultPopup.style.display = 'none';
-        });
-    } catch (error) {
-        console.error('Error fetching the API:', error);
-        document.getElementById('result').innerHTML = '<p>There was an error fetching the results.</p>';
-    }
 }
