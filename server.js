@@ -12,8 +12,6 @@ app.use(cors({
     allowedHeaders: ['Content-Type'],
 }));
 
-
-
 // Allow JSON requests
 app.use(express.json());
 
@@ -45,7 +43,6 @@ db.getConnection((err, connection) => {
 });
 
 
-
 // Function to log the Archive.org search query and results to the database
 async function logArchiveSearchToDatabase(query, results) {
     const timestamp = new Date().toISOString();  // Get the current timestamp
@@ -60,8 +57,6 @@ async function logArchiveSearchToDatabase(query, results) {
         console.log('Archive.org search logged to database:', result);
     });
 }
-
-
 
 // Define the /search route before app.listen()
 app.get('/search', (req, res) => {
@@ -91,27 +86,49 @@ app.get('/search', (req, res) => {
 
 
 
-async function logSearch(query) {
+
+// Archive.org Search Handling and Logging
+async function searchArchive(query) {
+    const apiUrl = `https://archive.org/logsearch.php?q=title:${encodeURIComponent(query)}&fl[]=title&fl[]=creator&rows=5&start=0&output=json`;
+
     try {
-        const response = await fetch('https://lgbtqplusproject.org/logSearch.php', {
-            method: 'POST',  // Ensure the correct method is used
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ query: query }),
-        });
-
-        if (!response.ok) {
-            console.error(`Error logging search: ${response.status}`);
-            return;
-        }
-
+        const response = await fetch(apiUrl);
         const data = await response.json();
-        console.log('Search logged:', data);
+        const items = data.response.docs;
+
+        // Log the search query to the database
+        logSearchToDatabase(query);
+
+        // Here you can handle showing the results, e.g., to the frontend
+        return items;  // Returning the results (you can further process this data for the frontend)
     } catch (error) {
-        console.error('Error logging search:', error);
+        console.error('Error fetching the API:', error);
+        return [];  // In case of an error, return an empty array
     }
 }
+
+
+// Define the /search route
+app.get('/search', async (req, res) => {
+    const searchQuery = req.query.query;
+
+    if (!searchQuery || searchQuery.trim() === '') {
+        return res.status(400).json({ error: 'Search query is missing or empty' });
+    }
+
+    try {
+        // Perform the Archive.org search and log the query
+        const archiveResults = await searchArchive(searchQuery);
+
+        // Respond with the results from Archive.org search
+        res.status(200).json(archiveResults);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to perform search' });
+    }
+});
+
+
+
 
 const port = process.env.PORT || 10000; // Default to port 10000 if no environment variable is provided
 app.listen(port, () => {
