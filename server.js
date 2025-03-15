@@ -6,8 +6,9 @@ const app = express();
 
 // Enable CORS for specific domain
 app.use(cors({
-    origin: 'https://www.lgbtqplusproject.org', // Your frontend domain
-    methods: ['GET', 'POST'], // Allow specific methods (GET/POST)
+    origin: ['https://www.lgbtqplusproject.org', 'https://lgbtqplusproject.org'],  // Allow both www and non-www
+    methods: ['GET'],
+    allowedHeaders: ['Content-Type'],
 }));
 
 // Allow JSON requests
@@ -44,12 +45,10 @@ db.getConnection((err, connection) => {
 app.get('/search', (req, res) => {
     const searchQuery = req.query.query;
 
-    // Check if the search query is valid
     if (!searchQuery || searchQuery.trim() === '') {
         return res.status(400).json({ error: 'Search query is missing or empty' });
     }
 
-    // Perform the search query in the database
     const sql = `SELECT * FROM historicalFigures WHERE name LIKE ? OR contribution LIKE ? OR country LIKE ?`;
     const values = [`%${searchQuery}%`, `%${searchQuery}%`, `%${searchQuery}%`];
 
@@ -60,7 +59,7 @@ app.get('/search', (req, res) => {
         }
 
         if (results.length === 0) {
-            return res.status(404).json({ message: 'No results found' });
+            return res.status(200).json([]);  // Return empty array if no results
         }
 
         // Log the search query into the search_logs table
