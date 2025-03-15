@@ -46,7 +46,7 @@ db.getConnection((err, connection) => {
 // Function to log the Archive.org search query and results to the database
 async function logArchiveSearchToDatabase(query, results) {
     const timestamp = new Date().toISOString();  // Get the current timestamp
-    const logSql = 'INSERT INTO search_log (query, search_time, results) VALUES (?, ?, ?)';
+    const logSql = 'INSERT INTO search_logs (query, search_time, results) VALUES (?, ?, ?)';
 
     // Here we're saving both the search query and the JSON stringified results
     db.query(logSql, [query, timestamp, JSON.stringify(results)], (err, result) => {
