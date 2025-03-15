@@ -125,9 +125,12 @@ document.getElementById('searchBtn').addEventListener('click', function () {
     fetch('https://lgbtqplusproject.onrender.com/logSearch', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json', // Send data as JSON
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ query: query })  // Ensure the query is correctly stringified as JSON
+        body: JSON.stringify({
+            query: query,
+            results: items // results from the API
+        })
     })
     .then(response => response.json())
     .then(data => {

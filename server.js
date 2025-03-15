@@ -111,26 +111,26 @@ async function searchArchive(query) {
 app.use(express.json());
 
 // Handle POST request to log search query
-app.post('/logSearch', (req, res) => {
-    const searchQuery = req.body.query;  // Extract query from request body
+app.post('/logSearch', express.json(), (req, res) => {
+    const searchQuery = req.body.query; // Get query from the request body
+    const results = req.body.results;   // Get results from the request body
 
-    if (!searchQuery) {
-        return res.status(400).json({ error: 'Query is missing' });
+    if (!searchQuery || !results) {
+        return res.status(400).json({ error: 'Query or results are missing' });
     }
 
     const timestamp = new Date().toISOString();
-    const logSql = 'INSERT INTO search_logs (query, search_time, results) VALUES (?, ?,?)';
+    const logSql = 'INSERT INTO search_logs (query, search_time, results) VALUES (?, ?, ?)';
 
-    db.query(logSql, [searchQuery, timestamp], (err, result) => {
+    db.query(logSql, [searchQuery, timestamp, JSON.stringify(results)], (err, result) => {
         if (err) {
-            console.error('Error logging search:', err);
-            return res.status(500).json({ error: 'Failed to log search' });
+            console.error('Database error:', err);  // Log the actual database error
+            return res.status(500).json({ error: 'Failed to log search: ' + err.message });
         }
 
         res.status(200).json({ message: 'Search logged successfully' });
     });
 });
-
 // Define the /search route
 app.get('/search', async (req, res) => {
     const searchQuery = req.query.query;
