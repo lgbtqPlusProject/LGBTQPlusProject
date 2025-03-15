@@ -122,7 +122,7 @@ document.getElementById('searchBtn').addEventListener('click', function () {
     if (query === '') return;
 
     // Log the search query in your database
-    fetch('https://lgbtqplusproject.org/logSearch.php', {
+    fetch('https://lgbtqplusproject.onrender.com/logSearch.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
