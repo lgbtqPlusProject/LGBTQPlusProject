@@ -4,7 +4,6 @@ const mysql = require('mysql2');
 const cors = require('cors');
 const app = express();
 
-
 // Enable CORS for specific domain
 app.use(cors({
     origin: 'https://www.lgbtqplusproject.org', // Your frontend domain
@@ -23,7 +22,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html')); // Ensure this path points to your index.html
 });
 
-// Replace with your actual database credentials
+// Replace with your actual database credentials or environment variables
 const db = mysql.createPool({
     host: 'sv15.byethost15.org',
     user: 'lgbtqplu_timo',
@@ -42,17 +41,15 @@ db.getConnection((err, connection) => {
 });
 
 // Search API Endpoint
-
-// Search route
 app.get('/search', (req, res) => {
     const searchQuery = req.query.query;
 
+    // Check if the search query is valid
     if (!searchQuery || searchQuery.trim() === '') {
         return res.status(400).json({ error: 'Search query is missing or empty' });
     }
 
-    // Perform your database query here
-    // Example:
+    // Perform the search query in the database
     const sql = `SELECT * FROM historicalFigures WHERE name LIKE ? OR contribution LIKE ? OR country LIKE ?`;
     const values = [`%${searchQuery}%`, `%${searchQuery}%`, `%${searchQuery}%`];
 
@@ -66,21 +63,19 @@ app.get('/search', (req, res) => {
             return res.status(404).json({ message: 'No results found' });
         }
 
+        // Log the search query into the search_logs table
+        const timestamp = new Date().toISOString();
+        const logSql = 'INSERT INTO search_logs (query, search_time) VALUES (?, ?)';
+        
+        db.query(logSql, [searchQuery, timestamp], (err) => {
+            if (err) {
+                console.error('Failed to log search query:', err);
+            }
+        });
+
+        // Send the results back to the client
         res.json(results);
     });
-});
-
-      // Log the search query into the search_logs table
-      const timestamp = new Date().toISOString();
-      const logSql = 'INSERT INTO search_logs (query, search_time) VALUES (?, ?)';
-      db.query(logSql, [searchQuery, timestamp], (err) => {
-          if (err) {
-              console.error('Failed to log search query:', err);
-          }
-      });
-
-      res.json(results); // Send results back to the client
-  });
 });
 
 const port = process.env.PORT || 3000;

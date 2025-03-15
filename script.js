@@ -1,5 +1,5 @@
 // Window onLoad
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     setTimeout(() => {
         document.getElementById("announcement").classList.add("show");
     }, 1000);
@@ -19,22 +19,22 @@ const contentSection = document.getElementById('content');
 const aboutSection = document.getElementById('about');
 
 function toggleNavbar() {
-  const scrollPosition = window.scrollY;
-  const contentTop = contentSection.offsetTop;
-  const contentHeight = contentSection.offsetHeight;
-  const aboutTop = aboutSection.offsetTop;
-  const aboutHeight = aboutSection.offsetHeight;
+    const scrollPosition = window.scrollY;
+    const contentTop = contentSection.offsetTop;
+    const contentHeight = contentSection.offsetHeight;
+    const aboutTop = aboutSection.offsetTop;
+    const aboutHeight = aboutSection.offsetHeight;
 
-  if (
-    (scrollPosition >= contentTop && scrollPosition <= contentTop + contentHeight) ||
-    (scrollPosition >= aboutTop && scrollPosition <= aboutTop + aboutHeight)
-  ) {
-    navbar.style.display = 'block';
-    contentSection.classList.add('navbar-visible');
-  } else {
-    navbar.style.display = 'none';
-    contentSection.classList.remove('navbar-visible');
-  }
+    if (
+        (scrollPosition >= contentTop && scrollPosition <= contentTop + contentHeight) ||
+        (scrollPosition >= aboutTop && scrollPosition <= aboutTop + aboutHeight)
+    ) {
+        navbar.style.display = 'block';
+        contentSection.classList.add('navbar-visible');
+    } else {
+        navbar.style.display = 'none';
+        contentSection.classList.remove('navbar-visible');
+    }
 }
 
 if (navbar && contentSection && aboutSection) {
@@ -52,11 +52,11 @@ function closeAnnouncement() {
 }
 
 // Contact Form Handling
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const contactFormContent = document.getElementById('contactFormContent');
     const successMessage = document.getElementById('successMessage');
 
-    contactFormContent.addEventListener('submit', function(event) {
+    contactFormContent.addEventListener('submit', function (event) {
         event.preventDefault();
         const formData = new FormData(contactFormContent);
 
@@ -79,41 +79,40 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Search Archive Handling
 async function searchArchive(query) {
-  const apiUrl = `https://archive.org/advancedsearch.php?q=title:${encodeURIComponent(query)}&fl[]=title&fl[]=creator&rows=5&start=0&output=json`;
+    const apiUrl = `https://archive.org/advancedsearch.php?q=title:${encodeURIComponent(query)}&fl[]=title&fl[]=creator&rows=5&start=0&output=json`;
 
-  try {
-    const response = await fetch(apiUrl);
-    const data = await response.json();
-    const resultDiv = document.getElementById('result');
-    const resultPopup = document.getElementById('resultPopup');
-    const closePopupBtn = document.getElementById('closePopup');
-    const items = data.response.docs;
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        const resultDiv = document.getElementById('result');
+        const resultPopup = document.getElementById('resultPopup');
+        const closePopupBtn = document.getElementById('closePopup');
+        const items = data.response.docs;
 
-    // Show the result popup
-    resultPopup.style.display = 'block';
+        // Show the result popup
+        resultPopup.style.display = 'block';
 
-    let resultHTML = items.length > 0 ? '<ul>' : '<p>No results found.</p>';
-    items.forEach(item => {
-        const creators = Array.isArray(item.creator) ? item.creator.join(', ') : (item.creator || 'N/A');
-        resultHTML += `
-          <li>
-            <strong>Title:</strong> <a href="https://archive.org/search.php?query=${encodeURIComponent(item.title)}" target="_blank">${item.title}</a><br>
-            <strong>Creator:</strong> ${creators}
-          </li>
-        `;
-    });
-    resultHTML += '</ul>';
-    resultDiv.innerHTML = resultHTML;
+        let resultHTML = items.length > 0 ? '<ul>' : '<p>No results found.</p>';
+        items.forEach(item => {
+            const creators = Array.isArray(item.creator) ? item.creator.join(', ') : (item.creator || 'N/A');
+            resultHTML += `
+              <li>
+                <strong>Title:</strong> <a href="https://archive.org/search.php?query=${encodeURIComponent(item.title)}" target="_blank">${item.title}</a><br>
+                <strong>Creator:</strong> ${creators}
+              </li>
+            `;
+        });
+        resultHTML += '</ul>';
+        resultDiv.innerHTML = resultHTML;
 
-    // Close the popup on close button click
-    closePopupBtn.addEventListener('click', function () {
-      resultPopup.style.display = 'none';
-    });
-
-  } catch (error) {
-    console.error('Error fetching the API:', error);
-    document.getElementById('result').innerHTML = '<p>There was an error fetching the results.</p>';
-  }
+        // Close the popup on close button click
+        closePopupBtn.addEventListener('click', function () {
+            resultPopup.style.display = 'none';
+        });
+    } catch (error) {
+        console.error('Error fetching the API:', error);
+        document.getElementById('result').innerHTML = '<p>There was an error fetching the results.</p>';
+    }
 }
 
 // Trigger search on search button click
@@ -174,7 +173,6 @@ function searchLogs() {
         .catch(error => console.error('Error fetching logs:', error));
 }
 
-
 // Function to search the historicalFigures table in the database
 async function searchDatabase(query) {
     if (!query || query.length < 2) {
@@ -223,7 +221,7 @@ async function searchDatabase(query) {
         closePopupBtn.addEventListener('click', function () {
             resultPopup.style.display = 'none';
         });
-        
+
     } catch (error) {
         console.error('Error fetching database search results:', error);
         alert('Error fetching data from the database.');
