@@ -1,7 +1,9 @@
 // Window onLoad
-window.onload = function() {
-    document.getElementById('announcement').classList.add('show');
-};
+document.addEventListener("DOMContentLoaded", function() {
+    setTimeout(() => {
+        document.getElementById("announcement").classList.add("show");
+    }, 1000);
+});
 
 // Landing Scroll
 document.getElementById('landing').addEventListener('click', () => {
@@ -35,16 +37,12 @@ function toggleNavbar() {
   }
 }
 
-window.addEventListener('scroll', toggleNavbar);
-toggleNavbar();  // Call on page load
+if (navbar && contentSection && aboutSection) {
+    window.addEventListener('scroll', toggleNavbar);
+    toggleNavbar();  // Call on page load
+}
 
 // Announcement Handling
-document.addEventListener("DOMContentLoaded", function() {
-    setTimeout(() => {
-        document.getElementById("announcement").classList.add("show");
-    }, 1000);
-});
-
 function closeAnnouncement() {
     const box = document.getElementById("announcement");
     box.style.opacity = "0";
@@ -55,31 +53,13 @@ function closeAnnouncement() {
 
 // Contact Form Handling
 document.addEventListener('DOMContentLoaded', function() {
-    const contactBtn = document.getElementById('contactBtn');
-    const contactForm = document.getElementById('contactForm');
     const contactFormContent = document.getElementById('contactFormContent');
     const successMessage = document.getElementById('successMessage');
-
-    if (contactBtn) {
-        contactBtn.addEventListener('click', function() {
-            contactForm.style.display = 'flex';
-            successMessage.style.display = 'none';
-            contactFormContent.style.display = 'block';
-            contactFormContent.reset();
-        });
-    }
-
-    window.closeForm = function() {
-        contactForm.style.display = 'none';
-        successMessage.style.display = 'none';
-        contactFormContent.style.display = 'block';
-        contactFormContent.reset();
-    };
 
     contactFormContent.addEventListener('submit', function(event) {
         event.preventDefault();
         const formData = new FormData(contactFormContent);
-        
+
         fetch(contactFormContent.action, {
             method: "POST",
             body: formData,
@@ -112,9 +92,8 @@ async function searchArchive(query) {
     // Show the result popup
     resultPopup.style.display = 'block';
 
-    if (items.length > 0) {
-      let resultHTML = '<ul>';
-      items.forEach(item => {
+    let resultHTML = items.length > 0 ? '<ul>' : '<p>No results found.</p>';
+    items.forEach(item => {
         const creators = Array.isArray(item.creator) ? item.creator.join(', ') : (item.creator || 'N/A');
         resultHTML += `
           <li>
@@ -122,16 +101,13 @@ async function searchArchive(query) {
             <strong>Creator:</strong> ${creators}
           </li>
         `;
-      });
-      resultHTML += '</ul>';
-      resultDiv.innerHTML = resultHTML;
-    } else {
-      resultDiv.innerHTML = '<p>No results found.</p>';
-    }
+    });
+    resultHTML += '</ul>';
+    resultDiv.innerHTML = resultHTML;
 
-    // Close the popup when clicking the close button
+    // Close the popup on close button click
     closePopupBtn.addEventListener('click', function () {
-      resultPopup.style.display = 'none'; // Hide the result popup
+      resultPopup.style.display = 'none';
     });
 
   } catch (error) {
@@ -197,3 +173,63 @@ function searchLogs() {
         })
         .catch(error => console.error('Error fetching logs:', error));
 }
+
+
+// Function to search the historicalFigures table in the database
+async function searchDatabase(query) {
+    if (!query || query.length < 2) {
+        return; // Don't search if the query is undefined or too short
+    }
+
+    try {
+        const response = await fetch(`https://lgbtqplusproject.org/search?query=${encodeURIComponent(query)}`);
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            alert(errorData.error || 'Error fetching results');
+            return;
+        }
+
+        const data = await response.json();
+
+        const resultDiv = document.getElementById('result');
+        const resultPopup = document.getElementById('resultPopup');
+        const closePopupBtn = document.getElementById('closePopup');
+        resultPopup.style.display = 'block';
+
+        if (data.length > 0) {
+            let resultHTML = '<ul>';
+            data.forEach(item => {
+                resultHTML += `
+                    <li>
+                        <strong>Name:</strong> ${item.name}<br>
+                        <strong>Contribution:</strong> ${item.contribution}<br>
+                        <strong>Country:</strong> ${item.country}
+                    </li>
+                `;
+            });
+            resultHTML += '</ul>';
+            resultDiv.innerHTML = resultHTML;
+        } else {
+            resultDiv.innerHTML = '<p>No results found in the database.</p>';
+        }
+
+        // Close popup logic
+        closePopupBtn.addEventListener('click', function () {
+            resultPopup.style.display = 'none';
+        });
+
+    } catch (error) {
+        console.error('Error fetching database search results:', error);
+        alert('Error fetching data from the database.');
+    }
+}
+
+// Event listener for the search button
+document.getElementById('searchBtnDatabase').addEventListener('click', function () {
+    const query = document.getElementById('searchBox').value.trim();
+
+    if (query === '') return;  // Prevents empty search
+
+    searchDatabase(query);
+});

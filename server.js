@@ -4,27 +4,27 @@ const mysql = require('mysql2');
 const cors = require('cors');
 const app = express();
 
+// Enable CORS and allow only the frontend domain
+app.use(cors());
 
-app.use(cors()); // Enable CORS
-app.use(express.json()); // Allow JSON requests
+// Allow JSON requests
+app.use(express.json());
 
-
-// Serve static files like script.js and css/cs01.css
-app.use(express.static(path.join(__dirname, '/')));  // Serve static files from the root folder
-app.use('/css', express.static(path.join(__dirname, 'css')));  // Serve all CSS files from the css folder
+// Serve static files like script.js and css
+app.use(express.static(path.join(__dirname, '/')));
+app.use('/css', express.static(path.join(__dirname, 'css')));
 
 // Serve index.html when accessing the root URL
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));  // Ensure this path points to your index.html
+    res.sendFile(path.join(__dirname, 'index.html')); // Ensure this path points to your index.html
 });
 
-
 // Replace with your actual database credentials
-const db = mysql.createPool({  // Use createPool for multiple connections
-  host: 'sv15.byethost15.org',  // Check your hosting provider for the correct hostname
-  user: 'lgbtqplu_timo',        // Your database username
-  password: 'Rubenom3626#',     // Your database password
-  database: 'lgbtqplu_lgbtqplusproject' // Your database name
+const db = mysql.createPool({
+    host: 'sv15.byethost15.org',
+    user: 'lgbtqplu_timo',
+    password: 'Rubenom3626#',
+    database: 'lgbtqplu_lgbtqplusproject'
 });
 
 // Check database connection
@@ -38,58 +38,43 @@ db.getConnection((err, connection) => {
 });
 
 // Search API Endpoint
+
+// Search route
 app.get('/search', (req, res) => {
-    let query = req.query.query;
-    console.log("Received search query:", query); // Log the incoming query
+  const query = req.query.query;
 
+  if (!query || query.trim() === '') {
+    return res.status(400).json({ error: "Query parameter missing or empty" });
+  }
 
-    if (!query || query.trim() === '') {
-        return res.status(400).json({ error: "Search query is missing or empty" });
+  // Your database search logic (e.g., querying MySQL)
+
+  const sql = `SELECT * FROM historicalFigures WHERE name LIKE ? OR contribution LIKE ? OR country LIKE ?`;
+  const values = [`%${query}%`, `%${query}%`, `%${query}%`];
+
+  db.query(sql, values, (err, results) => {
+    if (err) {
+      console.error('Error querying database:', err);
+      return res.status(500).json({ error: "Database error" });
     }
+    res.json(results); // Return the results to the frontend
+  });
+});
 
-    // Your database search logic here
-        let sql = `SELECT * FROM historicalFigures WHERE name LIKE ? OR contribution LIKE ? OR country LIKE ?`;
-        let values = [`%${query}%`, `%${query}%`, `%${query}%`];
+      // Log the search query into the search_logs table
+      const timestamp = new Date().toISOString();
+      const logSql = 'INSERT INTO search_logs (query, search_time) VALUES (?, ?)';
+      db.query(logSql, [searchQuery, timestamp], (err) => {
+          if (err) {
+              console.error('Failed to log search query:', err);
+          }
+      });
 
-        db.query(sql, values, (err, results) => {
-            if (err) {
-                console.error('Database query failed:', err);
-                return res.status(500).json({ error: 'Database error' });
-            }
-
-            if (results.length === 0) {
-                return res.status(404).json({ message: 'No results found' });
-            }
-            
-            res.json(results);
-        });
-    });
+      res.json(results); // Send results back to the client
+  });
+});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
-});
-
-// Assuming you're using Express and MySQL
-
-app.get('/search', (req, res) => {
-    const searchQuery = req.query.query || '';
-    const timestamp = new Date().toISOString();
-
-    // Log the search query into the database
-    const logSql = 'INSERT INTO search_logs (query, search_time) VALUES (?, ?)';
-    db.query(logSql, [searchQuery, timestamp], (err) => {
-        if (err) {
-            return res.status(500).json({ error: 'Failed to log search query' });
-        }
-    });
-
-    // Proceed with search operation (returning search results)
-    const searchSql = 'SELECT * FROM your_data_table WHERE column_name LIKE ?';
-    db.query(searchSql, [`%${searchQuery}%`], (err, results) => {
-        if (err) {
-            return res.status(500).json({ error: 'Failed to search database' });
-        }
-        res.json({ results });
-    });
 });
