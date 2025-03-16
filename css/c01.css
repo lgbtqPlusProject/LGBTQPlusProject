@@ -835,7 +835,7 @@ button:hover {
 }
 
 
-/* Feature styling */
+/* IML Section */
 #iml-feature {
     padding-top: 80px;
         padding: 50px 20px;
@@ -913,7 +913,7 @@ button:hover {
     background-color: #e3e1dc;
     color: white;
     padding: 20px;
-    height: 100vh;
+    height: 90vh;
 }
 
 #lesbian-legacy h2, #lesbian-legacy h3 {
@@ -1016,7 +1016,50 @@ button:hover {
 }
 
 .iml-link:hover {
-    background-color: #e6c200; /* Darker gold when hovered */
+    background-color: #4DA6FF; /* Darker gold when hovered */
+}
+
+/*Transgender Section*/
+#transgender-non-conforming {
+    background-color: #333;
+    color: whitesmoke;
+    padding: 20px;
+    height: 90vh;
+    font-family: 'Courier', monospace;
+    background-image: url('../images/transbackground.gif');
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-size: cover; /* Ensure the image covers the whole element */
+    background-position: center center; /* Center the image within the element */
+}
+
+#transgender-non-conforming h2, #transgender-non-conforming h3 {
+    color: pink; /* Gold color for headers */
+}
+
+#transgender-non-conforming a {
+    color: #4DA6FF; /* Gold color for links */
+    text-decoration: none;
+}
+
+#transgender-non-conforming a:hover {
+    text-decoration: underline;
+}
+
+.content-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.scrolling-text {
+    max-height: 450px;
+    overflow-y: scroll;
+}
+
+.scrolling-img {
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 5px;
 }
 
 /* Mobile-responsive adjustments */

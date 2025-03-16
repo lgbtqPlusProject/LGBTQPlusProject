@@ -17,6 +17,8 @@ document.getElementById('landing').addEventListener('click', () => {
 const navbar = document.getElementById('navbar');
 const contentSection = document.getElementById('content');
 const aboutSection = document.getElementById('about');
+const imlSection = document.getElementById('iml-feature');
+const lesSection = document.getElementById('lesbian-legacy');
 
 function toggleNavbar() {
     const scrollPosition = window.scrollY;
@@ -24,14 +26,19 @@ function toggleNavbar() {
     const contentHeight = contentSection.offsetHeight;
     const aboutTop = aboutSection.offsetTop;
     const aboutHeight = aboutSection.offsetHeight;
-    const imlSection = document.getElementById('iml-feature');
     const imlTop = imlSection.offsetTop;
     const imlHeight = imlSection.offsetHeight;
+    const lesTop = lesSection.offsetTop;
+    const lesHeight = lesSection.offsetHeight;
+    
 
+    
+    
     if (
         (scrollPosition >= contentTop && scrollPosition <= contentTop + contentHeight) ||
         (scrollPosition >= aboutTop && scrollPosition <= aboutTop + aboutHeight) ||
         (scrollPosition >= imlTop && scrollPosition <= imlTop + imlHeight)
+        (scrollPosition >= lesTop && scrollPosition <= lesTop + lesHeight)
     ) {
         navbar.style.display = 'block';
     } else {
