@@ -29,8 +29,8 @@
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="new-section.html">Coming Soon</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contactBtn">Contact Us</a></li>
+            <li><a href="#about">Digital Archives</a></li>
+            <li><a href="#" id="contactBtn">Contact Us</a></li>
         </ul>
     </nav>
     
@@ -42,26 +42,26 @@
     
     <!-- Main Content -->
     <section id="content">
-        <!-- Contact Form (Pop-up) -->
-        <div id="contactForm" class="contact-form" style="display:none;">
-            <div class="form-container">
-                <h2>Tell Us Your Story</h2>
+        <!-- Contact Form Popup (Initially Hidden) -->
+        <div id="contactPopup" class="popup" style="display: none;">
+            <div class="popup-content">
+                <!--<button class="close-btn1">&times;</button> <!-- Close button -->
                 <form id="contactFormContent" action="https://formspree.io/f/mgvawgvn" method="POST">
-                    <label for="name">Your Name:</label>
+                    <label for="name">Name:</label>
                     <input type="text" id="name" name="name" required>
-                    
-                    <label for="email">Your Email:</label>
+
+                    <label for="email">Email:</label>
                     <input type="email" id="email" name="email" required>
-                    
-                    <label for="message">Tell Us Your Story:</label>
+
+                    <label for="message">Message:</label>
                     <textarea id="message" name="message" required></textarea>
-                    
-                    <button type="submit">Send</button>
+
+                    <button type="submit">Send Message</button>
                 </form>
-                <p id="successMessage" style="display:none; color: green;">✅ Thank you! Your message has been sent.</p>
-                <button type="button" onclick="closeForm()">X</button>
+                <div id="successMessage" style="display: none;">✅ Your message was sent successfully!</div>
             </div>
         </div>
+
         
         <div class="header">
             <img src="images/historicalFiguresTitle.gif" alt="Background Image" class="background-image">

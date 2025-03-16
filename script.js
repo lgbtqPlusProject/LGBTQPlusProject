@@ -51,31 +51,78 @@ function closeAnnouncement() {
     }, 1500);
 }
 
-// Contact Form Handling
+// Contact Form Popup Handling
 document.addEventListener('DOMContentLoaded', function () {
-    const contactFormContent = document.getElementById('contactFormContent');
+    const contactBtn = document.getElementById('contactBtn');  // The "Contact Us" button
+    const contactPopup = document.getElementById('contactPopup');  // The entire popup
+    const contactFormContent = document.getElementById('contactFormContent');  // The form itself
     const successMessage = document.getElementById('successMessage');
+    const closeButton = document.querySelector('.close-btn1');  // The close button
 
-    contactFormContent.addEventListener('submit', function (event) {
-        event.preventDefault();
-        const formData = new FormData(contactFormContent);
+    // Function to open the popup with animation
+    function openPopup() {
+        contactPopup.style.display = 'flex';
+        setTimeout(() => {
+            contactPopup.style.opacity = '1';
+        }, 10);  // Trigger fade-in after setting display to 'flex'
+    }
 
-        fetch(contactFormContent.action, {
-            method: "POST",
-            body: formData,
-            headers: { "Accept": "application/json" }
-        })
-        .then(response => {
-            if (response.ok) {
-                contactFormContent.style.display = 'none';
-                successMessage.style.display = 'block';
-            } else {
-                alert("⚠️ Oops! There was a problem sending your message.");
-            }
-        })
-        .catch(error => alert("⚠️ Oops! There was a problem."));
-    });
+    // Function to close the popup with animation
+    function closePopup() {
+        contactPopup.style.opacity = '0';
+        setTimeout(() => {
+            contactPopup.style.display = 'none';
+            contactFormContent.reset();  // Clear the form when closed
+        }, 400);  // Matches the CSS transition duration (0.4s)
+    }
+
+    // Show the popup when clicking the "Contact Us" button
+    if (contactBtn) {
+        contactBtn.addEventListener('click', function (event) {
+            event.preventDefault();
+            console.log("Contact Us button clicked - Opening form.");
+            openPopup();
+            successMessage.style.display = 'none';
+        });
+    }
+
+    // Close the popup when clicking the close button
+    if (closeButton) {
+        closeButton.addEventListener('click', function () {
+            console.log("Close button clicked - Closing form.");
+            closePopup();
+        });
+    }
+
+    // Handle form submission
+    if (contactFormContent) {
+        contactFormContent.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const formData = new FormData(contactFormContent);
+
+            fetch(contactFormContent.action, {
+                method: "POST",
+                body: formData,
+                headers: { "Accept": "application/json" }
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Form submitted successfully.");
+                    successMessage.style.display = 'block';  // Show success message
+
+                    // Close the popup after 2 seconds of displaying success message
+                    setTimeout(() => {
+                        closePopup();
+                    }, 2000);
+                } else {
+                    alert("⚠️ Oops! There was a problem sending your message.");
+                }
+            })
+            .catch(error => alert("⚠️ Oops! There was a problem."));
+        });
+    }
 });
+
 
 // Search Archive Handling
 async function searchArchive(query) {
