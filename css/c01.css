@@ -13,6 +13,20 @@ h1 {
     display: none;
 }
 
+/* Mission Statement at the Bottom of the Content Page */
+.mission-statement {
+    background-color: rgba(0, 0, 0, 100); /* Semi-transparent background */
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 15px;
+    font-size: 14px;
+    width: 100%;  /* Full width of the content */
+    font-family: "Josefin Sans Regular", Courier, monospace;
+    text-align: center;
+    margin-top: 50px;  /* This pushes the mission statement to the bottom */
+}
+
 /* Body */
 body {
     font-family: "Josefin Sans Regular", Courier, monospace;
@@ -720,21 +734,6 @@ form button:hover {
     color: #555;        /* Light gray color for the text */
 }
 
-
-
-/* Mission Statement at the Bottom of the Content Page */
-.mission-statement {
-    background-color: black;  /* Optional background color */
-    color: white;
-    padding: 20px;
-    box-sizing: border-box;
-    border-radius: 10px;
-    font-size: 14px;
-    width: 100%;  /* Full width of the content */
-    text-align: center;
-    margin-top: 50px;  /* This pushes the mission statement to the bottom */
-}
-
 /* Full-Page About Section */
 .full-page-section {
     width: 100%;
@@ -829,6 +828,92 @@ button:hover {
 .archive-description .keyword {
     color: #ff4d4d;
     font-weight: bold;
+}
+
+
+/* Feature styling */
+#iml-feature {
+    padding-top: 50px;
+        padding: 50px 20px;
+        background-color: white
+        color: black;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start; /* Aligns the box lower */
+        margin-top: 80px; /* Adds space below the navbar */
+    }
+
+.iml-description {
+            font-family: 'Courier', monospace;
+            color: whitesmoke;
+            line-height: 1.6;
+}
+
+        .iml-container {
+            display: flex;
+            gap: 20px;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .iml-scrolling-content {
+            width: 35%;
+            height: 80vh;
+            overflow-y: auto;
+            padding: 20px;
+            background-color: white
+            color: black;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .iml-title {
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+.iml-container {
+    display: flex;
+    gap: 20px;
+    width: 90%;
+    max-width: 1200px;
+}
+
+.iml-scrolling-content {
+    width: 35%;
+    height: 80vh;
+    overflow-y: auto;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.10);
+}
+
+.iml-collage {
+    width: 60%;
+    height: 80vh;
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    color: white;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.collage-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.collage-grid img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
 }
 
 /* Mobile-responsive adjustments */

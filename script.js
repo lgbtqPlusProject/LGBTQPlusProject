@@ -24,16 +24,18 @@ function toggleNavbar() {
     const contentHeight = contentSection.offsetHeight;
     const aboutTop = aboutSection.offsetTop;
     const aboutHeight = aboutSection.offsetHeight;
+    const imlSection = document.getElementById('iml-feature');
+    const imlTop = imlSection.offsetTop;
+    const imlHeight = imlSection.offsetHeight;
 
     if (
         (scrollPosition >= contentTop && scrollPosition <= contentTop + contentHeight) ||
-        (scrollPosition >= aboutTop && scrollPosition <= aboutTop + aboutHeight)
+        (scrollPosition >= aboutTop && scrollPosition <= aboutTop + aboutHeight) ||
+        (scrollPosition >= imlTop && scrollPosition <= imlTop + imlHeight)
     ) {
         navbar.style.display = 'block';
-        contentSection.classList.add('navbar-visible');
     } else {
         navbar.style.display = 'none';
-        contentSection.classList.remove('navbar-visible');
     }
 }
 
@@ -328,4 +330,18 @@ document.getElementById('searchBtnDatabase').addEventListener('click', function 
     if (query === '') return;  // Prevents empty search
 
     searchDatabase(query);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const imlFeature = document.getElementById('iml-feature');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                imlFeature.classList.add('show');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    observer.observe(imlFeature);
 });
