@@ -31,8 +31,6 @@ h1 {
 body {
     font-family: "Josefin Sans Regular", Courier, monospace;
     background-color: black;
-    background-image: url("../images/lgbptqprojectLogov3.gif");
-    background-size: cover;
     margin: 0;
     padding: 0;
 }
@@ -207,10 +205,11 @@ button[onclick="searchDatabase()"]:focus {
 #landing {
     height: 100vh;
     display: flex;
+    background-size: cover;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #111;
+    background-color: black;
     color: white;
     text-align: center;
     position: relative;
@@ -478,7 +477,7 @@ form button:hover {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #111;
+    background-color: black;
     color: white;
     text-align: center;
     position: relative;
@@ -746,7 +745,12 @@ form button:hover {
 
 .about-content {
     text-align: center;
+    height: 100vh;
     max-width: 800px; /* Optional: limits the content width */
+}
+
+about {
+    background-color: black;
 }
 
 
@@ -835,13 +839,12 @@ button:hover {
 #iml-feature {
     padding-top: 50px;
         padding: 50px 20px;
-        background-color: white
+        background-color: #e3e1dc;
         color: black;
         height: 100vh;
         display: flex;
         justify-content: center;
         align-items: flex-start; /* Aligns the box lower */
-        margin-top: 80px; /* Adds space below the navbar */
     }
 
 .iml-description {
@@ -914,6 +917,71 @@ button:hover {
     width: 100%;
     height: auto;
     border-radius: 10px;
+}
+
+
+/*lesbian section*/
+#lesbian-legacy {
+    background-color: #e3e1dc;
+    color: white;
+    padding: 20px;
+    height: 100vh;
+}
+
+#lesbian-legacy h2, #lesbian-legacy h3 {
+    color: pink; /* Gold color for headers */
+}
+
+#lesbian-legacy a {
+    color: #4DA6FF; /* Blue color for links */
+    text-decoration: none;
+}
+
+#lesbian-legacy a:hover {
+    text-decoration: underline;
+}
+
+.content-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-content {
+    width: 50%;
+    padding-right: 20px;
+    background-color: #444; /* Dark background for left box */
+    border-radius: 10px; /* Rounded corners */
+    border: 2px solid pink; /* Pink border around the box */
+    padding: 20px;
+    font-family: 'Josefin Sans', sans-serif;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add a subtle shadow */
+    max-height: 450px; /* Limit height for scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.right-content {
+    width: 60%;
+    overflow-y: auto;
+    max-height: 500px;
+    background-color: #444;
+    font-family: 'Josefin Sans', sans-serif;
+    padding: 10px;
+    border-radius: 10px; /* Rounded corners */
+    border: 2px solid pink; /* Pink border around the box */
+    padding: 20px;
+    max-height: 450px; /* Limit height for scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.scrolling-text {
+    max-height: 450px;
+    overflow-y: scroll;
+}
+
+.scrolling-img {
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 5px;
 }
 
 /* Mobile-responsive adjustments */
