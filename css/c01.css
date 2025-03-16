@@ -837,11 +837,11 @@ button:hover {
 
 /* Feature styling */
 #iml-feature {
-    padding-top: 50px;
+    padding-top: 80px;
         padding: 50px 20px;
-        background-color: #e3e1dc;
+        background-color: black;
         color: black;
-        height: 100vh;
+        height: 80vh;
         display: flex;
         justify-content: center;
         align-items: flex-start; /* Aligns the box lower */
@@ -853,58 +853,46 @@ button:hover {
             line-height: 1.6;
 }
 
-        .iml-container {
-            display: flex;
-            gap: 20px;
-            width: 90%;
-            max-width: 1200px;
-        }
-
-        .iml-scrolling-content {
-            width: 35%;
-            height: 80vh;
-            overflow-y: auto;
-            padding: 20px;
-            background-color: white
-            color: black;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .iml-title {
-            font-family: 'Josefin Sans', sans-serif;
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            text-align: center;
-        }
+.iml-title {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    ext-align: center;
+}
 
 .iml-container {
     display: flex;
     gap: 20px;
     width: 90%;
+    height:800px;
     max-width: 1200px;
+    justify-content: center;
 }
 
 .iml-scrolling-content {
-    width: 35%;
-    height: 80vh;
-    overflow-y: auto;
+    width: 60%;
+    padding-right: 20px;
+    background-color: rgba(44, 44, 44, 0.8); /* Dark gray with semi-transparency */
+    color: whitesmoke;
+    border-radius: 10px; /* Rounded corners */
+    border: 2px solid gray; /* Gold border around the box */
     padding: 20px;
-    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
-    color: white;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.10);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add a subtle shadow */
+    max-height: 450px; /* Limit height for scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
 }
 
 .iml-collage {
     width: 60%;
-    height: 80vh;
-    overflow-y: auto;
-    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
-    color: white;
-    border-radius: 15px;
-    padding: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding-right: 20px;
+    background-color: rgba(44, 44, 44, 0.8); /* Dark gray with semi-transparency */
+    color: whitesmoke;
+    border-radius: 10px; /* Rounded corners */
+    border: 2px solid gray; /* Gold border around the box */
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add a subtle shadow */
+    max-height: 450px; /* Limit height for scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
 }
 
 .collage-grid {
@@ -953,7 +941,8 @@ button:hover {
     border-radius: 10px; /* Rounded corners */
     border: 2px solid pink; /* Pink border around the box */
     padding: 20px;
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Courier', monospace;
+    color: whitesmoke;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add a subtle shadow */
     max-height: 450px; /* Limit height for scrolling */
     overflow-y: auto; /* Enable vertical scrolling */
@@ -964,7 +953,8 @@ button:hover {
     overflow-y: auto;
     max-height: 500px;
     background-color: #444;
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Courier', monospace;
+    color: whitesmoke;
     padding: 10px;
     border-radius: 10px; /* Rounded corners */
     border: 2px solid pink; /* Pink border around the box */
@@ -982,6 +972,51 @@ button:hover {
     width: 100%;
     margin-top: 10px;
     border-radius: 5px;
+}
+
+#iml-bottom-container {
+    background-color: #444; /* Dark background to blend with the section */
+    color: white;
+    padding-bottom: 50px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.container-content {
+    max-width: 900px;
+    color: whitesmoke;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#iml-bottom-container h3 {
+    color: #FFD700; /* Gold color for the header */
+    margin-bottom: 10px;
+}
+
+#iml-bottom-container p {
+    color: white;
+    margin-bottom: 20px;
+}
+
+.links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.iml-link {
+    background-color: #FFD700; /* Gold color for the buttons */
+    color: black;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.iml-link:hover {
+    background-color: #e6c200; /* Darker gold when hovered */
 }
 
 /* Mobile-responsive adjustments */
