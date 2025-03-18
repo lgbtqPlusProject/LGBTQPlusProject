@@ -1,109 +1,83 @@
-// Window onLoad
-document.addEventListener("DOMContentLoaded", function () {
-    setTimeout(() => {
-        document.getElementById("announcement").classList.add("show");
-    }, 1000);
-});
-
-// Landing Scroll
-document.getElementById('landing').addEventListener('click', () => {
-    window.scrollTo({
-        top: window.innerHeight,
-        behavior: 'smooth'
-    });
-});
-
-// Navbar Scroll Handling
-const navbar = document.getElementById('navbar');
-const contentSection = document.getElementById('content');
-const aboutSection = document.getElementById('about');
-const imlSection = document.getElementById('iml-feature');
-const lesSection = document.getElementById('lesbian-legacy');
-
-function toggleNavbar() {
-    const scrollPosition = window.scrollY;
-    const contentTop = contentSection.offsetTop;
-    const contentHeight = contentSection.offsetHeight;
-    const aboutTop = aboutSection.offsetTop;
-    const aboutHeight = aboutSection.offsetHeight;
-    const imlTop = imlSection.offsetTop;
-    const imlHeight = imlSection.offsetHeight;
-    const lesTop = lesSection.offsetTop;
-    const lesHeight = lesSection.offsetHeight;
-    
-
-    
-    
-    if (
-        (scrollPosition >= contentTop && scrollPosition <= contentTop + contentHeight) ||
-        (scrollPosition >= aboutTop && scrollPosition <= aboutTop + aboutHeight) ||
-        (scrollPosition >= imlTop && scrollPosition <= imlTop + imlHeight)
-        (scrollPosition >= lesTop && scrollPosition <= lesTop + lesHeight)
-    ) {
-        navbar.style.display = 'block';
-    } else {
-        navbar.style.display = 'none';
-    }
-}
-
-if (navbar && contentSection && aboutSection) {
-    window.addEventListener('scroll', toggleNavbar);
-    toggleNavbar();  // Call on page load
-}
-
-// Announcement Handling
-function closeAnnouncement() {
-    const box = document.getElementById("announcement");
-    box.style.opacity = "0";
-    setTimeout(() => {
-        box.style.visibility = "hidden";
-    }, 1500);
-}
-
-// Contact Form Popup Handling
 document.addEventListener('DOMContentLoaded', function () {
-    const contactBtn = document.getElementById('contactBtn');  // The "Contact Us" button
-    const contactPopup = document.getElementById('contactPopup');  // The entire popup
-    const contactFormContent = document.getElementById('contactFormContent');  // The form itself
-    const successMessage = document.getElementById('successMessage');
-    const closeButton = document.querySelector('.close-btn1');  // The close button
 
-    // Function to open the popup with animation
+    // Show Announcement
+    setTimeout(() => {
+        const announcement = document.getElementById("announcement");
+        if (announcement) announcement.classList.add("show");
+    }, 1000);
+
+    // Landing Scroll
+    const landing = document.getElementById('landing');
+    if (landing) {
+        landing.addEventListener('click', () => {
+            window.scrollTo({
+                top: window.innerHeight,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // Navbar Scroll Handling
+    const navbar = document.getElementById('navbar');
+    const contentSection = document.getElementById('content');
+    const aboutSection = document.getElementById('about');
+    const imlSection = document.getElementById('iml-feature');
+    const lesSection = document.getElementById('lesbian-legacy');
+
+    function toggleNavbar() {
+        const scrollPosition = window.scrollY;
+
+        if (
+            (scrollPosition >= contentSection.offsetTop) ||
+            (scrollPosition >= aboutSection.offsetTop) ||
+            (scrollPosition >= imlSection.offsetTop) ||
+            (scrollPosition >= lesSection.offsetTop)
+        ) {
+            navbar.style.display = 'block';
+        } else {
+            navbar.style.display = 'none';
+        }
+    }
+
+    if (navbar && contentSection && aboutSection && imlSection && lesSection) {
+        window.addEventListener('scroll', toggleNavbar);
+        toggleNavbar();
+    }
+
+    // Contact Form Handling
+    const contactBtn = document.getElementById('contactBtn');
+    const contactPopup = document.getElementById('contactPopup');
+    const contactFormContent = document.getElementById('contactFormContent');
+    const successMessage = document.getElementById('successMessage');
+    const closeButton = document.querySelector('.close-btn1');
+
     function openPopup() {
         contactPopup.style.display = 'flex';
         setTimeout(() => {
             contactPopup.style.opacity = '1';
-        }, 10);  // Trigger fade-in after setting display to 'flex'
+        }, 10);
     }
 
-    // Function to close the popup with animation
     function closePopup() {
         contactPopup.style.opacity = '0';
         setTimeout(() => {
             contactPopup.style.display = 'none';
-            contactFormContent.reset();  // Clear the form when closed
-        }, 400);  // Matches the CSS transition duration (0.4s)
+            if (contactFormContent) contactFormContent.reset();
+        }, 400);
     }
 
-    // Show the popup when clicking the "Contact Us" button
     if (contactBtn) {
         contactBtn.addEventListener('click', function (event) {
             event.preventDefault();
-            console.log("Contact Us button clicked - Opening form.");
             openPopup();
-            successMessage.style.display = 'none';
+            if (successMessage) successMessage.style.display = 'none';
         });
     }
 
-    // Close the popup when clicking the close button
     if (closeButton) {
-        closeButton.addEventListener('click', function () {
-            console.log("Close button clicked - Closing form.");
-            closePopup();
-        });
+        closeButton.addEventListener('click', closePopup);
     }
 
-    // Handle form submission
     if (contactFormContent) {
         contactFormContent.addEventListener('submit', function (event) {
             event.preventDefault();
@@ -116,13 +90,8 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(response => {
                 if (response.ok) {
-                    console.log("Form submitted successfully.");
-                    successMessage.style.display = 'block';  // Show success message
-
-                    // Close the popup after 2 seconds of displaying success message
-                    setTimeout(() => {
-                        closePopup();
-                    }, 2000);
+                    successMessage.style.display = 'block';
+                    setTimeout(closePopup, 2000);
                 } else {
                     alert("⚠️ Oops! There was a problem sending your message.");
                 }
@@ -130,163 +99,55 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => alert("⚠️ Oops! There was a problem."));
         });
     }
-});
+    
+    
+    console.log("Search button listeners are working.");  // Add this at the top of your script.js file
 
-
-// Search Archive Handling
-async function searchArchive(query) {
-    const apiUrl = `https://archive.org/advancedsearch.php?q=title:${encodeURIComponent(query)}&fl[]=title&fl[]=creator&rows=5&start=0&output=json`;
-
-    try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        const resultDiv = document.getElementById('result');
-        const resultPopup = document.getElementById('resultPopup');
-        const closePopupBtn = document.getElementById('closePopup');
-        const items = data.response.docs;
-
-        // Show the result popup
-        resultPopup.style.display = 'block';
-
-        let resultHTML = items.length > 0 ? '<ul>' : '<p>No results found.</p>';
-        items.forEach(item => {
-            const creators = Array.isArray(item.creator) ? item.creator.join(', ') : (item.creator || 'N/A');
-            resultHTML += `
-                <li>
-                    <strong>Title:</strong> <a href="https://archive.org/search.php?query=${encodeURIComponent(item.title)}" target="_blank">${item.title}</a><br>
-                    <strong>Creator:</strong> ${creators}
-                </li>
-            `;
+    // Search Archive Handling
+    const searchBtn = document.getElementById('searchBtn');
+    if (searchBtn) {
+        searchBtn.addEventListener('click', function () {
+            console.log("Archive Search Button Clicked");
+            const query = document.getElementById('searchInput').value.trim();
+            if (query) searchArchive(query);  // Make sure this function is defined somewhere!
         });
-        resultHTML += '</ul>';
-        resultDiv.innerHTML = resultHTML;
-
-        // Log the search query and results
-        fetch('https://lgbtqplusproject.onrender.com/logSearch', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                query: query,       // Ensure query is a valid string
-                results: items      // Ensure results (from the Archive search) are valid
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.message === 'Search logged successfully') {
-                console.log('Search logged successfully.');
-            } else {
-                console.error('Failed to log search:', data.error);
-            }
-        })
-        .catch(error => {
-            console.error('Error logging search:', error);
-        });
-
-        // Close the popup on close button click
-        closePopupBtn.addEventListener('click', function () {
-            resultPopup.style.display = 'none';
-        });
-    } catch (error) {
-        console.error('Error fetching the API:', error);
-        document.getElementById('result').innerHTML = '<p>There was an error fetching the results.</p>';
     }
-}
 
-// Trigger search on search button click
-document.getElementById('searchBtn').addEventListener('click', function () {
-    const query = document.getElementById('searchInput').value.trim();
+    // Search Database Handling
+    const searchBtnDatabase = document.getElementById('searchBtnDatabase');
+    if (searchBtnDatabase) {
+        searchBtnDatabase.addEventListener('click', function () {
+            console.log("Database Search Button Clicked");
+            const query = document.getElementById('searchBox').value.trim();
+            if (query) searchDatabase(query);  // Make sure this function is defined somewhere!
+        });
+    }
 
-    if (query === '') return;
-
-    
-    // Proceed with the search
-    searchArchive(query);
-    
-    
-    // Log the search query in your database
-    fetch('https://lgbtqplusproject.onrender.com/logSearch', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            query: query,       // Ensure query is a valid string
-            results: items      // Ensure results (from the Archive search) are valid
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.message === 'Search logged successfully') {
-            console.log('Search logged successfully.');
-        } else {
-            console.error('Failed to log search:', data.error);
-        }
-    })
-    .catch(error => {
-        console.error('Error logging search:', error);
-    });
-
-    // Proceed with the search
-    searchArchive(query);
+    // Trigger IML section reveal
+    const imlFeature = document.getElementById('iml-feature');
+    if (imlFeature) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    imlFeature.classList.add('show');
+                }
+            });
+        }, { threshold: 0.1 });
+        observer.observe(imlFeature);
+    }
 });
 
-// Close search popup function
-function closeSearchPopup() {
-    document.getElementById('resultPopup').style.display = 'none';
-}
-
-// Function to search logs
-function searchLogs() {
-    const searchQuery = document.getElementById('logSearchQuery').value;
-
-    console.log("Searching logs for: ", searchQuery); // Debug log
-
-    fetch(`https://lgbtqplusproject.onrender.com/logsearch?query=${searchQuery}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            const logsContainer = document.querySelector("#logTable tbody");
-            logsContainer.innerHTML = ""; // Clear previous logs
-
-            if (data.logs.length === 0) {
-                const noResultsRow = document.createElement("tr");
-                noResultsRow.innerHTML = "<td colspan='2'>No results found</td>";
-                logsContainer.appendChild(noResultsRow);
-            }
-
-            data.logs.forEach(log => {
-                const logRow = document.createElement("tr");
-                logRow.innerHTML = `
-                    <td>${log.query}</td>
-                    <td>${log.search_time}</td>
-                `;
-                logsContainer.appendChild(logRow);
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching logs:', error);
-            alert('⚠️ Error fetching logs. Please try again later.');
-        });
-}
-
-// Function to search the historicalFigures table in the database
+// Database Search Function
 async function searchDatabase(query) {
     if (!query || query.length < 2) {
-        return; // Don't search if the query is undefined or too short
+        alert('Please enter a valid search query.');
+        return;
     }
 
     const url = `https://lgbtqplusproject.onrender.com/search?query=${encodeURIComponent(query)}`;
 
     try {
-        const response = await fetch(url, {
-            method: 'GET', // Ensure you're sending a GET request
-        });
+        const response = await fetch(url, { method: 'GET' });
 
         if (!response.ok) {
             const errorData = await response.json();
@@ -295,23 +156,12 @@ async function searchDatabase(query) {
         }
 
         const data = await response.json();
-
-        // Display results in a popup or any other method you prefer
-        const resultDiv = document.getElementById('result');
-        const resultPopup = document.getElementById('resultPopup');
-        const closePopupBtn = document.getElementById('closePopup');
-        resultPopup.style.display = 'block';
+        const resultDiv = document.getElementById('searchResultsContainer');
 
         if (data.length > 0) {
             let resultHTML = '<ul>';
             data.forEach(item => {
-                resultHTML += `
-                    <li>
-                        <strong>Name:</strong> ${item.name}<br>
-                        <strong>Contribution:</strong> ${item.contribution}<br>
-                        <strong>Country:</strong> ${item.country}
-                    </li>
-                `;
+                resultHTML += `<li><strong>Name:</strong> ${item.name} - <strong>Contribution:</strong> ${item.contribution} - <strong>Country:</strong> ${item.country}</li>`;
             });
             resultHTML += '</ul>';
             resultDiv.innerHTML = resultHTML;
@@ -319,36 +169,75 @@ async function searchDatabase(query) {
             resultDiv.innerHTML = '<p>No results found in the database.</p>';
         }
 
-        // Close popup logic
-        closePopupBtn.addEventListener('click', function () {
-            resultPopup.style.display = 'none';
-        });
-
+        document.getElementById('searchResultsBox').style.display = 'block';
     } catch (error) {
-        console.error('Error fetching database search results:', error);
+        console.error('Error fetching data from the database:', error);
         alert('⚠️ Error fetching data from the database. Please try again later.');
     }
 }
 
-// Event listener for the search button
-document.getElementById('searchBtnDatabase').addEventListener('click', function () {
-    const query = document.getElementById('searchBox').value.trim();
 
-    if (query === '') return;  // Prevents empty search
+// Close Search Results Box
+function closeSearchBox() {
+    const searchResultsBox = document.getElementById('searchResultsBox');
+    if (searchResultsBox) {
+        searchResultsBox.style.display = 'none';
+    }
+}
 
-    searchDatabase(query);
-});
+// Close Archive Search Popup
+function closeSearchPopup() {
+    const resultPopup = document.getElementById('resultPopup');
+    if (resultPopup) {
+        resultPopup.style.display = 'none';
+    }
+}
 
-document.addEventListener('DOMContentLoaded', () => {
-    const imlFeature = document.getElementById('iml-feature');
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                imlFeature.classList.add('show');
-            }
+// Archive Search Function
+async function searchArchive(query) {
+    if (!query) {
+        alert('Please enter a search query.');
+        return;
+    }
+
+    const apiUrl = `https://archive.org/advancedsearch.php?q=title:${encodeURIComponent(query)}&fl[]=title&fl[]=creator&rows=5&output=json`;
+
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        const items = data.response.docs;
+
+        const resultDiv = document.getElementById('result');
+        let resultHTML = items.length > 0 ? '<ul>' : '<p>No results found.</p>';
+
+        items.forEach(item => {
+            const creators = Array.isArray(item.creator) ? item.creator.join(', ') : (item.creator || 'N/A');
+            const encodedTitle = encodeURIComponent(item.title);
+
+            resultHTML += `
+                <li>
+                    <strong>Title:</strong> 
+                    <a href="https://archive.org/search.php?query=${encodedTitle}" target="_blank">${item.title}</a><br>
+                    <strong>Creator:</strong> ${creators}
+                </li>
+            `;
         });
-    }, { threshold: 0.1 });
 
-    observer.observe(imlFeature);
-});
+        resultHTML += '</ul>';
+        resultDiv.innerHTML = resultHTML;
+
+        // Show the popup
+        const resultPopup = document.getElementById('resultPopup');
+        if (resultPopup) {
+            resultPopup.style.display = 'block';
+        }
+    } catch (error) {
+        console.error('Error fetching data from Archive.org:', error);
+        alert('⚠️ Error fetching data. Please try again later.');
+    }
+}
+
+function closeAnnouncement() {
+    document.getElementById('announcement').style.display = 'none';
+}
