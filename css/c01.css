@@ -1062,6 +1062,71 @@ button:hover {
     border-radius: 5px;
 }
 
+/* Search Results Box (Matching Archive Search Style) */
+.search-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 800px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    max-height: 80vh;
+    z-index: 1000;
+}
+
+/* Close Button Styling */
+.close-btn2 {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.close-btn2:hover {
+    background-color: #d93636;
+}
+
+/* Individual Result Card Style */
+.result-card {
+    background-color: #f0f0f0;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 12px;
+    border-left: 5px solid #4DA6FF;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.result-card:hover {
+    background-color: #e3f2fd;
+    transform: scale(1.02);
+}
+
+/* Text Styling */
+.result-card h3 {
+    margin: 0;
+    padding-bottom: 5px;
+    color: #333;
+}
+
+.result-card p {
+    margin: 0;
+    padding-bottom: 5px;
+    color: #666;
+    line-height: 1.6;
+}
+
+
 /* Mobile-responsive adjustments */
 @media only screen and (max-width: 768px) {
     #content {
