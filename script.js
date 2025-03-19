@@ -232,12 +232,41 @@ async function searchArchive(query) {
         if (resultPopup) {
             resultPopup.style.display = 'block';
         }
+
+        // Log the search to your database
+        logSearch(query);
+
     } catch (error) {
         console.error('Error fetching data from Archive.org:', error);
         alert('⚠️ Error fetching data. Please try again later.');
     }
 }
 
+//log archive search results
+function logSearch(query) {
+    fetch('https://lgbtqplusproject.org/public/logsearch.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ searchQuery: query })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log('Search logged successfully.');
+        } else {
+            console.error('Failed to log search:', data.message);
+        }
+    })
+    .catch(error => console.error('Error logging search:', error));
+}
+
+
+
+
 function closeAnnouncement() {
     document.getElementById('announcement').style.display = 'none';
 }
+
+
