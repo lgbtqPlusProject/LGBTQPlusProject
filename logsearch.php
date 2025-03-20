@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // CORS headers for OPTIONS and POST requests
-header("Access-Control-Allow-Origin: https://www.lgbtqplusproject.org");  // Allow only your site
+header("Access-Control-Allow-Origin: *");  // Allow only your site
 header("Access-Control-Allow-Methods: POST, OPTIONS");  // Allow POST and OPTIONS methods
 header("Access-Control-Allow-Headers: Content-Type, Authorization");  // Allow necessary headers
 header("Content-Type: application/json");  // Return JSON response

@@ -10,7 +10,7 @@ const allowedOrigins = ['https://www.lgbtqplusproject.org', 'https://www.lgbtqpl
 
 // CORS middleware
 app.use(cors({
-    origin: 'https://www.lgbtqplusproject.org',  // Allow only this origin
+    origin: '*',  // Allow only this origin
     methods: ['POST', 'OPTIONS'],  // Allow POST and OPTIONS methods
     allowedHeaders: ['Content-Type', 'Authorization']  // Allow necessary headers
 }));
