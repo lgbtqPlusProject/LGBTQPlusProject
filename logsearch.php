@@ -3,9 +3,9 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Allowed origins (both www and non-www)
+// List of allowed origins (both www and non-www)
 $allowedOrigins = ['https://lgbtqplusproject.org', 'https://www.lgbtqplusproject.org'];
-$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';  // Get the origin of the incoming request
 
 // Check if the origin is in the allowed list
 if (in_array($origin, $allowedOrigins)) {
