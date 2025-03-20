@@ -17,10 +17,6 @@ app.use(cors({
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-const testimonyRoute = require('./path-to-your-backend-route-file');
-app.use(express.json());
-app.use('/', testimonyRoute); 
-
 // Your routes for handling POST requests (including the search logging route)
 app.post('/logSearch', (req, res) => {
     const searchQuery = req.body.searchQuery;
