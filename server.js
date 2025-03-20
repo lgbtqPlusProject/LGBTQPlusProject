@@ -6,7 +6,7 @@ const fetch = require('node-fetch');
 const app = express();
 
 // Enable CORS for specific domains only
-const allowedOrigins = ['https://lgbtqplusproject.org', 'https://www.lgbtqplusproject.org'];
+const allowedOrigins = ['https://www.lgbtqplusproject.org', 'https://www.lgbtqplusproject.org'];
 
 // CORS middleware
 app.use(cors({
