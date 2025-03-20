@@ -15,6 +15,8 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']  // Allow necessary headers
 }));
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Your routes for handling POST requests (including the search logging route)
 app.post('/logSearch', (req, res) => {
     const searchQuery = req.body.searchQuery;
