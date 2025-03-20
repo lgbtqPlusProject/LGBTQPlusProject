@@ -7,7 +7,7 @@ const fetch = require('node-fetch');
 // Enable CORS for specific domain
 const cors = require('cors');
 app.use(cors({
-    origin: '*',  // Allow the frontend domain
+    origin: ['https://lgbtqplusproject.org', 'https://www.lgbtqplusproject.org'],  // Allow only these origins
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
 }));
