@@ -3,7 +3,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// List of allowed origins (both www and non-www)
+// Allowed origins (both www and non-www)
 $allowedOrigins = ['https://lgbtqplusproject.org', 'https://www.lgbtqplusproject.org'];
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';  // Get the origin of the incoming request
 
@@ -18,7 +18,11 @@ header("Content-Type: application/json");  // Return JSON response
 
 // Handle preflight request (CORS OPTIONS request)
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);  // Send a success status (200 OK) for OPTIONS requests
+    // Allow the OPTIONS request by responding with 200 status code
+    header("Access-Control-Allow-Origin: $origin");
+    header("Access-Control-Allow-Methods: POST, OPTIONS");
+    header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
+    http_response_code(200);  // Send a success status (200 OK)
     exit();  // Exit after handling OPTIONS request
 }
 
