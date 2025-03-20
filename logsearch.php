@@ -3,54 +3,36 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// List of allowed origins (both www and non-www)
-$allowedOrigins = ['https://lgbtqplusproject.org', 'https://www.lgbtqplusproject.org'];
-$origin = $_SERVER['HTTP_ORIGIN'] ?? '';  // Get the origin of the incoming request
-
-// Check if the origin is in the allowed list
-if (in_array($origin, $allowedOrigins)) {
-    header("Access-Control-Allow-Origin: $origin");
-}
-
+// CORS headers for preflight and POST requests
+header("Access-Control-Allow-Origin: https://www.lgbtqplusproject.org");  // Allow specific origin
 header("Access-Control-Allow-Methods: POST, OPTIONS");  // Allow POST and OPTIONS methods
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");  // Allow necessary headers
+header("Access-Control-Allow-Headers: Content-Type, Authorization");  // Allow necessary headers
 header("Content-Type: application/json");  // Return JSON response
 
-// Handle preflight request (CORS OPTIONS request)
+// Handle preflight (OPTIONS request)
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    // Allow the OPTIONS request by responding with 200 status code
-    header("Access-Control-Allow-Origin: $origin");
-    header("Access-Control-Allow-Methods: POST, OPTIONS");
-    header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
-    http_response_code(200);  // Send a success status (200 OK)
-    exit();  // Exit after handling OPTIONS request
+    http_response_code(200);  // Send success response for OPTIONS preflight request
+    exit();  // Exit to prevent further execution
 }
 
-// Only allow POST requests
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);  // Method Not Allowed
-    echo json_encode(["success" => false, "message" => "Invalid request method."]);
+// Handle POST requests (main logic)
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Read incoming JSON data
+    $input = file_get_contents("php://input");
+    $data = json_decode($input, true);
+
+    if (!$data || !isset($data['searchQuery'])) {
+        echo json_encode(['success' => false, 'message' => 'Missing search query']);
+        exit();
+    }
+
+    // Log the search (you can replace this with actual logic to log into the database)
+    $searchQuery = $data['searchQuery'];
+
+    // Send a success response
+    echo json_encode(['success' => true, 'message' => 'Search logged successfully']);
     exit();
 }
 
-// Read incoming data
-$input = file_get_contents("php://input");
-$data = json_decode($input, true);
-
-// Check if JSON decoding worked
-if (json_last_error() !== JSON_ERROR_NONE) {
-    echo json_encode(["success" => false, "message" => "Invalid JSON format."]);
-    exit();
-}
-
-// Check if 'searchQuery' is provided
-if (!isset($data['searchQuery'])) {
-    echo json_encode(["success" => false, "message" => "No search query provided."]);
-    exit();
-}
-
-$searchQuery = $data['searchQuery'];  // Get the search query
-
-// Simulate logging search (replace this with actual database code)
-echo json_encode(["success" => true, "message" => "Search logged successfully."]);
-?>
+http_response_code(405);  // Method Not Allowed for any non-POST and non-OPTIONS requests
+echo json_encode(['success' => false, 'message' => 'Method Not Allowed']);
