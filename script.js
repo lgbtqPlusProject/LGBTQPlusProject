@@ -246,6 +246,9 @@ async function searchArchive(query) {
 function logSearch(query) {
     console.log(`Attempting to log search for: ${query}`);
 
+    // Log the URL being used
+    console.log('Fetching URL:', 'https://www.lgbtqplusproject.org/logsearch.php');
+
     fetch('https://www.lgbtqplusproject.org/logsearch.php', {  // Ensure this URL is correct
         method: 'POST',
         headers: {
@@ -274,7 +277,6 @@ function logSearch(query) {
     })
     .catch(error => console.error('Error logging search:', error));
 }
-
 
 function closeAnnouncement() {
     document.getElementById('announcement').style.display = 'none';
