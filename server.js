@@ -10,10 +10,26 @@ const allowedOrigins = ['https://lgbtqplusproject.org', 'https://www.lgbtqpluspr
 
 // CORS middleware
 app.use(cors({
-    origin: allowedOrigins,  // Allow only these origins
-    methods: ['GET', 'POST', 'OPTIONS'],  // Allow GET, POST, and OPTIONS methods
-    allowedHeaders: ['Content-Type', 'Authorization'],  // Allow necessary headers
+    origin: 'https://www.lgbtqplusproject.org',  // Allow only this origin
+    methods: ['POST', 'OPTIONS'],  // Allow POST and OPTIONS methods
+    allowedHeaders: ['Content-Type', 'Authorization']  // Allow necessary headers
 }));
+
+// Your routes for handling POST requests (including the search logging route)
+app.post('/logSearch', (req, res) => {
+    const searchQuery = req.body.searchQuery;
+
+    // Example: Log search query to the database (or do any action)
+    console.log('Logging search:', searchQuery);
+
+    // Respond with success message
+    res.json({ success: true, message: 'Search logged successfully' });
+});
+
+const port = 10000;
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+});
 
 // Preflight OPTIONS requests handling
 app.options('*', cors());  // This handles OPTIONS requests globally
