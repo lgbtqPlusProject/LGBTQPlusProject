@@ -1,21 +1,24 @@
-const path = require('path');
 const express = require('express');
-const mysql = require('mysql2');
-const app = express();
-const fetch = require('node-fetch');
-
-// Enable CORS for specific domain
 const cors = require('cors');
+const path = require('path');
+const mysql = require('mysql2');
+const fetch = require('node-fetch');
+const app = express();
+
+// Enable CORS for specific domains only
+const allowedOrigins = ['https://lgbtqplusproject.org', 'https://www.lgbtqplusproject.org'];
+
+// CORS middleware
 app.use(cors({
-    origin: ['https://lgbtqplusproject.org', 'https://www.lgbtqplusproject.org'],  // Allow only these origins
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type'],
+    origin: allowedOrigins,  // Allow only these origins
+    methods: ['GET', 'POST', 'OPTIONS'],  // Allow GET, POST, and OPTIONS methods
+    allowedHeaders: ['Content-Type', 'Authorization'],  // Allow necessary headers
 }));
 
-// Allow JSON requests
+// Parse JSON bodies
 app.use(express.json());
 
-// Serve static files like script.js and css
+// Serve static files like script.js and CSS
 app.use(express.static(path.join(__dirname, '/')));
 app.use('/css', express.static(path.join(__dirname, 'css')));
 
@@ -24,7 +27,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html')); // Ensure this path points to your index.html
 });
 
-// Replace with your actual database credentials or environment variables
+// Database connection pool
 const db = mysql.createPool({
     host: 'sv15.byethost15.org',
     user: 'lgbtqplu_timo',
@@ -32,31 +35,20 @@ const db = mysql.createPool({
     database: 'lgbtqplu_lgbtqplusproject'
 });
 
-// Check database connection
+// Test database connection
 db.getConnection((err, connection) => {
-  if (err) {
-    console.error('Error connecting to the database:', err.stack);
-    return;
-  }
-  console.log('Connected to MySQL database!');
-  connection.release(); // Release the connection back to the pool
+    if (err) {
+        console.error('Error connecting to the database:', err.stack);
+        return;
+    }
+    console.log('Connected to MySQL database!');
+    connection.release();
 });
 
+// Routes
 
-// Function to log the Archive.org search query and results to the database
-async function logArchiveSearchToDatabase(query, results) {
-    const timestamp = new Date().toISOString();  // Get the current timestamp
-    const logSql = 'INSERT INTO search_logs (query, search_time, results) VALUES (?, ?, ?)';
-
-    // Here we're saving both the search query and the JSON stringified results
-    db.query(logSql, [query, timestamp, JSON.stringify(results)], (err, result) => {
-        if (err) {
-            console.error('Error logging Archive.org search:', err);
-            return;
-        }
-        console.log('Archive.org search logged to database:', result);
-    });
-}
+// CORS Preflight (OPTIONS request)
+app.options('*', cors()); // This handles all OPTIONS requests globally
 
 // Define the /search route before app.listen()
 app.get('/search', (req, res) => {
@@ -83,35 +75,8 @@ app.get('/search', (req, res) => {
     });
 });
 
-
-
-
-
-// Archive.org Search Handling and Logging
-async function searchArchive(query) {
-    const apiUrl = `https://archive.org/advancedsearch.php?q=title:${encodeURIComponent(query)}&fl[]=title&fl[]=creator&rows=5&start=0&output=json`;
-
-    try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        const items = data.response.docs;
-
-        // Log the search query and results to the database
-        logSearchToDatabase(query, items);
-
-        // Return the search results to display on the frontend
-        return items;
-    } catch (error) {
-        console.error('Error fetching the API:', error);
-        return [];  // Return an empty array if the search fails
-    }
-}
-
-// Enable parsing of JSON bodies
-app.use(express.json());
-
 // Handle POST request to log search query
-app.post('/logSearch', express.json(), (req, res) => {
+app.post('/logSearch', (req, res) => {
     const searchQuery = req.body.query; // Get query from the request body
     const results = req.body.results;   // Get results from the request body
 
@@ -124,36 +89,16 @@ app.post('/logSearch', express.json(), (req, res) => {
 
     db.query(logSql, [searchQuery, timestamp, JSON.stringify(results)], (err, result) => {
         if (err) {
-            console.error('Database error:', err);  // Log the actual database error
+            console.error('Database error:', err);
             return res.status(500).json({ error: 'Failed to log search: ' + err.message });
         }
 
         res.status(200).json({ message: 'Search logged successfully' });
     });
 });
-// Define the /search route
-app.get('/search', async (req, res) => {
-    const searchQuery = req.query.query;
 
-    if (!searchQuery || searchQuery.trim() === '') {
-        return res.status(400).json({ error: 'Search query is missing or empty' });
-    }
-
-    try {
-        // Perform the Archive.org search and log the query
-        const archiveResults = await searchArchive(searchQuery);
-
-        // Respond with the results from Archive.org search
-        res.status(200).json(archiveResults);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to perform search' });
-    }
-});
-
-
-
-
-const port = process.env.PORT || 10000; // Default to port 10000 if no environment variable is provided
+// Set up server to listen
+const port = process.env.PORT || 10000;
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
