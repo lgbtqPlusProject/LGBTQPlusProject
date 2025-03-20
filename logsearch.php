@@ -12,14 +12,16 @@ if (in_array($origin, $allowedOrigins)) {
     header("Access-Control-Allow-Origin: $origin");
 }
 
-// CORS headers to allow POST and OPTIONS methods
 header("Access-Control-Allow-Methods: POST, OPTIONS");  // Allow POST and OPTIONS methods
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");  // Allow necessary headers
 header("Content-Type: application/json");  // Return JSON response
 
 // Handle preflight request (CORS OPTIONS request)
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    // Respond to the OPTIONS request
+    // Ensure CORS headers are set before responding
+    header("Access-Control-Allow-Origin: $origin");
+    header("Access-Control-Allow-Methods: POST, OPTIONS");
+    header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
     http_response_code(200);  // Send a success status (200 OK)
     exit();  // Exit after handling OPTIONS request
 }
