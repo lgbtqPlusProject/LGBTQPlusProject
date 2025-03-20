@@ -244,17 +244,31 @@ async function searchArchive(query) {
 
 //log archive search results
 function logSearch(query) {
-    fetch('https://lgbtqplusproject.org/public/logsearch.php', {
+    console.log(`Attempting to log search for: ${query}`);  // Log the query being sent
+
+    fetch('https://lgbtqplusproject.org/logsearch.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ searchQuery: query })
     })
-    .then(response => response.json())
+    .then(response => {
+        console.log('Response received from server:', response);
+
+        // Check if response is okay and JSON-formatted
+        if (response.ok) {
+            return response.json();
+        } else {
+            return response.text().then(text => {
+                console.error('Server responded with an error:', text);
+                throw new Error('Server Error: ' + text);
+            });
+        }
+    })
     .then(data => {
         if (data.success) {
-            console.log('Search logged successfully.');
+            console.log('Search logged successfully:', data.message);
         } else {
             console.error('Failed to log search:', data.message);
         }

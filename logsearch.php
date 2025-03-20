@@ -1,58 +1,43 @@
 <?php
-// CORS headers
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
+// CORS headers to allow cross-origin requests
+header("Access-Control-Allow-Origin: *");  // Allow requests from any origin
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 header("Content-Type: application/json");
 
-// Handle OPTIONS preflight request
+// Handle preflight request (CORS OPTIONS request)
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    header('HTTP/1.1 200 OK');
-    exit;
+    http_response_code(200);
+    exit();
 }
 
-// Database connection
-$host = 'sv15.byethost15.org'; // Your iFastNet database host
-$dbname = 'lgbtqplu_lgbtqplusproject';
-$username = 'lgbtqplu_timo';
-$password = 'Rubenom3626#';
-
-$conn = new mysqli($host, $username, $password, $dbname);
-
-// Check for connection errors
-if ($conn->connect_error) {
-    echo json_encode(['error' => 'Database connection failed: ' . $conn->connect_error]);
-    exit;
+// Only allow POST requests
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode(["success" => false, "message" => "Invalid request method."]);
+    exit();
 }
 
-// Only process POST requests
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the query and results from the POST body (assuming results are passed as JSON)
-    $data = json_decode(file_get_contents('php://input'), true);
-    error_log(print_r($data, true));  // Log the data to the error log
-    
-    // Check if query and results exist
-    if (!isset($data['query']) || !isset($data['results'])) {
-        echo json_encode(['error' => 'Query or results are missing']);
-        exit;
-    }
+// Read incoming data
+$input = file_get_contents("php://input");
+$data = json_decode($input, true);
 
-    $query = $data['query'];
-    $results = json_encode($data['results']);  // Store results as JSON string
-    $timestamp = date('Y-m-d H:i:s'); // Get current timestamp
-
-    // Prepare and execute the insert query
-    $stmt = $conn->prepare("INSERT INTO search_logs (query, search_time, results) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $query, $timestamp, $results);
-
-    if ($stmt->execute()) {
-        echo json_encode(['message' => 'Search logged successfully']);
-    } else {
-        echo json_encode(['error' => 'Failed to log search: ' . $stmt->error]);
-    }
-
-    $stmt->close();
-    $conn->close();
+// Check if JSON decoding worked
+if (json_last_error() !== JSON_ERROR_NONE) {
+    echo json_encode(["success" => false, "message" => "Invalid JSON format."]);
+    exit();
 }
-?>
+
+// Check if 'searchQuery' is provided
+if (!isset($data['searchQuery'])) {
+    echo json_encode(["success" => false, "message" => "No search query provided."]);
+    exit();
+}
+
+$searchQuery = $data['searchQuery'];  // Get the search query
+
+// Simulate logging search (replace this with your actual database code)
+echo json_encode(["success" => true, "message" => "Search logged successfully."]);
