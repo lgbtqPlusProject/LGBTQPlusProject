@@ -18,7 +18,7 @@ header("Content-Type: application/json");  // Return JSON response
 
 // Handle preflight request (CORS OPTIONS request)
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    // Respond to the OPTIONS request
+    // Allow the OPTIONS request by responding with 200 status code
     header("Access-Control-Allow-Origin: $origin");
     header("Access-Control-Allow-Methods: POST, OPTIONS");
     header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");

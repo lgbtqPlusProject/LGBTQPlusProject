@@ -15,6 +15,9 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization'],  // Allow necessary headers
 }));
 
+// Preflight OPTIONS requests handling
+app.options('*', cors());  // This handles OPTIONS requests globally
+
 // Parse JSON bodies
 app.use(express.json());
 
@@ -46,11 +49,6 @@ db.getConnection((err, connection) => {
 });
 
 // Routes
-
-// CORS Preflight (OPTIONS request)
-app.options('*', cors()); // This handles all OPTIONS requests globally
-
-// Define the /search route before app.listen()
 app.get('/search', (req, res) => {
     const searchQuery = req.query.query;
 
