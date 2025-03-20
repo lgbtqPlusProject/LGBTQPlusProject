@@ -3,11 +3,11 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// CORS headers to allow cross-origin requests
+// Allowed origins (both www and non-www)
 $allowedOrigins = ['https://lgbtqplusproject.org', 'https://www.lgbtqplusproject.org'];
-$origin = $_SERVER['HTTP_ORIGIN'] ?? ''; // Get the request's origin
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
 
-// Check if the origin is allowed
+// Check if the origin is in the allowed list
 if (in_array($origin, $allowedOrigins)) {
     header("Access-Control-Allow-Origin: $origin");
 }
@@ -18,13 +18,13 @@ header("Content-Type: application/json");  // Return JSON response
 
 // Handle preflight request (CORS OPTIONS request)
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);  // Return a 200 status for preflight requests
-    exit();  // Stop the script after handling OPTIONS request
+    http_response_code(200);  // Send a success status (200 OK) for OPTIONS requests
+    exit();  // Exit after handling OPTIONS request
 }
 
 // Only allow POST requests
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);  // Return a 405 status for disallowed methods
+    http_response_code(405);  // Method Not Allowed
     echo json_encode(["success" => false, "message" => "Invalid request method."]);
     exit();
 }
@@ -45,8 +45,8 @@ if (!isset($data['searchQuery'])) {
     exit();
 }
 
-$searchQuery = $data['searchQuery'];
+$searchQuery = $data['searchQuery'];  // Get the search query
 
-// Simulate logging search (replace this with your actual database code)
+// Simulate logging search (replace this with actual database code)
 echo json_encode(["success" => true, "message" => "Search logged successfully."]);
 ?>

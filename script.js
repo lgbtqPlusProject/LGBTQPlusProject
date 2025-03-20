@@ -246,7 +246,7 @@ async function searchArchive(query) {
 function logSearch(query) {
     console.log(`Attempting to log search for: ${query}`);
 
-    fetch('https://lgbtqplusproject.org/logsearch.php', {  // Make sure this URL is correct
+    fetch('https://lgbtqplusproject.onrender.com/logsearch.php', {  // Make sure this URL is correct
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
