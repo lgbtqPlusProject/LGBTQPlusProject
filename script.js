@@ -242,11 +242,11 @@ async function searchArchive(query) {
     }
 }
 
-//log archive search results
+//log archive search query
 function logSearch(query) {
-    console.log(`Attempting to log search for: ${query}`);  // Log the query being sent
+    console.log(`Attempting to log search for: ${query}`);
 
-    fetch('https://lgbtqplusproject.org/logsearch.php', {
+    fetch('https://lgbtqplusproject.org/logsearch.php', {  // Make sure this URL is correct
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -256,12 +256,11 @@ function logSearch(query) {
     .then(response => {
         console.log('Response received from server:', response);
 
-        // Check if response is okay and JSON-formatted
         if (response.ok) {
             return response.json();
         } else {
             return response.text().then(text => {
-                console.error('Server responded with an error:', text);
+                console.error('Server Error Response:', text);
                 throw new Error('Server Error: ' + text);
             });
         }

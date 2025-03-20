@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // CORS headers to allow cross-origin requests
-header("Access-Control-Allow-Origin: *");  // Allow requests from any origin
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 header("Content-Type: application/json");
@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 // Only allow POST requests
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405); // Return "Method Not Allowed" if not POST
     echo json_encode(["success" => false, "message" => "Invalid request method."]);
     exit();
 }
@@ -37,7 +38,7 @@ if (!isset($data['searchQuery'])) {
     exit();
 }
 
-$searchQuery = $data['searchQuery'];  // Get the search query
+$searchQuery = $data['searchQuery'];
 
 // Simulate logging search (replace this with your actual database code)
 echo json_encode(["success" => true, "message" => "Search logged successfully."]);
