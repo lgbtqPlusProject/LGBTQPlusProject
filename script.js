@@ -282,4 +282,32 @@ function closeAnnouncement() {
     document.getElementById('announcement').style.display = 'none';
 }
 
+//coming out stories
+async function submitTestimony(event) {
+  event.preventDefault();
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const story = document.getElementById('story').value;
+
+  try {
+    const response = await fetch('/submit-testimony', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name, email, story }),
+    });
+
+    if (response.ok) {
+      alert('Your testimony has been submitted successfully!');
+      document.getElementById('testimonyForm').reset();
+    } else {
+      alert('There was an issue submitting your testimony. Please try again.');
+    }
+  } catch (error) {
+    alert('An error occurred while submitting your testimony. Please try again.');
+    console.error('Error:', error);
+  }
+}
+
 
