@@ -26,10 +26,6 @@ app.post('/logSearch', (req, res) => {
     res.json({ success: true, message: 'Search logged successfully' });
 });
 
-const port = 10000;
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-});
 
 // Preflight OPTIONS requests handling
 app.options('*', cors());  // This handles OPTIONS requests globally
