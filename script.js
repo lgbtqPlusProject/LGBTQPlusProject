@@ -249,6 +249,7 @@ function logSearch(query) {
     const url = 'https://php.lgbtqplusproject.org/logsearch.php';  // Update if not in "public" folder
     console.log('Fetching URL:', url);
 
+    console.log('Sending request to PHP');
     fetch('https://php.lgbtqplusproject.org/logsearch.php', {
         method: 'POST',
         headers: {

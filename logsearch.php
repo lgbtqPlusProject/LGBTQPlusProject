@@ -3,8 +3,13 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    // Respond to preflight request
+    header("Access-Control-Allow-Origin: https://www.lgbtqplusproject.org");
+    header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+    header("Access-Control-Allow-Headers: Content-Type");
+    exit(0);
+}
 
 // Database credentials
 $servername = "sv15.byethost15.org";  // Replace with your iFastNet MySQL server name
