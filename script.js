@@ -242,42 +242,34 @@ async function searchArchive(query) {
     }
 }
 
-//log archive search query
+// Log archive search query
 function logSearch(query) {
     console.log(`Attempting to log search for: ${query}`);
 
-    // Log the URL being used
-    console.log('Fetching URL:', 'https://www.lgbtqplusproject.org/public/logsearch.php');
+    const url = 'https://php.lgbtqplusproject.org/logsearch.php';  // Update if not in "public" folder
+    console.log('Fetching URL:', url);
 
-    fetch('https://www.lgbtqplusproject.org/public/logsearch.php', {  // Ensure this URL is correct
+    fetch('https://php.lgbtqplusproject.org/logsearch.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ searchQuery: query })
+        body: JSON.stringify({ searchQuery: query }) // Ensure this is correct
     })
-    .then(response => {
-        console.log('Response received from server:', response);
-
-        if (response.ok) {
-            return response.json();
-        } else {
-            return response.text().then(text => {
-                console.error('Server Error Response:', text);
-                throw new Error('Server Error: ' + text);
-            });
-        }
-    })
+    .then(response => response.json())
     .then(data => {
+        console.log('Server Response:', data);  // Temporary logging to check response
         if (data.success) {
-            console.log('Search logged successfully:', data.message);
+            console.log('✅ Search logged successfully:', data.message);
         } else {
-            console.error('Failed to log search:', data.message);
+            console.error('❌ Failed to log search:', data.message);
         }
     })
-    .catch(error => console.error('Error logging search:', error));
+    .catch(error => console.error('❌ Error logging search:', error));
 }
 
+
+//close announcement
 function closeAnnouncement() {
     document.getElementById('announcement').style.display = 'none';
 }

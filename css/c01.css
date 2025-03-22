@@ -93,10 +93,11 @@ body {
     box-shadow: 0 0 5px rgba(255, 0, 0, 0.7); /* Red glow on focus */
 }
 
-/* Search Results Box */
+/************************************** Search Results Box */
 #searchResultsBox {
     display: none;
     position: fixed;
+    background-color: #f9f9f9; /* Light gray background */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -107,7 +108,10 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1000;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
 }
+
+
 
 /* Show the search results box when .show is added */
 #searchResultsBox.show {
@@ -630,22 +634,6 @@ form button:hover {
 }
 
 
-/* Style for the search results container */
-#searchResultsContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 15px; /* Space between results */
-    padding: 20px;
-    max-width: 800px;
-    margin: 20px auto;
-    background-color: #fff; /* White background */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    overflow: hidden;
-    opacity: 0;
-    animation: fadeIn 0.5s ease forwards; /* Fade-in effect */
-}
-
 /* Individual search result card styling */
 .search-result-card {
     background-color: #f9f9f9; /* Light gray background */
@@ -752,8 +740,6 @@ form button:hover {
 about {
     background-color: black;
 }
-
-
 
 /* Popup styling */
 .popup {
