@@ -201,17 +201,32 @@ async function searchArchive(query) {
         return;
     }
 
-    const apiUrl = `https://archive.org/advancedsearch.php?q=title:${encodeURIComponent(query)}&fl[]=title&fl[]=creator&rows=5&output=json`;
+    const apiUrl = `https://archive.org/advancedsearch.php?q=title:${encodeURIComponent(query)}&fl[]=title&fl[]=creator&rows=50&start=0&output=json`;
 
     try {
         const response = await fetch(apiUrl);
         const data = await response.json();
+
+        // Log the full response to inspect the structure
+        console.log('API Response:', data);
+
         const items = data.response.docs;
 
-        const resultDiv = document.getElementById('result');
-        let resultHTML = items.length > 0 ? '<ul>' : '<p>No results found.</p>';
+        if (items.length === 0) {
+            alert('No results found.');
+            return;
+        }
 
-        items.forEach(item => {
+        // Select a random subset of results (e.g., 5 random results)
+        const randomResults = getRandomItems(items, 5);
+
+        const resultDiv = document.getElementById('result');
+        let resultHTML = randomResults.length > 0 ? '<ul>' : '<p>No random results found.</p>';
+
+        randomResults.forEach(item => {
+            // Log the item to see what we have
+            console.log('Item:', item);
+
             const creators = Array.isArray(item.creator) ? item.creator.join(', ') : (item.creator || 'N/A');
             const encodedTitle = encodeURIComponent(item.title);
 
@@ -222,6 +237,9 @@ async function searchArchive(query) {
                     <strong>Creator:</strong> ${creators}
                 </li>
             `;
+
+            // Log the search result to the database
+            logSearch(query, item.title, creators);
         });
 
         resultHTML += '</ul>';
@@ -233,33 +251,59 @@ async function searchArchive(query) {
             resultPopup.style.display = 'block';
         }
 
-        // Log the search to your database
-        logSearch(query);
-
     } catch (error) {
         console.error('Error fetching data from Archive.org:', error);
         alert('⚠️ Error fetching data. Please try again later.');
     }
 }
 
-// Log archive search query
-function logSearch(query) {
+
+// Function to get random items from an array
+function getRandomItems(arr, num) {
+    const shuffled = arr.slice(0); // Copy the array to avoid mutating the original
+    let i = arr.length, temp, randomIndex;
+
+    while (i !== 0) {
+        randomIndex = Math.floor(Math.random() * i);
+        i -= 1;
+        temp = shuffled[i];
+        shuffled[i] = shuffled[randomIndex];
+        shuffled[randomIndex] = temp;
+    }
+
+    return shuffled.slice(0, num); // Return the first `num` random items
+}
+
+
+//log archive search query
+function logSearch(query, title, creator) {
     console.log(`Attempting to log search for: ${query}`);
+    console.log(`Title: ${title}, Creator: ${creator}`);  // Log the parameters being sent
 
-    const url = 'https://php.lgbtqplusproject.org/logsearch.php';  // Update if not in "public" folder
-    console.log('Fetching URL:', url);
+    // Check if the data exists before sending
+    if (!title || !creator) {
+        console.error('Missing title or creator, cannot log search.');
+        return; // Exit early if title or creator is missing
+    }
 
-    console.log('Sending request to PHP');
     fetch('https://php.lgbtqplusproject.org/logsearch.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ searchQuery: query }) // Ensure this is correct
+        body: JSON.stringify({ searchQuery: query, title: title, creator: creator })  // Send title and creator along with searchQuery
     })
-    .then(response => response.json())
+    .then(response => {
+        console.log('Response received:', response); // Log the full response to see if it’s valid
+        if (response.ok) {
+            return response.json();
+        } else {
+            console.error('Server responded with an error:', response);
+            return response.text().then(text => { throw new Error(text); });
+        }
+    })
     .then(data => {
-        console.log('Server Response:', data);  // Temporary logging to check response
+        console.log('Data received:', data); // Log the parsed JSON data
         if (data.success) {
             console.log('✅ Search logged successfully:', data.message);
         } else {
@@ -269,6 +313,63 @@ function logSearch(query) {
     .catch(error => console.error('❌ Error logging search:', error));
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    const testimonyForm = document.getElementById('testimonyForm'); // Ensure this is your form ID
+    
+    if (testimonyForm) {
+        testimonyForm.addEventListener('submit', function (event) {
+            event.preventDefault();  // Prevent default form submission
+            
+            // Prepare form data
+            const formData = new FormData(testimonyForm);
+            const data = {};
+            
+            // Populate the data object with form data
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            // Send the form data using Fetch API
+            fetch('https://php.lgbtqplusproject.org/logsearch.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', // We are sending JSON data
+                },
+                body: JSON.stringify(data)  // Convert form data to JSON
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Your testimony has been submitted successfully!');
+                    testimonyForm.reset();  // Reset the form
+                } else {
+                    alert('There was an issue submitting your story: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was an error submitting your testimony.');
+            });
+        });
+    }
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const elementsToShow = document.querySelectorAll('.form-text-box, .form-box');
+
+    function revealOnScroll() {
+        elementsToShow.forEach(element => {
+            const rect = element.getBoundingClientRect();
+            if (rect.top < window.innerHeight) {
+                element.classList.add('show-on-scroll');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll(); // Trigger animation if elements are already in view
+});
 
 //close announcement
 function closeAnnouncement() {

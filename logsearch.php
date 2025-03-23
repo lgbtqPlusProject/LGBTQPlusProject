@@ -3,12 +3,16 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Allow cross-origin requests from the main site
+header("Access-Control-Allow-Origin: https://www.lgbtqplusproject.org");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+
+// Handle preflight OPTIONS request
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-    // Respond to preflight request
-    header("Access-Control-Allow-Origin: https://www.lgbtqplusproject.org");
-    header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-    header("Access-Control-Allow-Headers: Content-Type");
-    exit(0);
+    // Respond to preflight request with necessary headers
+    header("Access-Control-Max-Age: 3600"); // Cache preflight response for 1 hour
+    exit(0); // Exit after handling OPTIONS request
 }
 
 // Database credentials

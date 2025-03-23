@@ -31,6 +31,7 @@ h1 {
 body {
     font-family: "Josefin Sans Regular", Courier, monospace;
     background-color: black;
+    color: white;
     margin: 0;
     padding: 0;
 }
@@ -970,7 +971,7 @@ button:hover {
 
 .container-content {
     max-width: 900px;
-    color: whitesmoke;
+    color: white;
     margin: 0 auto;
     text-align: center;
 }
@@ -1110,6 +1111,151 @@ button:hover {
     padding-bottom: 5px;
     color: #666;
     line-height: 1.6;
+}
+
+/* General Animation Styles */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Apply Animation to the Form and Text Box */
+.form-text-box, .form-box {
+    animation: fadeIn 1s ease forwards;
+    opacity: 0; /* Start as hidden */
+}
+
+/* Trigger Animation on Scroll */
+.show-on-scroll {
+    opacity: 1; /* Make visible when in view */
+}
+
+/* Overall Section */
+#comingOutSection {
+    background-color: #f4f7f6;
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    background-image: linear-gradient(45deg, #f5a623, #9b59b6);
+    color: white;
+}
+
+/* Container for both form and text */
+.content-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+/* Left Box (Text Section) */
+.form-text-box {
+    flex: 1;
+    max-width: 45%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    color: #333;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.form-text-box:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.form-text-heading {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: #FF6B6B;
+}
+
+.form-text-paragraph {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #3498db;
+}
+
+/* Right Box (Form Section) */
+.form-box {
+    flex: 1;
+    max-width: 45%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.form-box:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #333;
+}
+
+input[type="text"], input[type="email"], textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
+    border-color: #f5a623;
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    background-color: #f5a623;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #9b59b6;
+    transform: translateY(-2px);
+}
+
+.submit-btn:active {
+    background-color: #8e44ad;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .content-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .form-text-box, .form-box {
+        max-width: 100%;
+    }
 }
 
 

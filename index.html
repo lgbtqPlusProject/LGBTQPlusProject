@@ -234,6 +234,45 @@
             </div>
           </div>
         </section>
+        
+        <section id="comingOutSection">
+            <div class="content-container">
+                <!-- Left Box: Explanatory Text -->
+                <div class="form-text-box">
+                    <h2 class="form-text-heading">Share Your Coming Out Story</h2>
+                    <p class="form-text-paragraph">We'd love to hear your journey! 💖 Your story is an important part of our LGBTQ+ history. By sharing, you’re helping others feel seen and heard. Take a moment, tell us about your experience, and let’s make the world a more inclusive place together. 🌈</p>
+                    <p class="form-text-paragraph">Remember, no matter your story—it’s valid, it’s powerful, and it deserves to be shared!</p>
+                </div>
+
+                <!-- Right Box: Form -->
+                <div class="form-box">
+                    <form id="testimonyForm" method="POST" action="submit_testimony.php">
+                        <div class="form-group">
+                            <label for="name">Your Name:</label>
+                            <input type="text" id="name" name="name" required placeholder="Enter your name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Your Email:</label>
+                            <input type="email" id="email" name="email" required placeholder="Enter your email">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="location">Your Location:</label>
+                            <input type="text" id="location" name="location" required placeholder="Where are you from?">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="story">Your Story:</label>
+                            <textarea id="story" name="story" rows="5" required placeholder="Tell your story..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Submit Story</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        
     <script src="script.js"></script>
 </body>
 </html>
