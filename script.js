@@ -376,3 +376,8 @@ function closeAnnouncement() {
     document.getElementById('announcement').style.display = 'none';
 }
 
+document.querySelector(".sidebar-toggle").addEventListener("click", function() {
+  document.querySelector(".sidebar").classList.toggle("open");
+});
+
+
