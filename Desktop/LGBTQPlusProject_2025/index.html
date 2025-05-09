@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LGBTQ+ Project</title>
+    <!-- Favicon for Browser Tabs -->
+    <link rel="icon" type="images/x-icon" href="images/favicon.ico"/>
+    <!-- Apple Touch Icon (for iOS Home Screen) -->
+    <link rel="apple-touch-icon" href="images/favicon.ico"/>
+    <!-- Awesome Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Link to CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/c01.css"/>
+</head>
+<body>
+    <!-- Announcement Box -->
+    <div id="announcement" class="announcement">
+        <button class="close-btn1" onclick="closeAnnouncement()">✖</button>
+        <p><strong>Coming soon in 2025!</strong></p>
+        <p class="inquiry">
+        <br></br>
+            We are currently collecting individual coming out stories. Want share your coming out story? Email the LGBTQ+ Project or submit below.<br></br>
+            <a href="mailto:info@lgbtqplusproject.org" style="color: #4DA6FF; text-decoration: none;">
+                info@lgbtqplusproject.org
+            </a>
+        </p>
+    </div>
+    
+    <!-- Landing Page with Logo -->
+    <section id="landing" class="page-section">
+        <img src="images/lgbptqprojectLogov3.gif" alt="Logo" id="logo">
+        <div id="scroll-indicator" onclick="showContentPage()">Scroll Down ↓</div>
+    </section>
+    
+    <!-- Main Content -->
+    <section id="content">
+        <!-- Contact Form Popup (Initially Hidden) -->
+        <div id="contactPopup" class="popup" style="display: none;">
+            <div class="popup-content">
+                <!--<button class="close-btn1">&times;</button> <!-- Close button -->
+                <form id="contactFormContent" action="https://formspree.io/f/mgvawgvn" method="POST">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" required></textarea>
+
+                    <button type="submit">Send Message</button>
+                </form>
+                <div id="successMessage" style="display: none;">✅ Your message was sent successfully!</div>
+            </div>
+        </div>
+
+        <!--Historical Figures-->
+        <div class="header">
+            <img src="images/historicalfig&Events.gif" alt="Background Image" class="background-image">
+            <input type="text" id="searchBox" placeholder="Search LGBTQ+ Figures..." />
+            <button id="searchBtnDatabase">Search</button>
+        </div>
+        <div class="rounded-background"></div>
+        
+        <!-- Mission Statement -->
+        <div class="mission-statement">
+            <h2>Our Mission</h2>
+            <p>
+            The LGBTQ+ Project is dedicated to safeguarding and celebrating LGBTQ+ history. As a digital repository, we preserve artifacts, stories, and pivotal moments from our past, ensuring they remain accessible for future generations. By keeping our history alive online, we strive to educate, inspire, and empower individuals worldwide. Visit our Instagram page for more day-to-day history!<br></br>
+            <!-- Instagram Logo Link using Font Awesome -->
+            <a href="https://www.instagram.com/lgbtqplusproject" target="_blank">
+              <i class="fab fa-instagram" style="font-size: 40px;"></i>
+            </a>
+            </p>
+        </div>
+
+        <!-- Search Results Box -->
+        <div id="searchResultsBox" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-80 backdrop-blur-sm px-4">
+          <div class=" button bg-gray-900 text-white max-w-2xl w-full rounded-2xl shadow-2xl p-6 pt-12 relative overflow-y-auto max-h-[80vh]">
+            <!-- Close Button -->
+            <button onclick="closeSearchBox()" class="absolute top-4 right-4 p-2 text-white text-sm font-bold rounded-full shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300"
+            style="background-image: linear-gradient(to right, #9333ea, #ec4899, #14b8a6) !important;">
+              ✖
+            </button>
+
+            <!-- Results Container -->
+            <div id="searchResultsContainer" class="space-y-4 text-sm sm:text-base leading-relaxed">
+              <!-- JavaScript will inject results here -->
+            </div>
+            
+          </div>
+        </div>
+        
+    </section>
+
+    
+<!-- Digital Archive Section (Compact Version) -->
+    <section id="about" class="bg-gradient-to-r from-purple-600 via-pink-500 to-teal-400 text-white py-10 sm:py-12">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="relative rounded-xl overflow-hidden shadow-xl">
+          <img src="images/digitalarchives.gif" alt="Digital Archives Background" class="absolute inset-0 w-full h-full object-cover opacity-40" />
+
+          <div class="relative z-10 bg-black bg-opacity-70 p-5 sm:p-6 md:p-8 rounded-xl">
+            <p class="text-base sm:text-lg leading-relaxed font-light tracking-wide text-center">
+              <b>Digital Archives</b> | The LGBTQ+ Project, in partnership with Archive.org, presents a comprehensive repository of LGBTQ+ history, offering access to a wide range of digital content. Dive into historical documents, photographs, videos, and more that shaped our community. <br><br>
+
+              Explore pivotal topics like <span class="keyword text-pink-300 font-bold">Stonewall Riots</span>, <span class="keyword text-pink-300 font-bold">Harvey Milk</span>, <span class="keyword text-pink-300 font-bold">Lavender Scare</span>, <span class="keyword text-pink-300 font-bold">ACT UP</span>, and <span class="keyword text-pink-300 font-bold">Marsha P. Johnson</span>. This archive is your gateway to preserving LGBTQ+ heritage. <br><br>
+
+              Begin your search and help keep history alive for future generations.
+            </p>
+          </div>
+        </div>
+
+        <!-- Search Section -->
+        <div class="mt-6 flex flex-col sm:flex-row justify-center items-center gap-3">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search archives..."
+            class="w-full sm:w-1/2 p-2 rounded-md text-sm text-gray-800 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-pink-400 transition"
+          />
+          <button
+            id="searchBtn"
+            class="p-2 px-4 bg-gradient-to-r from-purple-600 via-pink-500 to-teal-400 text-white text-sm rounded-md shadow-md hover:shadow-lg hover:scale-105 transition"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+        
+        <!-- Popup for displaying results -->
+        <div id="resultPopup" style="display: none;" class="z-50 fixed inset-0 flex items-center justify-center bg-black bg-opacity-80">
+          <div class="bg-white text-black p-6 rounded-lg max-w-lg w-full shadow-lg overflow-auto max-h-[80vh]">
+            <button onclick="closeSearchPopup()" class="text-sm text-right mb-4 float-right text-red-500">Close ✖</button>
+            <div id="result"></div>
+          </div>
+        </div>
+        </section>
+    
+    <!--Coming Out Section-->
+    <section id="comingOutSection">
+                <div class="content-container">
+                    <!-- Left Box: Explanatory Text -->
+                    <div class="form-text-box">
+                        <h2 class="form-text-heading">Share Your Coming Out Story</h2>
+                        <p class="form-text-paragraph">We'd love to hear your journey! 💖 Your story is an important part of our LGBTQ+ history. By sharing, you’re helping others feel seen and heard. Take a moment, tell us about your experience, and let’s make the world a more inclusive place together. 🌈</p>
+                        <p class="form-text-paragraph">Remember, no matter your story—it’s valid, it’s powerful, and it deserves to be shared!</p>
+                    </div>
+
+                    <!-- Right Box: Form -->
+                    <div class="form-box">
+                        <form id="testimonyForm" method="POST" action="submit_testimony.php">
+                            <div class="form-group">
+                                <label for="name">Your Name:</label>
+                                <input type="text" id="name" name="name" required placeholder="Enter your name">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">Your Email:</label>
+                                <input type="email" id="email" name="email" required placeholder="Enter your email">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="location">Your Location:</label>
+                                <input type="text" id="location" name="location" required placeholder="Where are you from?">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="story">Your Story:</label>
+                                <textarea id="story" name="story" rows="5" required placeholder="Tell your story..."></textarea>
+                            </div>
+                            
+                            <button type="submit" class="submit-btn">Submit Story</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+    <!--Coming Out Stories Showecase-->
+    <section id="comingOutShowcase" class="py-12 bg-gradient-to-r from-pink-400 via-purple-400 to-teal-400 text-white">
+      <div class="max-w-5xl mx-auto px-4">
+        <h2 class="text-3xl font-bold mb-8 text-center">🌈 Shared Coming Out Stories<br></br> Coming Soon...
+        
+        </h2>
+        <div id="storiesContainer" class="space-y-8"></div>
+      </div>
+    </section>
+    
+    <!--Featured Section - IML for May-->
+    <section id="iml-feature" class="full-page-section">
+      <div class="iml-flex-wrapper">
+        <!-- Left Side: Text Content -->
+        <div class="iml-left">
+          <h1>Upcoming Event: International Male Leather (IML)</h1>
+          <div class="iml-description">
+              <p>The <strong>International Male Leather (IML)</strong> contest stands as a powerful testament to the LGBTQ+ community’s commitment to visibility, authenticity, and cultural preservation. Since its founding in 1979 by <strong>Chuck Renslow</strong>—a pioneering gay rights activist, businessman, and publisher—the event has become an essential part of LGBTQ+ history, celebrating the resilience and unity of the Leather and BDSM subcultures.</p>
+
+              <p>Renslow, instrumental in shaping queer culture in Chicago through establishments like the Gold Coast leather bar and publications like <em>GayLife</em>, envisioned IML as more than a contest. His goal was to create a platform where leather enthusiasts could express themselves openly and proudly, defying societal shame and stigma.</p>
+
+              <p>Held annually over <strong>Memorial Day weekend</strong> in Chicago, IML attracts thousands of participants and attendees worldwide. Contestants vying for the title of <strong>International Mr. Leather</strong> are not just judged on appearance, but on their ability to represent the values of the leather community—authenticity, advocacy, and leadership.</p>
+
+              <p>Figures such as <strong>Guy Baldwin (IML 1989)</strong> and <strong>Jeff Tucker (IML 1994)</strong> have used their titles to promote acceptance and understanding of the leather lifestyle while addressing broader LGBTQ+ issues. Baldwin, a psychotherapist and author, contributed significantly to discussions about BDSM psychology, consent, and identity. Tucker has worked tirelessly to raise awareness about health, diversity, and representation.</p>
+
+              <p>Explore the IML Archives & Upcoming Event Info. <a href="https://chicagolgbthalloffame.org/international-mr-leather/" target="_blank" class="iml-link">Visit the IML Archives</a> or get news on the <a href="https://www.internationalmrleather.com" target="_blank" class="iml-link">Upcoming IML Event</a>
+              </p>
+          </div>
+        </div>
+
+        <!-- Right Side: Image Collage -->
+        <div class="iml-right">
+          <div class="collage-grid">
+            <img src="images/iml01.gif" alt="IML 01">
+            <img src="images/iml02.gif" alt="IML 02">
+            <img src="images/iml03.gif" alt="IML 03">
+            <img src="images/iml04.gif" alt="IML 04">
+            <img src="images/iml05.gif" alt="IML 05">
+            <img src="images/iml06.gif" alt="IML 06">
+            <img src="images/iml07.gif" alt="IML 07">
+            <img src="images/iml08.gif" alt="IML 08">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!--Lavendar Scare-->
+<section id="lavender-legacy">
+          <div class="section-header">
+            <h2>From the Lavender Scare to Today</h2>
+            <p>Government Layoffs, Discrimination & Queer Resilience</p>
+          </div>
+
+          <div class="lavender-flex">
+            <div class="lavender-text">
+              <p>
+                In the 1950s, LGBTQ+ federal workers were targeted and fired in what came to be known as the <strong>Lavender Scare</strong>.
+                Labeled as "security risks" and moral threats, thousands of queer individuals lost their jobs under government-sanctioned
+                discrimination—many forced into silence or exile.
+              </p>
+
+              <p>
+                Today, we are witnessing new waves of layoffs in public education, healthcare, and nonprofit sectors—many affecting
+                LGBTQ+ workers and allies. While not labeled as such, the echoes of systemic exclusion are loud and clear.
+              </p>
+
+              <p>
+                This section draws a direct line between then and now—because understanding the past is essential to reshaping
+                our future.
+              </p>
+
+              <p>
+                <strong>LGBTQPlusProject.org</strong> is committed to preserving these stories—both historical and contemporary.
+                Explore archival footage, listen to firsthand accounts, and reflect on what it means to be queer in a system
+                that still fails to protect its own.
+              </p>
+
+              <!-- Archival Collage -->
+              <div class="lavender-gallery" style="display: flex; overflow-x: auto; gap: 10px; padding: 10px;">
+                <img src="images/lavscare01.jpeg" alt="Lavender Scare 1" class="lavender-thumb" onclick="openLightbox('images/lavscare01.jpeg')">
+                <img src="images/lavscare02.jpeg" alt="Lavender Scare 2" class="lavender-thumb" onclick="openLightbox('images/lavscare02.jpeg')">
+                <img src="images/lavscare03.jpeg" alt="Lavender Scare 3" class="lavender-thumb" onclick="openLightbox('images/lavscare03.jpeg')">
+              </div>
+              
+              <!-- Interactive Timeline -->
+              <section class="relative max-w-4xl mx-auto py-16 px-6 sm:px-10">
+                <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-px h-full bg-gradient-to-b from-purple-500 to-teal-400"></div>
+                
+                <div class="space-y-12">
+                  <!-- Timeline Item -->
+                  <div class="relative flex items-start">
+                    <div class="absolute -left-5 top-0 w-6 h-6 bg-purple-500 rounded-full border-4 border-white shadow-lg"></div>
+                    <div class="bg-gray-900 p-6 rounded-xl shadow-md transform transition hover:shadow-2xl hover:translate-y-2 w-full">
+                      <h4 class="text-xl font-semibold text-purple-300">1953: Executive Order 10450</h4>
+                      <p class="text-white mt-2">Eisenhower signs an order banning homosexuals from federal jobs, institutionalizing the Lavender Scare.</p>
+                    </div>
+                  </div>
+
+                  <!-- Timeline Item -->
+                  <div class="relative flex items-start">
+                    <div class="absolute -left-5 top-0 w-6 h-6 bg-purple-500 rounded-full border-4 border-white shadow-lg"></div>
+                    <div class="bg-gray-900 p-6 rounded-xl shadow-md transform transition hover:shadow-2xl hover:translate-y-2 w-full">
+                      <h4 class="text-xl font-semibold text-purple-300">1957: Frank Kameny is Fired</h4>
+                      <p class="text-white mt-2">After being dismissed for being gay, Frank Kameny fights back, becoming a pioneer in LGBTQ+ activism.</p>
+                    </div>
+                  </div>
+
+                  <!-- Timeline Item -->
+                  <div class="relative flex items-start">
+                    <div class="absolute -left-5 top-0 w-6 h-6 bg-purple-500 rounded-full border-4 border-white shadow-lg"></div>
+                    <div class="bg-gray-900 p-6 rounded-xl shadow-md transform transition hover:shadow-2xl hover:translate-y-2 w-full">
+                      <h4 class="text-xl font-semibold text-purple-300">1965: White House Protest</h4>
+                      <p class="text-white mt-2">LGBTQ+ individuals picket the White House demanding civil rights protections for federal employees.</p>
+                    </div>
+                  </div>
+
+                  <!-- Timeline Item -->
+                  <div class="relative flex items-start">
+                    <div class="absolute -left-5 top-0 w-6 h-6 bg-purple-500 rounded-full border-4 border-white shadow-lg"></div>
+                    <div class="bg-gray-900 p-6 rounded-xl shadow-md transform transition hover:shadow-2xl hover:translate-y-2 w-full">
+                      <h4 class="text-xl font-semibold text-purple-300">1975: Civil Service Reforms</h4>
+                      <p class="text-white mt-2">The U.S. Civil Service Commission lifts its ban on hiring gay employees after years of protest.</p>
+                    </div>
+                  </div>
+
+                  <!-- Timeline Item -->
+                  <div class="relative flex items-start">
+                    <div class="absolute -left-5 top-0 w-6 h-6 bg-green-400 rounded-full border-4 border-white shadow-lg"></div>
+                    <div class="bg-gray-900 p-6 rounded-xl shadow-md transform transition hover:shadow-2xl hover:translate-y-2 w-full">
+                      <h4 class="text-xl font-semibold text-green-300">Now: Restoring the “T” and “Q”</h4>
+                      <p class="text-white mt-2">Activists today work to restore the voices of Trans and Queer people erased by the Lavender Scare.</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+        </section>
+
+<!--Featured Person Section -->
+<section id="transgender-non-conforming" class="relative w-full bg-black text-white overflow-hidden py-20">
+  <!-- Background Image -->
+  <div class="absolute inset-0 z-0">
+    <img src="images/bayardrustin3.gif" alt="Bayard Rustin" class="w-full h-full object-cover opacity-30">
+    <div class="absolute inset-0 bg-gradient-to-b from-black/80 to-black/90"></div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+
+      <!-- Text Content -->
+      <div class="bg-black/70 backdrop-blur-md rounded-2xl shadow-lg p-6 sm:p-10 space-y-6">
+        <h2 class="text-2xl sm:text-3xl font-bold text-pink-300 text-center lg:text-left">Bayard Rustin: The Architect of the Dream</h2>
+        <p class="text-base sm:text-lg leading-relaxed text-pink-300 font-light text-center lg:text-left">
+          Bayard Rustin was a brilliant strategist, openly gay Black civil rights leader, and a key advisor to Martin Luther King Jr.
+          He organized the 1963 March on Washington and taught Dr. King the principles of nonviolence. Despite being pushed to the background due to his sexuality, his legacy is monumental.
+        </p>
+        <ul class="grid grid-cols-1 gap-2 text-pink-300 text-sm sm:text-base list-disc list-inside">
+          <li>Organizer of the 1963 March on Washington</li>
+          <li>Advisor to MLK Jr. on nonviolent resistance</li>
+          <li>Fighter for LGBTQ+ rights and economic justice</li>
+          <li>Co-founder of the Southern Christian Leadership Conference</li>
+        </ul>
+        <blockquote class="italic text-center text-pink-200 text-sm sm:text-base mt-4">“We need, in every community, a group of angelic troublemakers.” — Bayard Rustin</blockquote>
+      </div>
+
+      <!-- Right-side Image Scroll -->
+      <div class="h-[500px] overflow-y-auto space-y-4 pr-2 custom-scrollbar">
+        <img src="images/rustin1.jpeg" alt="Rustin thinking" class="rounded-lg shadow-md w-full" />
+        <img src="images/rustin2.jpeg" alt="Rustin with MLK" class="rounded-lg shadow-md w-full" />
+        <img src="images/rustin3.jpeg" alt="March on Washington" class="rounded-lg shadow-md w-full" />
+        <img src="images/rustin4.jpeg" alt="Young Bayard Rustin" class="rounded-lg shadow-md w-full" />
+        <img src="images/rustin5.jpeg" alt="Mr. Bayard Rustin" class="rounded-lg shadow-md w-full" />
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Story Lightbox Popup -->
+<div id="storyModal" class="modal hidden">
+  <div class="modal-content">
+    <span id="modalClose" class="close">&times;</span>
+    <h2 id="modalName"></h2>
+    <p id="modalLocation"></p>
+    <p id="modalStory"></p>
+    <div class="modal-navigation">
+      <button id="prevStory" class="nav-button">← Previous</button>
+      <button id="nextStory" class="nav-button">Next →</button>
+    </div>
+  </div>
+</div>
+        
+            <!-- Lightbox Overlay -->
+            <div id="lightbox-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); justify-content: center; align-items: center; z-index: 1000;">
+                <span id="lightbox-close" style="cursor:pointer; position: absolute; top: 20px; right: 30px; font-size: 40px; color: white;" onclick="document.getElementById('lightbox-overlay').style.display='none'; document.getElementById('lightbox-img').src='';">×</span>
+              <img id="lightbox-img" src="" alt="Enlarged Image" style="max-width: 90%; max-height: 90%; border-radius: 10px;">
+            </div>
+
+            <script src="script.js"></script>
+</body>
+</html>
+
+
